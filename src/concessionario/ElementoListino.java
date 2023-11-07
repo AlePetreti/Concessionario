@@ -1,3 +1,4 @@
+package concessionario;
 public class ElementoListino {
 
     private Automobile automobile;

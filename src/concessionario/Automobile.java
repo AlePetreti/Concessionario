@@ -1,3 +1,4 @@
+package concessionario;
 public class Automobile {
 
     private String modello;
