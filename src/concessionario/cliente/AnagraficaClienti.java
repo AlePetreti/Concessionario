@@ -58,4 +58,11 @@ public class AnagraficaClienti {
         }
         return clientiTrovati;
     }
+    /**
+     * 
+     * @return lista dei clienti
+     */
+    public List<Cliente> getClienti() {
+        return new LinkedList<>(listaClienti);
+    }
 }

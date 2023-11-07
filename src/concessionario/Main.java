@@ -3,29 +3,25 @@ import java.util.List;
 
 import concessionario.cliente.AnagraficaClienti;
 import concessionario.cliente.Cliente;
+import concessionario.cliente.FactoryCliente;
 
 public class Main {
     public static void main(String[] args) throws Exception {
 
-        Cliente c1;
-        Cliente c2;
-        Cliente c3;
-        AnagraficaClienti anagrafica;
+        FactoryCliente clientefactory = new FactoryCliente();
+        AnagraficaClienti anagrafica = new AnagraficaClienti();
 
-        c1 = new Cliente("Alessandro", "Petreti", "petretiale@gmail.com", "3291390019", "PTRLSN02S25D488F");
-        c2 = new Cliente("Andrea", "Petreti", "petretiandrea@gmail.com", "3567893245", "SONODOWN");
-        c3 = new Cliente("Roberta", "Mentuccia", "mentucciaroberta@gmail.com", "3256764598", "HOSEMPRERAGIONE");
+        for(int i = 0; i < 2; i++) {
+            anagrafica.registraCliente(clientefactory.creaClienteRandom());
+        }
 
-        anagrafica = new AnagraficaClienti();
-
-        anagrafica.registraCliente(c1);
-        anagrafica.registraCliente(c2);
-        anagrafica.registraCliente(c3);
-
-        Cliente clienteTrovato = anagrafica.cercaCliente("SONODOWN");
+        Cliente clienteTrovato = anagrafica.cercaCliente("");
         System.out.println(clienteTrovato);
 
-        List<Cliente> clienti = anagrafica.cercaClienti("Pe");
+        List<Cliente> clienti = anagrafica.cercaClienti("Alessandro");
+        System.out.println(clienti);
+
+        clienti = anagrafica.getClienti();
         System.out.println(clienti);
     }
 }
