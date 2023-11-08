@@ -38,7 +38,7 @@ public class AnagraficaClienti {
     public List<Cliente> cercaClienti(String nome, String cognome) {
         List<Cliente> clientiTrovati = new LinkedList<Cliente>();
         for(Cliente e : listaClienti) {
-            if(e.getNome().equals(nome) || e.getCognome().equals(cognome)){
+            if(e.getNome().equalsIgnoreCase(nome) || e.getCognome().equalsIgnoreCase(cognome)){
                 clientiTrovati.add(e);
             }
         }
@@ -52,7 +52,8 @@ public class AnagraficaClienti {
     public List<Cliente> cercaClienti(String parolaChiave) {
         List<Cliente> clientiTrovati = new LinkedList<Cliente>();
         for(Cliente e : listaClienti) {
-            if(e.getNome().contains(parolaChiave) || e.getCognome().contains(parolaChiave)){
+            if(e.getNome().toLowerCase().contains(parolaChiave.toLowerCase()) || 
+               e.getCognome().toLowerCase().contains(parolaChiave.toLowerCase())) {
                 clientiTrovati.add(e);
             }
         }

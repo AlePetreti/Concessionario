@@ -1,3 +1,0 @@
-Mario,Rossi,mariorossi@email.com,1234567890,F7GP1KKGPMUBOR5D
-Luigi,Verdi,luigiverdi@email.com,9876543210,J2IB1TTY98I1M889
-Alessandro,Petreti,petretiale@gmail.com,3713190237,1ZVG8B59ZMRD61FH
