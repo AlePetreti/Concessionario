@@ -1,4 +1,5 @@
-package concessionario;
+package concessionario.automobile;
+
 public class Automobile {
 
     private String modello;
@@ -49,6 +50,13 @@ public class Automobile {
         return statoMacchina;
     }
 
+    @Override
+    public String toString() {
+        return "Automobile [modello=" + modello + ", marca=" + marca + ", km=" + km + ", numeroPorte=" + numeroPorte
+                + ", cilindrata=" + cilindrata + ", cavalli=" + cavalli + ", statoMacchina=" + statoMacchina + "]";
+    }
+
+    
     
     
 }

@@ -1,4 +1,7 @@
 package concessionario;
+
+import concessionario.automobile.Automobile;
+
 public class ElementoListino {
 
     private Automobile automobile;
