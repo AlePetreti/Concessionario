@@ -1,8 +1,11 @@
 package concessionario;
+
 import java.util.List;
 import java.util.ArrayList;
 
+import concessionario.automobile.Automobile;
 import concessionario.automobile.FactoryAutomobili;
+import concessionario.automobile.StatoMacchina;
 import concessionario.cliente.AnagraficaClienti;
 import concessionario.cliente.Cliente;
 import concessionario.cliente.FactoryAnagraficaFile;
@@ -18,10 +21,17 @@ public class Main {
         Listino listinoAuto = new Listino();
         
         for(int i = 0; i < 10; i++) {
-            System.out.println(factoryAutomobili.creaAutoRandom1()); 
-
+            listinoAuto.aggiungiAuto(factoryAutomobili.creaAutoRandom1(), 0);
         }
-        listinoAuto.stampaListino(factoryAutomobili.creaAutoRandom());
+        listinoAuto.aggiungiAuto(new Automobile("ClasseA", "MERCEDES", 0, 5, 0, 0, null), 0);
+        
+        // listinoAuto.stampaListino(factoryAutomobili.creaAutoRandom());
+
+        Filtro filtro = new Filtro();
+
+        CercatoreAuto cercatoreAuto = new CercatoreAuto();
+        List<Automobile> autoTrovate = cercatoreAuto.cercaAuto(filtro, listinoAuto);
+        System.out.println(autoTrovate);
 
         // creazione clienti e prove sulla ricerca 
        /*List<Cliente> clienti;

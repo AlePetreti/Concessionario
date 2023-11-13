@@ -24,14 +24,14 @@ public class Listino {
         }
         return -1;
     }
-    
+
     /**
      * aggiungo un elemento listino al listino
      * @param elementoListino
      * @return true
      */
-    public boolean aggiungiAuto(ElementoListino elementoListino) {
-        listino.add(elementoListino);
+    public boolean aggiungiAuto(Automobile auto, double prezzo) {
+        listino.add(new ElementoListino(auto, prezzo) );
         return true;
     }
 
