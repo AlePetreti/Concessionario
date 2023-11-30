@@ -27,7 +27,7 @@ public class Listino {
 
     /**
      * aggiungo un elemento listino al listino
-     * @param elementoListino
+     * @param auto, prezzo
      * @return true
      */
     public boolean aggiungiAuto(Automobile auto, double prezzo) {

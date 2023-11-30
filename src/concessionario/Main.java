@@ -28,6 +28,7 @@ public class Main {
         // listinoAuto.stampaListino(factoryAutomobili.creaAutoRandom());
 
         Filtro filtro = new Filtro();
+        filtro.setMarca("MERCEDES");
 
         CercatoreAuto cercatoreAuto = new CercatoreAuto();
         List<Automobile> autoTrovate = cercatoreAuto.cercaAuto(filtro, listinoAuto);
