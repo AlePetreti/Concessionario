@@ -19,4 +19,11 @@ public class ElementoListino {
     public double getPrezzo() {
         return prezzo;
     }
+
+    @Override
+    public String toString() {
+        return "ElementoListino [automobile=" + automobile + ", prezzo=" + prezzo + "]";
+    }
+
+    
 }
