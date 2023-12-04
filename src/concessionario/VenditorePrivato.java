@@ -16,4 +16,8 @@ public class VenditorePrivato {
     public Automobile getAutomobile() {
         return this.auto;
     }
+
+    public Cliente getCliente() {
+        return this.cliente;
+    }
 }
