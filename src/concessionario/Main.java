@@ -1,9 +1,8 @@
 package concessionario;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
-import java.util.ArrayList;
-import java.util.InputMismatchException;
 
 import concessionario.automobile.Automobile;
 import concessionario.automobile.FactoryAutomobili;
@@ -16,151 +15,194 @@ import concessionario.cliente.FactoryCliente;
 public class Main {
     public static void main(String[] args) throws Exception {
 
-        AnagraficaClienti anagrafica = new AnagraficaClienti();
-        FactoryCliente clientefactory = new FactoryCliente();
-        List<Cliente> clienti;
-        FactoryAnagraficaFile anagraficaFile = new FactoryAnagraficaFile("Elenco_clienti.txt");
-        FactoryAutomobili factoryAutomobili = new FactoryAutomobili();
-        Listino listinoAuto = new Listino();
-        Concessionario concessionario = new Concessionario(listinoAuto);
-        Filtro filtro = new Filtro();
-        CercatoreAuto cercatoreAuto = new CercatoreAuto();
-        Scanner scanner = new Scanner(System.in);
-        int scelta;
-        Cliente cliente = new Cliente("porco", "dio", null, null, null);
-        VenditorePrivato privato = new VenditorePrivato(cliente, new Automobile("ClasseA", "MERCEDES", 0, 5, 0, 0, StatoMacchina.USATO));
 
-        
-        // creazione automobili
-        for(int i = 0; i < 2; i++) {
-            listinoAuto.aggiungiAuto(factoryAutomobili.creaAutoRandom1(), 0);
-        }
-        listinoAuto.aggiungiAuto(new Automobile("ClasseA", "MERCEDES", 0, 5, 0, 0, StatoMacchina.NUOVO), 0);
-        
-        // creazione clienti
-        for (int i = 0; i < 10; i++) {
-            anagrafica.registraCliente(clientefactory.creaClienteRandom());
-        }
+    AnagraficaClienti anagrafica = new AnagraficaClienti();
+    FactoryCliente clientefactory = new FactoryCliente();
+    FactoryAnagraficaFile anagraficaFile = new FactoryAnagraficaFile("Elenco_clienti.txt");
+    FactoryAutomobili factoryAutomobili = new FactoryAutomobili();
+    Listino listinoAuto = new Listino();
+    Concessionario concessionario = new Concessionario(listinoAuto);
+    Filtro filtro = new Filtro();
+    CercatoreAuto cercatoreAuto = new CercatoreAuto();
 
-        do {
-            System.out.println("selezionare l'operazione che si vuole eseguire:");
-            System.out.println("1. gestione clienti");
-            System.out.println("2. ricerca auto");
-            System.out.println("5. acquisto auto da privato");
-            System.out.println("0. ESCI");
-            scelta = scanner.nextInt();
-            scanner.nextLine();
+    Cliente cliente = new Cliente("porco", "dio", null, null, null);
+    Automobile autoUsata  = new Automobile("ClasseA", "MERCEDES", 0, 5, 0, 0, StatoMacchina.USATO);
+    VenditorePrivato privato = new VenditorePrivato(cliente, autoUsata, 2000);
 
-            switch(scelta) {
-                case 1:
-                int opzione;
-                do {
-                    System.out.println("gestione clienti scegliere l'operazione da eseguire");
-                    System.out.println("1. registra cliente");
-                    System.out.println("2. ricerca cliente in base a codice fiscale");
-                    System.out.println("3. ricerca cliente in base a parola chiave");
-                    System.out.println("0. torna al menu principale");
-                    opzione = scanner.nextInt();
-                    scanner.nextLine();
+    // Inizializzazione di automobili e clienti
+    inizializzaAutomobili(listinoAuto, factoryAutomobili);
+    inizializzaClienti(anagrafica, anagraficaFile, clientefactory);
 
-                    switch (opzione) {
-                        case 1:
-                            String nome, cognome, email, telefono, codiceFiscale;
-                            System.out.println("inserisci nome:");
-                            nome = scanner.nextLine();
-                            System.out.println("inserisci cognome:");
-                            cognome = scanner.nextLine();
-                            System.out.println("inserisci email:");
-                            email = scanner.nextLine();
-                            System.out.println("inserisci telefono:");
-                            telefono = scanner.nextLine();
-                            System.out.println("inserisci codice fiscale:");
-                            codiceFiscale = scanner.nextLine();
-                            Cliente nuovoCliente = new Cliente(nome, cognome, email, telefono, codiceFiscale);
-                            anagrafica.registraCliente(nuovoCliente);
-                        break;
+    // ...
 
-                        case 2:
-                            String cf;
-                            System.out.println("inserisci il codice fiscale(cf):");
-                            cf = scanner.nextLine();
-                            Cliente clienteTrovato = anagrafica.cercaCliente(cf);
-                            System.out.println(clienteTrovato);
-                        break;
+    eseguiMenu(anagrafica,filtro, cercatoreAuto, listinoAuto);
+}
 
-                        case 3:
-                            String key;
-                            System.out.println("inserisci la parola chiave");
-                            key = scanner.nextLine();
-                            clienti = anagrafica.cercaClienti(key);
-                            System.out.println(clienti);
-                        break;
-                    }
-                }while(opzione != 0);
-                // ricontroilare come sistemare i menu interni
-                case 2:
-                    String modello, marca;
-                    int km, numeroPorte, cilindrata;
-                    StatoMacchina statoMacchina;
-                    double prezzoMax;
+private static void inizializzaAutomobili(Listino listinoAuto, FactoryAutomobili factoryAutomobili) {
+    for(int i = 0; i < 2; i++) {
+        listinoAuto.aggiungiAuto(factoryAutomobili.creaAutoRandom1(), 0);
+    }
+    listinoAuto.aggiungiAuto(new Automobile("ClasseA", "MERCEDES", 0, 5, 0, 0, StatoMacchina.NUOVO), 0);
+}
 
-                    try {
-                        System.out.println("Marca o premere spazio se non si vuole inserire:");
-                        marca = scanner.nextLine();
-                        if(!marca.isEmpty()) {
-                            filtro.setMarca(marca);
-                        }
+private static void inizializzaClienti(AnagraficaClienti anagrafica, FactoryAnagraficaFile anagraficaFile, FactoryCliente clientefactory) {
+    for (int i = 0; i < 10; i++) {
+        anagrafica.registraCliente(clientefactory.creaClienteRandom());
+    }
+}
 
-                        System.out.println("Modello o premere se non si vuole inserire:");
-                        modello = scanner.nextLine();
-                        if(!modello.isEmpty()) {
-                            filtro.setModello(modello);
-                        }
-                    
-                        System.out.println("Km o -1 se non si vuole inserire:");
-                        km = scanner.nextInt();
-                        filtro.setKm(km);
-                        
-                        System.out.println("Numero porte o 0 se non si vuole inserire:");
-                        numeroPorte = scanner.nextInt();
-                        filtro.setNumeroPorte(numeroPorte);
-                    
-                        System.out.println("Cilindrata o 0 se non si vuole inserire:");
-                        cilindrata = scanner.nextInt();
-                        filtro.setCilindrata(cilindrata);
+private static void eseguiMenu(AnagraficaClienti anagrafica, Filtro filtro, CercatoreAuto cercatoreAuto, Listino listinoAuto) {
+    Scanner scanner = new Scanner(System.in);
+    int scelta;
 
-                        System.out.println("Stato macchina(NUOVO, USATO):");
-                        String statoInput = scanner.next();
-                        statoMacchina = StatoMacchina.valueOf(statoInput.toUpperCase());
-                        filtro.setStatoMacchina(statoMacchina);
+    do {
+        stampaMenuPrincipale();
+        scelta = scanner.nextInt();
+        scanner.nextLine();
+        gestisciSceltaMenu(scelta, scanner, anagrafica, filtro, cercatoreAuto, listinoAuto);
 
-                        // da finire il prezzo
-                        /*System.out.println("Prezzo Max o 0 se non si vuole inserire:");
-                        prezzoMax = scanner.nextDouble();
-                        filtro.setPrezzoMax(prezzoMax); */
-                    
-                        List<Automobile> autoTrovate = cercatoreAuto.cercaAuto(filtro, listinoAuto);
-                        if (autoTrovate.isEmpty()) {
-                            System.out.println("Nessuna automobile trovata.");
-                        } else {
-                            System.out.println("Automobili trovate:");
-                            for (Automobile auto : autoTrovate) {
-                                System.out.println(auto); 
-                            }
-                        }
-                        // gestire meglio le eccezioni
-                    } catch(InputMismatchException e) {
-                        System.out.println("Input non valido. Assicurati di inserire il tipo corretto");
-                    } catch(IllegalArgumentException e) {
-                        System.out.println("Valore non valido inserito. Assicurati di rispettare le specifiche richieste");
-                    }
+    } while (scelta != 0);
+
+    scanner.close();
+}
+
+private static void stampaMenuPrincipale() {
+    System.out.println("selezionare l'operazione che si vuole eseguire:");
+    System.out.println("1. gestione clienti");
+    System.out.println("2. ricerca auto");
+    System.out.println("3. acquisto auto da privato");
+    System.out.println("0. ESCI");
+}
+
+private static void gestisciSceltaMenu(int scelta, Scanner scanner, AnagraficaClienti anagrafica, Filtro filtro, CercatoreAuto cercatoreAuto, Listino listinoAuto) {
+    switch (scelta) {
+        case 1:
+            gestioneClienti(scanner, anagrafica);
+            break;
+        case 2:
+            ricercaAuto(scanner, filtro, cercatoreAuto, listinoAuto);
+            break;
+    }
+}
+
+private static void gestioneClienti(Scanner scanner, AnagraficaClienti anagrafica) {
+    int opzione;
+    do {
+        stampaMenuGestioneClienti();
+        opzione = scanner.nextInt();
+        scanner.nextLine();
+        switch (opzione) {
+            case 1:
+                registraCliente(scanner, anagrafica);
                 break;
+            case 2:
+                ricercaCliente(scanner, anagrafica);
+                break;
+            case 3:
+                ricercaClientiPerParolaChiave(scanner, anagrafica);
+                break;
+        }
+    } while (opzione != 0);
+}
 
+private static void stampaMenuGestioneClienti() {
+    System.out.println("gestione clienti scegliere l'operazione da eseguire");
+    System.out.println("1. registra cliente");
+    System.out.println("2. ricerca cliente in base a codice fiscale");
+    System.out.println("3. ricerca cliente in base a parola chiave");
+    System.out.println("0. torna al menu principale");
+}
+
+private static void registraCliente(Scanner scanner, AnagraficaClienti anagrafica) {
+    String nome, cognome, email, telefono, codiceFiscale;
+    System.out.println("inserisci nome:");
+    nome = scanner.nextLine();
+    System.out.println("inserisci cognome:");
+    cognome = scanner.nextLine();
+    System.out.println("inserisci email:");
+    email = scanner.nextLine();
+    System.out.println("inserisci telefono:");
+    telefono = scanner.nextLine();
+    System.out.println("inserisci codice fiscale:");
+    codiceFiscale = scanner.nextLine();
+    Cliente nuovoCliente = new Cliente(nome, cognome, email, telefono, codiceFiscale);
+    anagrafica.registraCliente(nuovoCliente);
+}
+
+private static void ricercaCliente(Scanner scanner, AnagraficaClienti anagrafica) {
+    String cf;
+    System.out.println("inserisci il codice fiscale(cf):");
+    cf = scanner.nextLine();
+    Cliente clienteTrovato = anagrafica.cercaCliente(cf);
+    System.out.println(clienteTrovato);
+}
+
+private static void ricercaClientiPerParolaChiave(Scanner scanner, AnagraficaClienti anagrafica) {
+    System.out.println("inserisci la parola chiave");
+    String parolaChiave = scanner.nextLine();
+    List<Cliente> clienti= anagrafica.cercaClienti(parolaChiave);
+    System.out.println(clienti);
+}
+
+private static void ricercaAuto(Scanner scanner, Filtro filtro, CercatoreAuto cercatoreAuto, Listino listinoAuto) {
+    String modello, marca;
+        int km, numeroPorte, cilindrata;
+        StatoMacchina statoMacchina;
+        double prezzoMax;
+        try {
+            System.out.println("Marca o premere spazio se non si vuole inserire:");
+            marca = scanner.nextLine();
+            if(!marca.isEmpty()) {
+                filtro.setMarca(marca);
             }
-        }while(scelta != 0);
-        scanner.close();
-       
-        /* 
+            System.out.println("Modello o premere se non si vuole inserire:");
+            modello = scanner.nextLine();
+            if(!modello.isEmpty()) {
+                filtro.setModello(modello);
+            }
+            System.out.println("Km o -1 se non si vuole inserire:");
+            km = scanner.nextInt();
+            filtro.setKm(km);
+
+            System.out.println("Numero porte o 0 se non si vuole inserire:");
+            numeroPorte = scanner.nextInt();
+            filtro.setNumeroPorte(numeroPorte);
+                    
+            System.out.println("Cilindrata o 0 se non si vuole inserire:");
+            cilindrata = scanner.nextInt();
+            filtro.setCilindrata(cilindrata);
+            
+            System.out.println("Stato macchina(NUOVO, USATO):");
+            String statoInput = scanner.next();
+            statoMacchina = StatoMacchina.valueOf(statoInput.toUpperCase());
+            filtro.setStatoMacchina(statoMacchina);
+
+            // da finire il prezzo
+            /*System.out.println("Prezzo Max o 0 se non si vuole inserire:");
+            prezzoMax = scanner.nextDouble();
+            filtro.setPrezzoMax(prezzoMax); */
+
+            List<Automobile> autoTrovate = cercatoreAuto.cercaAuto(filtro, listinoAuto);
+            if (autoTrovate.isEmpty()) {
+                System.out.println("Nessuna automobile trovata.");
+            } else {
+                System.out.println("Automobili trovate:");
+                for (Automobile auto : autoTrovate) {
+                    System.out.println(auto); 
+                }
+            }
+            // sistemare eccezioni
+        } catch(InputMismatchException e) {
+            System.out.println("Input non valido. Assicurati di inserire il tipo corretto");
+        } catch(IllegalArgumentException e) {
+            System.out.println("Valore non valido inserito. Assicurati di rispettare le specifiche richieste");
+        }
+    }
+
+// Altre funzioni secondo necessità
+}
+
+/* 
         concessionario.acquistaAutoDaPrivato(privato);
         
         System.out.println(listinoAuto.getListino());
@@ -177,6 +219,3 @@ public class Main {
         System.out.println(clienti); 
         
         anagrafica = anagraficaFile.creaAnagraficaClienti(); */
-    }
-}
-

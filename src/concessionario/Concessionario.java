@@ -10,8 +10,10 @@ public class Concessionario {
     }
 
     public boolean acquistaAutoDaPrivato(VenditorePrivato privato) {
-        listino.aggiungiAuto(privato.getAutomobile(), 0); // questo prezzo é di rivendita
+        listino.aggiungiAuto(privato.getAutomobile(), privato.getprezzoVendita()); // questo prezzo é di rivendita in questo caso é uguale al prezzo di acquisto
         // pensare a dove usare il cliente
         return true;
     }
+
+    
 }

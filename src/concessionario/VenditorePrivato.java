@@ -7,10 +7,12 @@ public class VenditorePrivato {
 
     private Cliente cliente;
     private Automobile auto;
+    private int prezzoVendita;
 
-    public VenditorePrivato(Cliente cliente, Automobile auto) {
+    public VenditorePrivato(Cliente cliente, Automobile auto, int prezzoVendita) {
         this.cliente = cliente;
         this.auto = auto;
+        this.prezzoVendita = prezzoVendita;
     }
 
     public Automobile getAutomobile() {
@@ -19,5 +21,9 @@ public class VenditorePrivato {
 
     public Cliente getCliente() {
         return this.cliente;
+    }
+
+    public int getprezzoVendita() {
+        return this.prezzoVendita;
     }
 }
