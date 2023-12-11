@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class FactoryAutomobili {
     
     private Random rnd;
+    private Optional optional;
 
     public FactoryAutomobili() {
         this.rnd = new Random();
@@ -26,25 +27,60 @@ public class FactoryAutomobili {
         int numeroPorteAuto = numeroPorte[rnd.nextInt(numeroPorte.length)];
         int cilindrataAuto = cilindrata[rnd.nextInt(cilindrata.length)];
         int cavalliAuto = cavalli[rnd.nextInt(cavalli.length)];
-        return new Automobile(modelloAuto, marcaAuto, 0, numeroPorteAuto, cilindrataAuto, cavalliAuto, StatoMacchina.NUOVO); 
+        return new Automobile(modelloAuto, marcaAuto, 0, numeroPorteAuto, cilindrataAuto, cavalliAuto, StatoMacchina.NUOVO,generatoreTarga(),generatorePrezzo()); 
     }
-    /**
-     * 
-     * @return una lista di auto generate random
-     */
-    public List<Automobile> creaAutoRandom() {
-        
-        List<Automobile> automobili = new ArrayList<Automobile>();
-        String[] marche = {"MERCEDES", "FIAT", "TOYOTA", "AUDI", "VOLKSWAGEN", "ALFAROMEO", "SUZUKI"};
-        int[] numeroPorte = {3,5};
-        int[] cilindrata = {1200, 1400, 1600, 1900, 2000, 2200, 3000, 4000};
-        int[] cavalli = {75, 90, 116, 120, 150, 190, 210, 350, 400};
-        for(int i = 0; i < 10; i++) {
-            String marcaAuto = marche[rnd.nextInt(marche.length)];
-            automobili.add(new Automobile(selezionaModello(marcaAuto), marcaAuto, 0, numeroPorte[rnd.nextInt(numeroPorte.length)], cilindrata[rnd.nextInt(cilindrata.length)], cavalli[rnd.nextInt(cavalli.length)], StatoMacchina.NUOVO));
+   
+    
+     
+    
+    private String generatoreTarga()
+    {
+    	
+    	String lettere = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        Random random = new Random();
+
+        String targa = "";
+
+        // Genera le prime 2 lettere casualmente
+        for (int i = 0; i < 2; i++) {
+            int index = random.nextInt(lettere.length());
+            targa += lettere.charAt(index);
         }
-        return automobili;
+
+        // Genera i 3 numeri casualmente
+        for (int i = 0; i < 3; i++) {
+            int numero = random.nextInt(10);
+            targa += numero;
+        }
+
+    
+        // Genera le ultime 2 lettere casualmente
+        for (int i = 0; i < 2; i++) {
+            int index = random.nextInt(lettere.length());
+            targa += lettere.charAt(index);
+        }
+
+       return targa;
+    
     }
+    
+    
+    private int generatorePrezzo()
+    {
+    	Random random = new Random();
+        int limiteinferiore = 10000;
+        int limitesuperiore = 100000;
+       
+        int casuale = random.nextInt(limitesuperiore - limiteinferiore + 1) + limiteinferiore;
+        
+        return casuale;
+        
+    }
+    
+    
+    
+    
+    
     
     private String selezionaModello(String marca) {
         

@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import concessionario.automobile.FactoryAutomobili;
+import concessionario.automobile.Optional;
 import concessionario.cliente.AnagraficaClienti;
 import concessionario.cliente.Cliente;
 import concessionario.cliente.FactoryAnagraficaFile;
@@ -18,11 +19,16 @@ public class Main {
         Listino listinoAuto = new Listino();
         
         for(int i = 0; i < 10; i++) {
-            System.out.println(factoryAutomobili.creaAutoRandom1()); 
+           
+        	System.out.println(factoryAutomobili.creaAutoRandom1()); 
 
         }
-        listinoAuto.stampaListino(factoryAutomobili.creaAutoRandom());
+        
+     
 
+        
+        
+        
         // creazione clienti e prove sulla ricerca 
        /*List<Cliente> clienti;
 

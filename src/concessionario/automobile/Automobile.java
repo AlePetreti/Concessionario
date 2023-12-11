@@ -9,10 +9,14 @@ public class Automobile {
     private int cilindrata;
     private int cavalli;
     private StatoMacchina statoMacchina;
+    private String targa;
+    private int prezzo;
+    
+
 
 
     
-    public Automobile(String modello, String marca, int km, int numeroPorte, int cilindrata, int cavalli, StatoMacchina statoMacchina) {
+    public Automobile(String modello, String marca, int km, int numeroPorte, int cilindrata, int cavalli, StatoMacchina statoMacchina, String targa, int prezzo) {
         this.modello = modello;
         this.marca = marca;
         this.km = km;
@@ -20,6 +24,9 @@ public class Automobile {
         this.cilindrata = cilindrata;
         this.cavalli = cavalli;
         this.statoMacchina = statoMacchina;
+        this.targa = targa;
+        this.prezzo = prezzo;
+       
     }
 
     public String getModello() {
@@ -49,11 +56,25 @@ public class Automobile {
     public StatoMacchina geStatoMacchina() {
         return statoMacchina;
     }
+    
+    
+    public String getTarga() {
+		return targa;
+	}
+    
+    
+    public int getPrezzo() {
+		return prezzo;
+	}
 
-    @Override
+	public void setPrezzo(int prezzo) {
+		this.prezzo += prezzo;
+	}
+
+	@Override
     public String toString() {
         return "Automobile [modello=" + modello + ", marca=" + marca + ", km=" + km + ", numeroPorte=" + numeroPorte
-                + ", cilindrata=" + cilindrata + ", cavalli=" + cavalli + ", statoMacchina=" + statoMacchina + "]";
+                + ", cilindrata=" + cilindrata + ", cavalli=" + cavalli + ", statoMacchina=" + statoMacchina + ",targa=" + targa + ",prezzo=" + prezzo + "]";
     }
 
     
