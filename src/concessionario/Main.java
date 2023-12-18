@@ -1,16 +1,28 @@
 package concessionario;
 
+import java.awt.Container;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-import concessionario.automobile.Automobile;
-import concessionario.automobile.FactoryAutomobili;
-import concessionario.automobile.StatoMacchina;
-import concessionario.cliente.AnagraficaClienti;
-import concessionario.cliente.Cliente;
-import concessionario.cliente.FactoryAnagraficaFile;
-import concessionario.cliente.FactoryCliente;
+import concessionario.controller.ConcessionarioController;
+import concessionario.model.CercatoreAuto;
+import concessionario.model.Concessionario;
+import concessionario.model.Filtro;
+import concessionario.model.Listino;
+import concessionario.model.VenditorePrivato;
+import concessionario.model.automobile.Automobile;
+import concessionario.model.automobile.FactoryAutomobili;
+import concessionario.model.automobile.StatoMacchina;
+import concessionario.model.cliente.AnagraficaClienti;
+import concessionario.model.cliente.Cliente;
+import concessionario.model.cliente.FactoryAnagraficaFile;
+import concessionario.model.cliente.FactoryCliente;
+import concessionario.view.ConcessionarioView;
+import concessionario.view.ConcessionarioViewImpl;
+import concessionario.view.ConcessionarioViewObserver;
+import concessionario.view.Event;
+import concessionario.view.TipoEvento;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -28,6 +40,13 @@ public class Main {
     Cliente cliente = new Cliente("porco", "dio", null, null, null);
     Automobile autoUsata  = new Automobile("ClasseA", "MERCEDES", 0, 5, 0, 0, StatoMacchina.USATO);
     VenditorePrivato privato = new VenditorePrivato(cliente, autoUsata, 2000);
+
+
+    // VIEW
+    final ConcessionarioView view = new ConcessionarioViewImpl();
+    final ConcessionarioViewObserver controller = new ConcessionarioController(view);
+    view.show();
+
 
     // Inizializzazione di automobili e clienti
     inizializzaAutomobili(listinoAuto, factoryAutomobili);
@@ -198,8 +217,6 @@ private static void ricercaAuto(Scanner scanner, Filtro filtro, CercatoreAuto ce
             System.out.println("Valore non valido inserito. Assicurati di rispettare le specifiche richieste");
         }
     }
-
-// Altre funzioni secondo necessità
 }
 
 /* 

@@ -1,4 +1,4 @@
-package concessionario.cliente;
+package concessionario.model.cliente;
 
 public interface FactoryAnagraficaCliente {
     

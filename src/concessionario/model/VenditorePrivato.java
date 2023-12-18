@@ -1,7 +1,7 @@
-package concessionario;
+package concessionario.model;
 
-import concessionario.automobile.Automobile;
-import concessionario.cliente.Cliente;
+import concessionario.model.automobile.Automobile;
+import concessionario.model.cliente.Cliente;
 
 public class VenditorePrivato {
 

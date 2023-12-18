@@ -1,8 +1,8 @@
-package concessionario;
+package concessionario.model;
 import java.util.LinkedList;
 import java.util.List;
 
-import concessionario.automobile.Automobile;
+import concessionario.model.automobile.Automobile;
 
 public class Listino {
     

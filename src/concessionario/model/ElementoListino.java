@@ -1,6 +1,6 @@
-package concessionario;
+package concessionario.model;
 
-import concessionario.automobile.Automobile;
+import concessionario.model.automobile.Automobile;
 
 public class ElementoListino {
 

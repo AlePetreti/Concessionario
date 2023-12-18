@@ -1,15 +1,16 @@
-package concessionario;
-import concessionario.automobile.Automobile;
-import concessionario.automobile.StatoMacchina;
-
+package concessionario.model;
 import java.util.List;
+
+import concessionario.model.automobile.Automobile;
+import concessionario.model.automobile.StatoMacchina;
+
 import java.util.LinkedList;
 
 
 public class CercatoreAuto {
 
     
-    
+    // da aggiungere il prezzo 
     public List<Automobile> cercaAuto(Filtro filtro, Listino listinoAuto) {
         List<Automobile> autoFiltrate = new LinkedList<Automobile>();
         for(ElementoListino e: listinoAuto.getListino() ) {
