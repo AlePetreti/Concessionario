@@ -23,7 +23,7 @@ public class AnagraficaClienti {
      */
     public Cliente cercaCliente(String cf) {
         for(Cliente e : listaClienti) {
-            if(e.getCf().equals(cf)) {
+            if(e.getCf().equalsIgnoreCase(cf)) {
                 return e;
             }
         }

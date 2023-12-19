@@ -44,7 +44,7 @@ public class Main {
 
     // VIEW
     final ConcessionarioView view = new ConcessionarioViewImpl();
-    final ConcessionarioViewObserver controller = new ConcessionarioController(view);
+    final ConcessionarioViewObserver controller = new ConcessionarioController(view, anagrafica);
     view.show();
 
 
