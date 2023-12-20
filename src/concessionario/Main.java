@@ -2,6 +2,7 @@ package concessionario;
 
 import concessionario.controller.AnagraficaClientiController;
 import concessionario.controller.ConcessionarioController;
+import concessionario.controller.GestioneAutoController;
 import concessionario.model.CercatoreAuto;
 import concessionario.model.Concessionario;
 import concessionario.model.Filtro;
@@ -19,6 +20,8 @@ import concessionario.view.AnagraficaClientiViewImpl;
 import concessionario.view.ConcessionarioView;
 import concessionario.view.ConcessionarioViewImpl;
 import concessionario.view.ConcessionarioViewObserver;
+import concessionario.view.GestioneAutoImpl;
+import concessionario.view.GestioneAutoView;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -41,8 +44,10 @@ public class Main {
     // VIEW
     final ConcessionarioView view = new ConcessionarioViewImpl();
     final AnagraficaClientiView viewAnagrafica = new AnagraficaClientiViewImpl();
-    final ConcessionarioViewObserver controller = new ConcessionarioController(view, viewAnagrafica);
+    final GestioneAutoView viewGestioneAuto = new GestioneAutoImpl();
+    final ConcessionarioViewObserver controller = new ConcessionarioController(view, viewAnagrafica, viewGestioneAuto);
     final AnagraficaClientiController controllerAnagrafica = new AnagraficaClientiController(viewAnagrafica, anagrafica);
+    final GestioneAutoController controllerGestioneAuto = new GestioneAutoController(viewGestioneAuto, listinoAuto);
     view.show();
 
 
@@ -52,7 +57,7 @@ public class Main {
 }
 
 private static void inizializzaAutomobili(Listino listinoAuto, FactoryAutomobili factoryAutomobili) {
-    for(int i = 0; i < 2; i++) {
+    for(int i = 0; i < 10; i++) {
         listinoAuto.aggiungiAuto(factoryAutomobili.creaAutoRandom1(), 0);
     }
     listinoAuto.aggiungiAuto(new Automobile("ClasseA", "MERCEDES", 0, 5, 0, 0, StatoMacchina.NUOVO), 0);

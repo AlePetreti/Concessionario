@@ -24,15 +24,23 @@ public class ConcessionarioViewImpl implements ConcessionarioView {
         frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS)); 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JButton btn = addButton("Anagrafica Cliente", frame);
-        btn.addActionListener(new ActionListener() {
+        JButton bAnagrafica = addButton("Anagrafica Cliente", frame);
+        bAnagrafica.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 notifyEvent(TipoEvento.ANAGRAFICA_CLIENTI);
             }
         });
-        addButton("Ricerca Auto", frame);
+        JButton bGestioneAuto = addButton("Gestione Auto", frame);
+        bGestioneAuto.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                notifyEvent(TipoEvento.GESTIONE_AUTO);
+            }
+        });
+        
         addButton("Acquista da privato", frame); 
     }
     
