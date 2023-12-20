@@ -1,6 +1,6 @@
-package concessionario.Officina;
+package concessionario.model.Officina;
 
-import concessionario.assicurazione.LivelloDanni;
+import concessionario.model.assicurazione.LivelloDanni;
 
 public class Officina {
 

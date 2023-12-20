@@ -1,10 +1,10 @@
-package concessionario.autonoleggio;
+package concessionario.model.autonoleggio;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
-import concessionario.assicurazione.Assicurazione;
+import concessionario.model.assicurazione.Assicurazione;
 
 public class Leasing {
     private List<Auto> autoLeasing;

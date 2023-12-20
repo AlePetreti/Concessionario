@@ -1,4 +1,4 @@
-package concessionario.autonoleggio;
+package concessionario.model.autonoleggio;
 
 public class Auto {
     private String marca;

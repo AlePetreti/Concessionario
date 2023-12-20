@@ -1,4 +1,4 @@
-package concessionario.autonoleggio;
+package concessionario.model.autonoleggio;
 
 import java.util.Random;
 import java.util.Scanner;

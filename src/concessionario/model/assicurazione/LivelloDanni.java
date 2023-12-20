@@ -1,4 +1,4 @@
-package concessionario.assicurazione;
+package concessionario.model.assicurazione;
 
 public enum LivelloDanni {
     NESSUN_DANNO("Nessun danno"), DANNO_LIEVE("Danni lievi"), DANNO_GRAVE("Danni gravi");

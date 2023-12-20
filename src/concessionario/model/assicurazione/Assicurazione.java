@@ -1,7 +1,7 @@
-package concessionario.assicurazione;
+package concessionario.model.assicurazione;
 
-import concessionario.autonoleggio.Autonoleggio;
-import concessionario.Officina.Officina;
+import concessionario.model.autonoleggio.Autonoleggio;
+import concessionario.model.Officina.Officina;
 import java.util.Scanner;
 
 // Classe Assicurazione, sottoclasse di Autonoleggio

@@ -1,6 +1,6 @@
 package concessionario;
 
-import concessionario.autonoleggio.Autonoleggio;
+import concessionario.model.autonoleggio.Autonoleggio;
 
 public class Main {
     public static void main(String[] args) throws Exception {
