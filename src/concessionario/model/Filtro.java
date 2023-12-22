@@ -1,24 +1,47 @@
-package concessionario.automobile;
+package concessionario.model;
 
-public class Automobile {
+import concessionario.model.automobile.StatoMacchina;
+
+public class Filtro {
 
     private String modello;
     private String marca;
     private int km;
     private int numeroPorte;
     private int cilindrata;
-    private int cavalli;
+    private double prezzoMax;
     private StatoMacchina statoMacchina;
 
+    public Filtro() {
+        this.statoMacchina = StatoMacchina.NUOVO;
+        this.km = -1;
+    }
 
-    
-    public Automobile(String modello, String marca, int km, int numeroPorte, int cilindrata, int cavalli, StatoMacchina statoMacchina) {
+    public void setModello(String modello) {
         this.modello = modello;
+    }
+
+    public void setMarca(String marca) {
         this.marca = marca;
+    }
+
+    public void setKm(int km) {
         this.km = km;
+    }
+
+    public void setNumeroPorte(int numeroPorte) {
         this.numeroPorte = numeroPorte;
+    }
+
+    public void setCilindrata(int cilindrata) {
         this.cilindrata = cilindrata;
-        this.cavalli = cavalli;
+    }
+
+    public void setPrezzoMax(double prezzoMax) {
+        this.prezzoMax = prezzoMax;
+    }
+
+    public void setStatoMacchina(StatoMacchina statoMacchina) {
         this.statoMacchina = statoMacchina;
     }
 
@@ -42,21 +65,20 @@ public class Automobile {
         return cilindrata;
     }
 
-    public int getCavalli() {
-        return cavalli;
+    public double getPrezzoMax() {
+        return prezzoMax;
     }
 
-    public StatoMacchina geStatoMacchina() {
+    public StatoMacchina getStatoMacchina() {
         return statoMacchina;
     }
 
-    @Override
-    public String toString() {
-        return "Automobile [modello=" + modello + ", marca=" + marca + ", km=" + km + ", numeroPorte=" + numeroPorte
-                + ", cilindrata=" + cilindrata + ", cavalli=" + cavalli + ", statoMacchina=" + statoMacchina + "]";
-    }
+    
 
     
-    
+
+
     
 }
+
+

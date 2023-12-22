@@ -1,8 +1,8 @@
-package concessionario;
+package concessionario.model;
 import java.util.LinkedList;
 import java.util.List;
 
-import concessionario.automobile.Automobile;
+import concessionario.model.automobile.Automobile;
 
 public class Listino {
     
@@ -24,14 +24,14 @@ public class Listino {
         }
         return -1;
     }
-    
+
     /**
      * aggiungo un elemento listino al listino
-     * @param elementoListino
+     * @param auto, prezzo
      * @return true
      */
-    public boolean aggiungiAuto(ElementoListino elementoListino) {
-        listino.add(elementoListino);
+    public boolean aggiungiAuto(Automobile auto, double prezzo) {
+        listino.add(new ElementoListino(auto, prezzo) );
         return true;
     }
 

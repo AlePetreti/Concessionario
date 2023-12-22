@@ -1,6 +1,6 @@
-package concessionario;
+package concessionario.model;
 
-import concessionario.automobile.Automobile;
+import concessionario.model.automobile.Automobile;
 
 public class ElementoListino {
 
@@ -19,4 +19,11 @@ public class ElementoListino {
     public double getPrezzo() {
         return prezzo;
     }
+
+    @Override
+    public String toString() {
+        return "ElementoListino [automobile=" + automobile + ", prezzo=" + prezzo + "]";
+    }
+
+    
 }
