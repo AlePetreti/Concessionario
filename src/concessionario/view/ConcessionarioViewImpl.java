@@ -41,7 +41,15 @@ public class ConcessionarioViewImpl implements ConcessionarioView {
             }
         });
         
-        addButton("Acquista da privato", frame); 
+        addButton("Noleggia Auto", frame);
+        JButton bNoleggio = addButton("Noleggia Auto", frame);
+        bNoleggio.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                notifyEvent(TipoEvento.Noleggia_auto);
+            }
+        });
     }
     
     private static JButton addButton(String text, Container container) {
