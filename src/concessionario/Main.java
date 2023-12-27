@@ -39,7 +39,9 @@ public class Main {
     Cliente cliente = new Cliente("porco", "dio", null, null, null);
     Automobile autoUsata  = new Automobile("ClasseA", "MERCEDES", 0, 5, 0, 0, StatoMacchina.USATO);
     VenditorePrivato privato = new VenditorePrivato(cliente, autoUsata, 2000);
+    
 
+    
 
     // VIEW
     final ConcessionarioView view = new ConcessionarioViewImpl();

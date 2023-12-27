@@ -8,6 +8,7 @@ public enum TipoEvento {
     GESTIONE_AUTO_APERTA,
     REGISTRA_CLIENTI,
     CERCA_CLIENTI,
-    CERCA_CLIENTI_CF
+    CERCA_CLIENTI_CF, 
+    noleggiaAuto,
     
 }
