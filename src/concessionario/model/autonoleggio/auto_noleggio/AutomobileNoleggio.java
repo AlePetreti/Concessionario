@@ -62,8 +62,8 @@ public class AutomobileNoleggio {
 
     @Override
     public String toString() {
-        return "Automobile [marca: " + marca + ", Modello: " + modello + ",  numeroPorte:" + numeroPorte
-                + ",  cilindrata:" + cilindrata + ",  cavalli:" + cavalli + ",  DisponibilitàAuto:" + DisponibilitàAuto + "]";
+        return "Automobile [Marca: " + marca + ", Modello: " + modello + ",  numeroPorte:" + numeroPorte
+                + ",  Cilindrata:" + cilindrata + ",  Cavalli:" + cavalli + ",  DisponibilitàAuto:" + DisponibilitàAuto + "]";
     }
 }
 
