@@ -20,16 +20,16 @@ public class AutonoleggioView extends JFrame {
     public AutonoleggioView(AutonoleggioController controller) {
         this.controller = controller;
 
-        initializeUI();
+        graficaIniziale();
         aggiornaListaAuto();
     }
 
-    private void initializeUI() {
+    private void graficaIniziale() {
         setTitle("Autonoleggio");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         Dimension preferredSize = new Dimension(1440, 720);
         setPreferredSize(preferredSize);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         coperturaAssicurativa = new JComboBox<>(new String[]{"Copertura Bassa", "Copertura Media", "Copertura Alta"});
         coperturaAssicurativa.setSelectedIndex(0); // Imposta il default su Copertura Bassa

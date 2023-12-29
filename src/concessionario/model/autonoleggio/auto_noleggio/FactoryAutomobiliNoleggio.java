@@ -74,6 +74,5 @@ public class FactoryAutomobiliNoleggio {
             default:
                 return "modello non disponibile";
         }
-    }
-    
+    }   
 }
