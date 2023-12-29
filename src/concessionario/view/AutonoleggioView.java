@@ -47,16 +47,15 @@ public class AutonoleggioView extends JFrame {
         listaAutoNoleggio.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         JScrollPane scrollPane = new JScrollPane(listaAutoNoleggio);
 
-        JPanel coperturaPanel = new JPanel(new FlowLayout());
-        coperturaPanel.add(labelCopertura);
-        coperturaPanel.add(coperturaAssicurativa);
+        JPanel assicurazionePanel = new JPanel(new FlowLayout());
+        assicurazionePanel.add(labelCopertura);
+        assicurazionePanel.add(coperturaAssicurativa);
 
         JPanel leftPanel = new JPanel(new BorderLayout());
         leftPanel.add(labelAutoDisponibili, BorderLayout.NORTH);
         leftPanel.add(scrollPane, BorderLayout.CENTER);
-        leftPanel.add(coperturaPanel, BorderLayout.SOUTH);
+        leftPanel.add(assicurazionePanel, BorderLayout.SOUTH);
 
-        // Panel for Noleggio Duration
         JPanel durataNoleggioPanel = new JPanel(new FlowLayout());
         JLabel labelDurataNoleggio = new JLabel("Inserire durata del noleggio (Giorni):");
         durataNoleggioField = new JTextField(5);
