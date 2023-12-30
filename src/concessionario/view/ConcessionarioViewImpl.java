@@ -49,6 +49,14 @@ public class ConcessionarioViewImpl implements ConcessionarioView {
                 notifyEvent(TipoEvento.noleggiaAuto);
             }
         });
+
+        JButton bLeasingAuto = addButton("Leasing Auto", frame);
+        bLeasingAuto.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                notifyEvent(TipoEvento.LEASING_AUTO);
+            }
+        });
     }
 
     private static JButton addButton(String text, Container container) {
@@ -72,7 +80,7 @@ public class ConcessionarioViewImpl implements ConcessionarioView {
         Autonoleggio autonoleggio = new Autonoleggio();
         autonoleggio.getAutomobili().addAll(new FactoryAutomobiliNoleggio().creaAutoRandom());
         AutonoleggioController autonoleggioController = new AutonoleggioController(autonoleggio);
-        AutonoleggioView autonoleggioView = new AutonoleggioView(autonoleggioController);
+        AutonoleggioViewImpl autonoleggioView = new AutonoleggioViewImpl(autonoleggioController);
         autonoleggioView.setVisible(true);
     }
 }

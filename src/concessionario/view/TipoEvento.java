@@ -10,5 +10,6 @@ public enum TipoEvento {
     CERCA_CLIENTI,
     CERCA_CLIENTI_CF, 
     noleggiaAuto,
+    LEASING_AUTO,
     
 }
