@@ -27,16 +27,15 @@ public class LeasingAutoViewImpl implements LeasingAutoView {
         durataContrattoComboBox = new JComboBox<>(new Integer[]{1, 2, 3, 4, 5});
         limiteChilometricoComboBox = new JComboBox<>(generateChilometricoOptions());
 
-        JButton confermaButton = new JButton("Conferma");
-        confermaButton.addActionListener(new ActionListener() {
+        JButton bottoneConferma = new JButton("Conferma");
+        bottoneConferma.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                confermaButtonClicked();
+                confermaContratto();
             }
         });
 
-        // Imposta un font bold per le etichette a sinistra
-        Font boldFont = new Font("Arial", Font.BOLD, 18);
+        Font boldFont = new Font("Arial", Font.BOLD, 18); // Imposta un font diverso per le etichette di sinistra
 
         JLabel autoLabel = new JLabel("Auto Disponibili:");
         autoLabel.setFont(boldFont);
@@ -44,7 +43,7 @@ public class LeasingAutoViewImpl implements LeasingAutoView {
         JLabel durataContrattoLabel = new JLabel("Durata Contratto (anni):");
         durataContrattoLabel.setFont(boldFont);
 
-        JLabel limiteChilometricoLabel = new JLabel("Limite Chilometrico:");
+        JLabel limiteChilometricoLabel = new JLabel("Limite Chilometrico (annuale):");
         limiteChilometricoLabel.setFont(boldFont);
 
         panel.add(autoLabel);
@@ -53,42 +52,39 @@ public class LeasingAutoViewImpl implements LeasingAutoView {
         panel.add(durataContrattoComboBox);
         panel.add(limiteChilometricoLabel);
         panel.add(limiteChilometricoComboBox);
-        panel.add(confermaButton);
+        panel.add(bottoneConferma);
 
         frameLeasingAuto.add(panel);
         centerFrame(frameLeasingAuto);
     }
 
-    private void confermaButtonClicked() {
+    private void confermaContratto() {
         // Ottieni i dettagli del contratto
-        AutomobileNoleggio selectedAuto = (AutomobileNoleggio) autoDisponibiliComboBox.getSelectedItem();
+        AutomobileNoleggio autoSelezionata = (AutomobileNoleggio) autoDisponibiliComboBox.getSelectedItem();
         int durataContratto = (Integer) durataContrattoComboBox.getSelectedItem();
         int limiteChilometrico = (Integer) limiteChilometricoComboBox.getSelectedItem();
 
-        // Calcola la tariffa mensile (esempio: prezzo mensile randomico tra 100 e 1000, multiplo di 50)
         int tariffaMensile = (new Random().nextInt(19) + 2) * 50;
 
-        // Calcola il prezzo totale dell'auto
-        int prezzoTotale = durataContratto * tariffaMensile * 12; // mese * 12 per ottenere il totale in base agli anni
+        int prezzoTotale = durataContratto * tariffaMensile * 12;
 
-        // Passa ai dettagli del contratto
-        showContrattoDetails(selectedAuto, durataContratto, limiteChilometrico, tariffaMensile, prezzoTotale);
+        mostraDettagliContratto(autoSelezionata, durataContratto, limiteChilometrico, tariffaMensile, prezzoTotale);
+
     }
 
-    private void showContrattoDetails(AutomobileNoleggio selectedAuto, int durataContratto, int limiteChilometrico,
+    private void mostraDettagliContratto(AutomobileNoleggio autoSelezionata, int durataContratto, int limiteChilometrico,
                                       int tariffaMensile, int prezzoTotale) {
         JFrame frameDettagliContratto = new JFrame("Dettagli Contratto");
         frameDettagliContratto.setSize(500, 400);
 
         JPanel panel = new JPanel(new GridLayout(5, 2));
 
-        JLabel autoLabel = new JLabel("Auto selezionata: " + selectedAuto.getMarca() + " " + selectedAuto.getModello());
+        JLabel autoLabel = new JLabel("Auto selezionata: " + autoSelezionata.getMarca() + " " + autoSelezionata.getModello());
         JLabel anniContrattoLabel = new JLabel("Anni di contratto: " + durataContratto);
         JLabel limiteChilometricoLabel = new JLabel("Limite chilometrico: " + limiteChilometrico + " km");
         JLabel tariffaMensileLabel = new JLabel("Tariffa mensile: " + tariffaMensile + " euro");
         JLabel prezzoTotaleLabel = new JLabel("Prezzo Totale dell'auto: " + prezzoTotale + " euro");
 
-        // Imposta un font più grande per le etichette
         Font labelFont = new Font("Arial", Font.PLAIN, 18);
 
         autoLabel.setFont(labelFont);
@@ -109,7 +105,6 @@ public class LeasingAutoViewImpl implements LeasingAutoView {
     }
 
     private Integer[] generateChilometricoOptions() {
-        // Genera un array di valori chilometrici tra 10000 e 50000
         int minChilometrico = 10000;
         int maxChilometrico = 50000;
         int step = 1000;

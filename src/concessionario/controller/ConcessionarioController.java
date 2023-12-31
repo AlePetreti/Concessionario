@@ -1,10 +1,5 @@
 package concessionario.controller;
 
-
-import java.util.List;
-
-import concessionario.model.autonoleggio.auto_noleggio.AutomobileNoleggio;
-import concessionario.model.autonoleggio.auto_noleggio.FactoryAutomobiliNoleggio;
 import concessionario.view.AnagraficaClientiView;
 import concessionario.view.ConcessionarioView;
 import concessionario.view.ConcessionarioViewObserver;
