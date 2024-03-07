@@ -1,8 +1,9 @@
 package concessionario.view;
 
-public interface ConcessionarioView {
 
-    void show();
+public interface AutonoleggioView{
+    
+    void autonoleggioView();
 
     void addObserver(ConcessionarioViewObserver observer);
 

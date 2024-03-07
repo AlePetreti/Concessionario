@@ -9,11 +9,13 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+import concessionario.controller.AutonoleggioController;
+import concessionario.model.autonoleggio.Autonoleggio;
+import concessionario.model.autonoleggio.auto_noleggio.FactoryAutomobiliNoleggio;
 
 public class ConcessionarioViewImpl implements ConcessionarioView {
 
     private JFrame frame;
-
     private List<ConcessionarioViewObserver> osservatori;
 
     public ConcessionarioViewImpl() {
@@ -21,51 +23,74 @@ public class ConcessionarioViewImpl implements ConcessionarioView {
         // menu principale
         this.frame = new JFrame("CONCESSIONARIO");
         this.frame.setSize(400, 300);
-        frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS)); 
+        frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JButton bAnagrafica = addButton("Anagrafica Cliente", frame);
         bAnagrafica.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 notifyEvent(TipoEvento.ANAGRAFICA_CLIENTI);
             }
         });
+
         JButton bGestioneAuto = addButton("Gestione Auto", frame);
         bGestioneAuto.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 notifyEvent(TipoEvento.GESTIONE_AUTO);
             }
         });
-        
-        addButton("Acquista da privato", frame); 
+
+        JButton bNoleggiaAuto = addButton("Noleggia Auto", frame);
+        bNoleggiaAuto.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                notifyEvent(TipoEvento.noleggiaAuto);
+            }
+        });
+
+        JButton bLeasingAuto = addButton("Leasing Auto", frame);
+        bLeasingAuto.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                notifyEvent(TipoEvento.LEASING_AUTO);
+            }
+        });
     }
-    
+
     private static JButton addButton(String text, Container container) {
         JButton button = new JButton(text);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         container.add(button);
         return button;
     }
-    
+
     /**
-     * metodo per notificare un evento
+     * Metodo per notificare un evento.
+     *
      * @param tipoEvento
      */
     private void notifyEvent(TipoEvento tipoEvento) {
-        for (ConcessionarioViewObserver concessionarioViewObserver : osservatori) {
-            concessionarioViewObserver.eventNotified(new Event(tipoEvento));
-        }
+    for (ConcessionarioViewObserver concessionarioViewObserver : osservatori) {
+        concessionarioViewObserver.eventNotified(new Event(tipoEvento));
     }
+
+    if (tipoEvento == TipoEvento.noleggiaAuto) {
+        Autonoleggio autonoleggio = new Autonoleggio();
+        autonoleggio.getAutomobili().addAll(new FactoryAutomobiliNoleggio().creaAutoRandom());
+        AutonoleggioController autonoleggioController = new AutonoleggioController(autonoleggio);
+        AutonoleggioViewImpl autonoleggioView = new AutonoleggioViewImpl(autonoleggioController);
+        autonoleggioView.setVisible(true);
+    }
+}
+
 
     @Override
     public void show() {
         frame.setVisible(true);
     }
-    
+
     @Override
     public void addObserver(ConcessionarioViewObserver observer) {
         osservatori.add(observer);
