@@ -22,11 +22,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.text.html.Option;
 
 import concessionario.model.ElementoListino;
 
-public class GestioneAutoImpl implements GestioneAutoView{
+public class GestioneAutoViewImpl implements GestioneAutoView{
 
     private final JFrame frameAuto;
     private final JTextArea listinoAuto;
@@ -40,7 +39,7 @@ public class GestioneAutoImpl implements GestioneAutoView{
     private List<ConcessionarioViewObserver> osservatori;
     
 
-    public GestioneAutoImpl() {
+    public GestioneAutoViewImpl() {
         this.osservatori = new LinkedList<>();
         frameAuto = new JFrame("GestioneAuto");
         this.frameAuto.setSize(1280, 720);

@@ -1,5 +1,9 @@
 package concessionario.model;
 
+import concessionario.model.automobile.Automobile;
+import concessionario.model.automobile.StatoMacchina;
+import concessionario.model.cliente.AnagraficaClienti;
+
 public class Concessionario {
 
     private Listino listino;
@@ -15,5 +19,13 @@ public class Concessionario {
         return true;
     }
 
+    public boolean vendiAuto(Automobile auto, AnagraficaClienti listaClienti) {
+        if(auto.geStatoMacchina().equals(StatoMacchina.NUOVO)) {
+            
+        } else {
+            
+        }     
+        return true;
+    }
     
 }

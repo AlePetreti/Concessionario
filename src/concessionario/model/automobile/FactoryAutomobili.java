@@ -5,17 +5,16 @@ import java.util.ArrayList;
 
 public class FactoryAutomobili {
     
-    private Random rnd;
+    private static Random rnd;
 
     public FactoryAutomobili() {
-        this.rnd = new Random();
+        rnd = new Random();
     }
-
     /**
      * 
      * @return un auto generato random
      */
-    public Automobile creaAutoRandom1() {
+    public Automobile creaAutoRandom() {
         
         String[] marche = {"MERCEDES", "FIAT", "TOYOTA", "AUDI", "VOLKSWAGEN", "ALFAROMEO", "SUZUKI"};
         int[] numeroPorte = {3,5};

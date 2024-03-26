@@ -21,7 +21,8 @@ public class CercatoreAuto {
                 && (filtro.getKm() == -1 || filtro.getKm() == auto.getKm())
                 && (filtro.getNumeroPorte() == 0 || filtro.getNumeroPorte() == auto.getNumeroPorte())
                 && (filtro.getCilindrata() == 0 || filtro.getCilindrata() == auto.getCilindrata())
-                && (filtro.getStatoMacchina().equals(StatoMacchina.NUOVO) || filtro.getStatoMacchina().equals(auto.geStatoMacchina()))) {
+                && (filtro.getStatoMacchina().equals(StatoMacchina.NUOVO) || filtro.getStatoMacchina().equals(auto.geStatoMacchina()))
+                && (filtro.getPrezzoMax() == 0.0 || filtro.getPrezzoMax() >= e.getPrezzo())) {
                     autoFiltrate.aggiungiAuto(auto, e.getPrezzo());
            }
         }

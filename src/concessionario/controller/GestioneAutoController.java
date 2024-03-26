@@ -50,6 +50,6 @@ public class GestioneAutoController implements ConcessionarioViewObserver{
         filtroAuto.setKm(view.getKmAuto().orElse(-1));
         filtroAuto.setNumeroPorte(view.getNumeroPorte().orElse(0));
         filtroAuto.setCilindrata(view.getCilindrata().orElse(0));
-        // filtroAuto.setPrezzoMax(view.getPrezzoMax().orElse(0.0));
+        filtroAuto.setPrezzoMax(view.getPrezzoMax().orElse(0.0));
     }
 }

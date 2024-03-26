@@ -5,6 +5,7 @@ import concessionario.controller.ConcessionarioController;
 import concessionario.controller.GestioneAutoController;
 import concessionario.model.CercatoreAuto;
 import concessionario.model.Concessionario;
+import concessionario.model.FactoryPrezzo;
 import concessionario.model.Filtro;
 import concessionario.model.Listino;
 import concessionario.model.VenditorePrivato;
@@ -20,7 +21,7 @@ import concessionario.view.AnagraficaClientiViewImpl;
 import concessionario.view.ConcessionarioView;
 import concessionario.view.ConcessionarioViewImpl;
 import concessionario.view.ConcessionarioViewObserver;
-import concessionario.view.GestioneAutoImpl;
+import concessionario.view.GestioneAutoViewImpl;
 import concessionario.view.GestioneAutoView;
 
 public class Main {
@@ -31,6 +32,7 @@ public class Main {
     FactoryCliente clientefactory = new FactoryCliente();
     FactoryAnagraficaFile anagraficaFile = new FactoryAnagraficaFile("Elenco_clienti.txt");
     FactoryAutomobili factoryAutomobili = new FactoryAutomobili();
+    FactoryPrezzo factoryPrezzo= new FactoryPrezzo();
     Listino listinoAuto = new Listino();
     Concessionario concessionario = new Concessionario(listinoAuto);
     Filtro filtro = new Filtro();
@@ -44,7 +46,7 @@ public class Main {
     // VIEW
     final ConcessionarioView view = new ConcessionarioViewImpl();
     final AnagraficaClientiView viewAnagrafica = new AnagraficaClientiViewImpl();
-    final GestioneAutoView viewGestioneAuto = new GestioneAutoImpl();
+    final GestioneAutoView viewGestioneAuto = new GestioneAutoViewImpl();
     final ConcessionarioViewObserver controller = new ConcessionarioController(view, viewAnagrafica, viewGestioneAuto);
     final AnagraficaClientiController controllerAnagrafica = new AnagraficaClientiController(viewAnagrafica, anagrafica);
     final GestioneAutoController controllerGestioneAuto = new GestioneAutoController(viewGestioneAuto, listinoAuto);
@@ -58,7 +60,7 @@ public class Main {
 
 private static void inizializzaAutomobili(Listino listinoAuto, FactoryAutomobili factoryAutomobili) {
     for(int i = 0; i < 10; i++) {
-        listinoAuto.aggiungiAuto(factoryAutomobili.creaAutoRandom1(), 0);
+        listinoAuto.aggiungiAuto(factoryAutomobili.creaAutoRandom(), FactoryPrezzo.generaPrezzo());
     }
 }
 
