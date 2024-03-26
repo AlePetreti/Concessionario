@@ -40,8 +40,6 @@ public class ConcessionarioViewImpl implements ConcessionarioView {
                 notifyEvent(TipoEvento.GESTIONE_AUTO);
             }
         });
-        
-        addButton("Acquista da privato", frame); 
     }
     
     private static JButton addButton(String text, Container container) {

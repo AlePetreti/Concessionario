@@ -61,8 +61,7 @@ public class AnagraficaClientiViewImpl implements AnagraficaClientiView{
         // campo per nome cliente
         panel1.add(new JLabel("nome cliente:"), constraints);
         constraints.gridy = 1;
-        nomeCliente = new JTextField();
-        panel1.add(nomeCliente, constraints);
+        panel1.add(nomeCliente = new JTextField(), constraints);
         constraints.gridy = 2;
         // campo per cognome cliente
         panel1.add(new JLabel("cognome cliente:"), constraints);

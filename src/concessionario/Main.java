@@ -36,7 +36,7 @@ public class Main {
     Filtro filtro = new Filtro();
     CercatoreAuto cercatoreAuto = new CercatoreAuto();
 
-    Cliente cliente = new Cliente("porco", "dio", null, null, null);
+    Cliente cliente = new Cliente("Mario", "Rossi", null, null, null);
     Automobile autoUsata  = new Automobile("ClasseA", "MERCEDES", 0, 5, 0, 0, StatoMacchina.USATO);
     VenditorePrivato privato = new VenditorePrivato(cliente, autoUsata, 2000);
 
@@ -60,7 +60,6 @@ private static void inizializzaAutomobili(Listino listinoAuto, FactoryAutomobili
     for(int i = 0; i < 10; i++) {
         listinoAuto.aggiungiAuto(factoryAutomobili.creaAutoRandom1(), 0);
     }
-    listinoAuto.aggiungiAuto(new Automobile("ClasseA", "MERCEDES", 0, 5, 0, 0, StatoMacchina.NUOVO), 0);
 }
 
 private static void inizializzaClienti(AnagraficaClienti anagrafica, FactoryAnagraficaFile anagraficaFile, FactoryCliente clientefactory) {
