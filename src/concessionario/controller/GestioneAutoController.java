@@ -1,31 +1,33 @@
 package concessionario.controller;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import concessionario.model.CercatoreAuto;
-import concessionario.model.ElementoListino;
+import concessionario.model.Concessionario;
 import concessionario.model.Filtro;
 import concessionario.model.Listino;
-import concessionario.model.automobile.Automobile;
+import concessionario.model.Preventivo;
+import concessionario.model.cliente.AnagraficaClienti;
 import concessionario.view.ConcessionarioViewObserver;
 import concessionario.view.Event;
 import concessionario.view.GestioneAutoView;
 
 public class GestioneAutoController implements ConcessionarioViewObserver{
 
-    private GestioneAutoView view;
-    private Listino listinoAuto;
-    private CercatoreAuto cercatoreAuto;
-    private Filtro filtroAuto;
+    private final GestioneAutoView view;
+    private final Listino listinoAuto;
+    private final Concessionario concessionario;
+    private final CercatoreAuto cercatoreAuto;
+    private final Filtro filtroAuto;
+    private final AnagraficaClienti anagraficaClienti;
 
 
-    public GestioneAutoController(GestioneAutoView view, Listino listino) {
+    public GestioneAutoController(GestioneAutoView view, Listino listino, AnagraficaClienti anagraficaClienti, Concessionario concessionario) {
         this.view = view;
         this.listinoAuto = listino;
         this.cercatoreAuto = new CercatoreAuto();
         this.view.addObserver(this);
         this.filtroAuto = new Filtro();
+        this.anagraficaClienti = anagraficaClienti;
+        this.concessionario = concessionario;
     }
 
     @Override
@@ -38,6 +40,17 @@ public class GestioneAutoController implements ConcessionarioViewObserver{
                 impostaFiltro();
                 Listino autoTrovate = cercatoreAuto.cercaAuto(filtroAuto, listinoAuto);
                 view.mostraListino(autoTrovate.getListino());
+            break;
+            case CERCA_AUTO_USATE:
+                /* TODO: da finire quando ci sono le auto usate */
+            break;
+            case MOSTRA_PREVENTIVO:
+                view.mostraCreaPreventivo();
+                view.mostraListaClienti(anagraficaClienti.getClienti());
+            break;
+            case CONCLUDI_VENDITA:
+                Preventivo preventivo = concessionario.generaPreventivo(view.getElementoListino().getAutomobile(), view.getClienteSelezionato(anagraficaClienti.getClienti()));
+                concessionario.vendiAuto(preventivo);
             break;
             default:
             break;

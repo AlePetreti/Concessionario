@@ -11,8 +11,8 @@ import concessionario.view.Event;
 
 public class AnagraficaClientiController implements ConcessionarioViewObserver{
 
-    private AnagraficaClientiView view;
-    private AnagraficaClienti anagraficaClienti;
+    private final AnagraficaClientiView view;
+    private final AnagraficaClienti anagraficaClienti;
 
     public AnagraficaClientiController(AnagraficaClientiView view, AnagraficaClienti anagraficaClienti) {
         this.view = view;

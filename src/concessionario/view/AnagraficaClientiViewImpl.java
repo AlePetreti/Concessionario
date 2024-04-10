@@ -19,14 +19,14 @@ import concessionario.model.cliente.Cliente;
 
 public class AnagraficaClientiViewImpl implements AnagraficaClientiView{
 
-    private JFrame frameClienti;
-    private JTextArea listaClienti;
-    private JTextField nomeCliente;
-    private JTextField cognomeCliente;
-    private JTextField emailCliente;
-    private JTextField telCliente;
-    private JTextField cfCliente;
-    private JTextField parolaChiave;
+    private final JFrame frameClienti;
+    private final JTextArea listaClienti;
+    private final JTextField nomeCliente;
+    private final JTextField cognomeCliente;
+    private final JTextField emailCliente;
+    private final JTextField telCliente;
+    private final JTextField cfCliente;
+    private final JTextField parolaChiave;
 
     private List<ConcessionarioViewObserver> osservatori;
 

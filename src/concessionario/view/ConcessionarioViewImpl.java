@@ -5,14 +5,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import java.util.List;
-import javax.swing.BoxLayout;
+
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+
+import concessionario.model.Preventivo;
 
 
 public class ConcessionarioViewImpl implements ConcessionarioView {
 
-    private JFrame frame;
+    private final JFrame frame;
+    private final JList<Preventivo> preventiviCompletati;
+    private final DefaultListModel<Preventivo> modelloLista;
 
     private List<ConcessionarioViewObserver> osservatori;
 
@@ -20,11 +28,14 @@ public class ConcessionarioViewImpl implements ConcessionarioView {
         this.osservatori = new LinkedList<>();
         // menu principale
         this.frame = new JFrame("CONCESSIONARIO");
-        this.frame.setSize(400, 300);
-        frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS)); 
+        this.frame.setSize(1280, 720);
+        this.frame.setLayout(new BorderLayout());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JButton bAnagrafica = addButton("Anagrafica Cliente", frame);
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout(FlowLayout.LEADING, 200, 10));
+        // bottone anagrafica cliente
+        JButton bAnagrafica = new JButton("Anagrafica Cliente");
+        panel.add(bAnagrafica);
         bAnagrafica.addActionListener(new ActionListener() {
 
             @Override
@@ -32,7 +43,10 @@ public class ConcessionarioViewImpl implements ConcessionarioView {
                 notifyEvent(TipoEvento.ANAGRAFICA_CLIENTI);
             }
         });
-        JButton bGestioneAuto = addButton("Gestione Auto", frame);
+
+        // bottone gestione auto
+        JButton bGestioneAuto = new JButton("Gestione Auto");
+        panel.add(bGestioneAuto);
         bGestioneAuto.addActionListener(new ActionListener() {
 
             @Override
@@ -40,15 +54,31 @@ public class ConcessionarioViewImpl implements ConcessionarioView {
                 notifyEvent(TipoEvento.GESTIONE_AUTO);
             }
         });
+
+        // panel per mostrare i preventivi completati
+        JPanel panel1 = new JPanel();
+        panel1.add(new JLabel("Registro Vendite"));
+        JButton aggiornaVendite = new JButton("Aggiorna Vendite");
+        panel1.add(aggiornaVendite);
+        aggiornaVendite.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                notifyEvent(TipoEvento.AGGIORNA_VENDITE);
+            }
+            
+        });
+        modelloLista = new DefaultListModel<>();
+        preventiviCompletati = new JList<>(modelloLista);
+        preventiviCompletati.setLayoutOrientation(JList.VERTICAL);
+        panel1.add(preventiviCompletati);
+       
+
+
+        this.frame.add(panel, BorderLayout.PAGE_START);
+        this.frame.add(panel1, BorderLayout.CENTER);
     }
-    
-    private static JButton addButton(String text, Container container) {
-        JButton button = new JButton(text);
-        button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        container.add(button);
-        return button;
-    }
-    
+
     /**
      * metodo per notificare un evento
      * @param tipoEvento
@@ -72,5 +102,14 @@ public class ConcessionarioViewImpl implements ConcessionarioView {
     @Override
     public void removeObserver(ConcessionarioViewObserver observer) {
         osservatori.remove(observer);
+    }
+
+    @Override
+    public void mostraPreventiviCompletati(List<Preventivo> preventivi) {
+        modelloLista.clear();
+
+        for(Preventivo preventivo : preventivi) {
+            modelloLista.addElement(preventivo);
+        }
     }
 }

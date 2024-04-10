@@ -4,7 +4,7 @@ import java.util.List;
 
 public class AnagraficaClienti {
 
-    private LinkedList<Cliente> listaClienti;
+    private final LinkedList<Cliente> listaClienti;
 
     public AnagraficaClienti() {
         listaClienti = new LinkedList<Cliente>();
@@ -12,8 +12,11 @@ public class AnagraficaClienti {
     }
     // aggiungi cliente alla lista 
     public boolean registraCliente(Cliente cliente) {
-        listaClienti.add(cliente);
-        return true;
+        if(!isPresent(cliente)) {
+            listaClienti.add(cliente);
+            return true;
+        }
+        return false; 
     }
 
     /**
@@ -65,5 +68,16 @@ public class AnagraficaClienti {
      */
     public List<Cliente> getClienti() {
         return new LinkedList<>(listaClienti);
+    }
+    /**
+     * 
+     * @param cliente
+     * @return TRUE se il cliente é presente nella lista dei clienti
+     */
+    public boolean isPresent(Cliente cliente) {
+        if(listaClienti.contains(cliente)) {
+            return true;
+        }
+        return false;
     }
 }

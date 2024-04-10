@@ -8,7 +8,7 @@ import concessionario.model.Concessionario;
 import concessionario.model.FactoryPrezzo;
 import concessionario.model.Filtro;
 import concessionario.model.Listino;
-import concessionario.model.VenditorePrivato;
+import concessionario.model.RegistroVendite;
 import concessionario.model.automobile.Automobile;
 import concessionario.model.automobile.FactoryAutomobili;
 import concessionario.model.automobile.StatoMacchina;
@@ -34,22 +34,18 @@ public class Main {
     FactoryAutomobili factoryAutomobili = new FactoryAutomobili();
     FactoryPrezzo factoryPrezzo= new FactoryPrezzo();
     Listino listinoAuto = new Listino();
-    Concessionario concessionario = new Concessionario(listinoAuto);
+    RegistroVendite registroVendite = new RegistroVendite();
+    Concessionario concessionario = new Concessionario(listinoAuto, anagrafica, registroVendite);
     Filtro filtro = new Filtro();
     CercatoreAuto cercatoreAuto = new CercatoreAuto();
-
-    Cliente cliente = new Cliente("Mario", "Rossi", null, null, null);
-    Automobile autoUsata  = new Automobile("ClasseA", "MERCEDES", 0, 5, 0, 0, StatoMacchina.USATO);
-    VenditorePrivato privato = new VenditorePrivato(cliente, autoUsata, 2000);
-
 
     // VIEW
     final ConcessionarioView view = new ConcessionarioViewImpl();
     final AnagraficaClientiView viewAnagrafica = new AnagraficaClientiViewImpl();
     final GestioneAutoView viewGestioneAuto = new GestioneAutoViewImpl();
-    final ConcessionarioViewObserver controller = new ConcessionarioController(view, viewAnagrafica, viewGestioneAuto);
+    final ConcessionarioViewObserver controller = new ConcessionarioController(view, viewAnagrafica, viewGestioneAuto, registroVendite);
     final AnagraficaClientiController controllerAnagrafica = new AnagraficaClientiController(viewAnagrafica, anagrafica);
-    final GestioneAutoController controllerGestioneAuto = new GestioneAutoController(viewGestioneAuto, listinoAuto);
+    final GestioneAutoController controllerGestioneAuto = new GestioneAutoController(viewGestioneAuto, listinoAuto, anagrafica, concessionario);
     view.show();
 
 
