@@ -1,11 +1,9 @@
-package concessionario.view;
+package concessionario.view.gestioneAuto;
 
 import java.util.List;
 import java.util.Optional;
 
 import concessionario.model.ElementoListino;
-import concessionario.model.automobile.Automobile;
-import concessionario.model.cliente.Cliente;
 
 public interface GestioneAutoView {
     
@@ -27,16 +25,8 @@ public interface GestioneAutoView {
 
     Optional<Double> getPrezzoMax();
 
-    void addObserver(ConcessionarioViewObserver observer);
+    void addObserver(GestioneAutoViewObserver observer);
 
-    void removeObserver(ConcessionarioViewObserver observer);
-
-    void mostraCreaPreventivo();
-
-    void mostraSpecificheAutoPreventivo(Automobile auto);
-
-    void mostraListaClienti(List<Cliente> cliente);
-
-    Cliente getClienteSelezionato(List<Cliente> listaClienti);
+    void removeObserver(GestioneAutoViewObserver observer);
 
 }

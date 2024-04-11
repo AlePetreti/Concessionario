@@ -1,11 +1,11 @@
 package concessionario.controller;
 
 import concessionario.model.RegistroVendite;
-import concessionario.view.AnagraficaClientiView;
-import concessionario.view.ConcessionarioView;
-import concessionario.view.ConcessionarioViewObserver;
-import concessionario.view.Event;
-import concessionario.view.GestioneAutoView;
+import concessionario.view.anagraficaView.AnagraficaClientiView;
+import concessionario.view.concessionario.ConcessionarioView;
+import concessionario.view.concessionario.ConcessionarioViewObserver;
+import concessionario.view.concessionario.EventoConcessionario;
+import concessionario.view.gestioneAuto.GestioneAutoView;
 
 public class ConcessionarioController implements ConcessionarioViewObserver {
 
@@ -23,8 +23,8 @@ public class ConcessionarioController implements ConcessionarioViewObserver {
     }
 
     @Override
-    public void eventNotified(Event e) {
-        switch (e.getTipoEvento()) {
+    public void eventNotified(EventoConcessionario e) {
+        switch (e) {
             case ANAGRAFICA_CLIENTI:
                 viewAnagrafica.mostraAnagraficaClienti();
             break;

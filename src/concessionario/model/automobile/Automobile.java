@@ -10,8 +10,6 @@ public class Automobile {
     private final int cavalli;
     private final StatoMacchina statoMacchina;
 
-
-    
     public Automobile(String modello, String marca, int km, int numeroPorte, int cilindrata, int cavalli, StatoMacchina statoMacchina) {
         this.modello = modello;
         this.marca = marca;

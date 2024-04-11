@@ -9,34 +9,22 @@ public class Preventivo {
     private Cliente cliente;
     private double prezzoTotale;
 
-    public Preventivo(Automobile auto, Cliente cliente, double prezzoTotale) {
+    public Preventivo(Automobile auto, double prezzoAuto, Cliente cliente) {
         this.auto = auto;
         this.cliente = cliente;
-        this.prezzoTotale = prezzoTotale;
+        this.prezzoTotale = prezzoAuto;
     }
 
     public Automobile getAuto() {
         return auto;
     }
 
-    public void setAuto(Automobile auto) {
-        this.auto = auto;
-    }
-
     public Cliente getCliente() {
         return cliente;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
     public double getPrezzoTotale() {
         return prezzoTotale;
-    }
-
-    public void setPrezzoTotale(double prezzoTotale) {
-        this.prezzoTotale = prezzoTotale;
     }
 
     @Override

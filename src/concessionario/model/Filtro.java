@@ -78,13 +78,6 @@ public class Filtro {
     public StatoMacchina getStatoMacchina() {
         return statoMacchina;
     }
-
-    
-
-    
-
-
-    
 }
 
 

@@ -1,4 +1,4 @@
-package concessionario.view;
+package concessionario.view.concessionario;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -40,7 +40,7 @@ public class ConcessionarioViewImpl implements ConcessionarioView {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                notifyEvent(TipoEvento.ANAGRAFICA_CLIENTI);
+                notifyEvent(EventoConcessionario.ANAGRAFICA_CLIENTI);
             }
         });
 
@@ -51,7 +51,7 @@ public class ConcessionarioViewImpl implements ConcessionarioView {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                notifyEvent(TipoEvento.GESTIONE_AUTO);
+                notifyEvent(EventoConcessionario.GESTIONE_AUTO);
             }
         });
 
@@ -64,7 +64,7 @@ public class ConcessionarioViewImpl implements ConcessionarioView {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                notifyEvent(TipoEvento.AGGIORNA_VENDITE);
+                notifyEvent(EventoConcessionario.AGGIORNA_VENDITE);
             }
             
         });
@@ -83,9 +83,9 @@ public class ConcessionarioViewImpl implements ConcessionarioView {
      * metodo per notificare un evento
      * @param tipoEvento
      */
-    private void notifyEvent(TipoEvento tipoEvento) {
+    private void notifyEvent(EventoConcessionario tipoEvento) {
         for (ConcessionarioViewObserver concessionarioViewObserver : osservatori) {
-            concessionarioViewObserver.eventNotified(new Event(tipoEvento));
+            concessionarioViewObserver.eventNotified(tipoEvento);
         }
     }
 

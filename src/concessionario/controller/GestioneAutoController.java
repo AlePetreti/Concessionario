@@ -6,11 +6,12 @@ import concessionario.model.Filtro;
 import concessionario.model.Listino;
 import concessionario.model.Preventivo;
 import concessionario.model.cliente.AnagraficaClienti;
-import concessionario.view.ConcessionarioViewObserver;
-import concessionario.view.Event;
-import concessionario.view.GestioneAutoView;
+import concessionario.view.gestioneAuto.EventoGestioneAuto;
+import concessionario.view.gestioneAuto.GestioneAutoView;
+import concessionario.view.gestioneAuto.GestioneAutoViewObserver;
+import concessionario.view.preventivo.PreventivoView;
 
-public class GestioneAutoController implements ConcessionarioViewObserver{
+public class GestioneAutoController implements GestioneAutoViewObserver{
 
     private final GestioneAutoView view;
     private final Listino listinoAuto;
@@ -18,9 +19,10 @@ public class GestioneAutoController implements ConcessionarioViewObserver{
     private final CercatoreAuto cercatoreAuto;
     private final Filtro filtroAuto;
     private final AnagraficaClienti anagraficaClienti;
+    private final PreventivoController preventivoController;
 
 
-    public GestioneAutoController(GestioneAutoView view, Listino listino, AnagraficaClienti anagraficaClienti, Concessionario concessionario) {
+    public GestioneAutoController(GestioneAutoView view, Listino listino, AnagraficaClienti anagraficaClienti, Concessionario concessionario, PreventivoController preventivoController) {
         this.view = view;
         this.listinoAuto = listino;
         this.cercatoreAuto = new CercatoreAuto();
@@ -28,11 +30,12 @@ public class GestioneAutoController implements ConcessionarioViewObserver{
         this.filtroAuto = new Filtro();
         this.anagraficaClienti = anagraficaClienti;
         this.concessionario = concessionario;
+        this.preventivoController = preventivoController;
     }
 
     @Override
-    public void eventNotified(Event e) {
-        switch (e.getTipoEvento()) {
+    public void eventNotified(EventoGestioneAuto e) {
+        switch (e) {
             case GESTIONE_AUTO_APERTA:
                 view.mostraListino(listinoAuto.getListino());
             break;
@@ -45,13 +48,14 @@ public class GestioneAutoController implements ConcessionarioViewObserver{
                 /* TODO: da finire quando ci sono le auto usate */
             break;
             case MOSTRA_PREVENTIVO:
-                view.mostraCreaPreventivo();
-                view.mostraListaClienti(anagraficaClienti.getClienti());
-            break;
-            case CONCLUDI_VENDITA:
+                preventivoController.inizializzaPreventivo(view.getElementoListino().getAutomobile());
+                //view.mostraCreaPreventivo();
+                //view.mostraListaClienti(anagraficaClienti.getClienti());
+            break; 
+         /* case CONCLUDI_VENDITA:
                 Preventivo preventivo = concessionario.generaPreventivo(view.getElementoListino().getAutomobile(), view.getClienteSelezionato(anagraficaClienti.getClienti()));
                 concessionario.vendiAuto(preventivo);
-            break;
+            break; */
             default:
             break;
         }

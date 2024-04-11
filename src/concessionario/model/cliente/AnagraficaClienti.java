@@ -4,7 +4,7 @@ import java.util.List;
 
 public class AnagraficaClienti {
 
-    private final LinkedList<Cliente> listaClienti;
+    private final List<Cliente> listaClienti;
 
     public AnagraficaClienti() {
         listaClienti = new LinkedList<Cliente>();

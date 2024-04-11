@@ -1,4 +1,4 @@
-package concessionario.view;
+package concessionario.view.concessionario;
 
 import java.util.List;
 

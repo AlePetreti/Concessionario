@@ -20,7 +20,7 @@ public class Concessionario {
     public Preventivo generaPreventivo(Automobile auto, Cliente cliente) {
         if(listaClienti.isPresent(cliente)) {
             double prezzoAuto = listino.getPrezzoAuto(auto);
-            return new Preventivo(auto, cliente, prezzoAuto);
+            return new Preventivo(auto, prezzoAuto, cliente);
         }
         return null;
     }

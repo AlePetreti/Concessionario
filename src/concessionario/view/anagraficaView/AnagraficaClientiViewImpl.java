@@ -1,4 +1,4 @@
-package concessionario.view;
+package concessionario.view.anagraficaView;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -6,8 +6,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -15,12 +15,15 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTable;
+
 import concessionario.model.cliente.Cliente;
 
 public class AnagraficaClientiViewImpl implements AnagraficaClientiView{
 
     private final JFrame frameClienti;
-    private final JTextArea listaClienti;
+    private final JTable tabella;
+    private final DefaultTableModel model;
     private final JTextField nomeCliente;
     private final JTextField cognomeCliente;
     private final JTextField emailCliente;
@@ -28,7 +31,7 @@ public class AnagraficaClientiViewImpl implements AnagraficaClientiView{
     private final JTextField cfCliente;
     private final JTextField parolaChiave;
 
-    private List<ConcessionarioViewObserver> osservatori;
+    private List<AnagraficaClientiViewObserver> osservatori;
 
 
     public AnagraficaClientiViewImpl() {
@@ -37,17 +40,17 @@ public class AnagraficaClientiViewImpl implements AnagraficaClientiView{
         this.frameClienti.setSize(1280, 720);
         this.frameClienti.setLayout(new BorderLayout());
 
-        // lista clienti
+        // tabvella clienti
         JPanel panel = new JPanel();
         panel.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(new JLabel("Lista dei clienti"));
         panel.add(Box.createRigidArea(new Dimension(0, 8)));
-        listaClienti = new JTextArea();
-        listaClienti.setLineWrap(true);
-        listaClienti.setEditable(false);
-        listaClienti.setOpaque(false);
-        panel.add(listaClienti);
+        String[] columnNames = {"CF", "Nome", "Cognome", "Email", "Telefono"};
+        model = new DefaultTableModel(columnNames, 0);
+        tabella = new JTable(model);
+        panel.add(tabella);
+        
         
         // registrazione clienti
         JPanel panel1 = new JPanel();
@@ -94,7 +97,7 @@ public class AnagraficaClientiViewImpl implements AnagraficaClientiView{
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                notifyEvent(TipoEvento.REGISTRA_CLIENTI);
+                notifyEvent(EventoAnagrafica.REGISTRA_CLIENTI);
             }
         });
         
@@ -116,9 +119,9 @@ public class AnagraficaClientiViewImpl implements AnagraficaClientiView{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(checkBoxCf.isSelected()) { 
-                    notifyEvent(TipoEvento.CERCA_CLIENTI_CF);
+                    notifyEvent(EventoAnagrafica.CERCA_CLIENTI_CF);
                 } else {
-                    notifyEvent(TipoEvento.CERCA_CLIENTI);
+                    notifyEvent(EventoAnagrafica.CERCA_CLIENTI);
                 }
             }    
         });
@@ -129,26 +132,24 @@ public class AnagraficaClientiViewImpl implements AnagraficaClientiView{
         this.frameClienti.add(panel2, BorderLayout.PAGE_START);
     }
 
-    private void notifyEvent(TipoEvento tipoEvento) {
-        for (ConcessionarioViewObserver concessionarioViewObserver : osservatori) {
-            concessionarioViewObserver.eventNotified(new Event(tipoEvento));
+    private void notifyEvent(EventoAnagrafica tipoEvento) {
+        for (AnagraficaClientiViewObserver anagraficaClientiViewObserver : osservatori) {
+            anagraficaClientiViewObserver.eventNotified(tipoEvento);
         }
     }
 
     @Override
     public void mostraAnagraficaClienti() {
         frameClienti.setVisible(true);
-        notifyEvent(TipoEvento.ANAGRAFICA_CLIENTI_APERTA);
+        notifyEvent(EventoAnagrafica.ANAGRAFICA_CLIENTI_APERTA);
     }
 
-    @Override
     public void mostraListaClienti(List<Cliente> clienti) {
-        String datiCliente = new String();
-        datiCliente = ("Cf\t\tNome\tCognome\tEmail\t\t\tTelefono\n");
-        for (Cliente cliente : clienti) { 
-            datiCliente = datiCliente + (cliente.getCf() + "\t" + cliente.getNome() + "\t" +  cliente.getCognome()+ "\t" + cliente.getEmail() + "\t\t" + cliente.getTelefono() + "\n");
+        model.setRowCount(0);
+        for (Cliente cliente : clienti) {
+            Object[] rowData = {cliente.getCf(), cliente.getNome(), cliente.getCognome(), cliente.getEmail(), cliente.getTelefono()};
+            model.addRow(rowData);
         }
-        listaClienti.setText(datiCliente);
     }
 
     @Override
@@ -182,12 +183,12 @@ public class AnagraficaClientiViewImpl implements AnagraficaClientiView{
     }
 
     @Override
-    public void addObserver(ConcessionarioViewObserver observer) {
+    public void addObserver(AnagraficaClientiViewObserver observer) {
         osservatori.add(observer);
     }
 
     @Override
-    public void removeObserver(ConcessionarioViewObserver observer) {
+    public void removeObserver(AnagraficaClientiViewObserver observer) {
         osservatori.remove(observer);
     }
     

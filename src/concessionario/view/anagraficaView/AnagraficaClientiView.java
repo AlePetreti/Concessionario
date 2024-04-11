@@ -1,4 +1,4 @@
-package concessionario.view;
+package concessionario.view.anagraficaView;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public interface AnagraficaClientiView {
 
     String getParolaChiave();
 
-    void addObserver(ConcessionarioViewObserver observer);
+    void addObserver(AnagraficaClientiViewObserver observer);
 
-    void removeObserver(ConcessionarioViewObserver observer);
+    void removeObserver(AnagraficaClientiViewObserver observer);
 }

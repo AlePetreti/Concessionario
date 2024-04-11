@@ -1,4 +1,4 @@
-package concessionario.view;
+package concessionario.view.gestioneAuto;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -12,35 +12,28 @@ import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import concessionario.model.ElementoListino;
-import concessionario.model.automobile.Automobile;
 import concessionario.model.automobile.StatoMacchina;
-import concessionario.model.cliente.Cliente;
 
 public class GestioneAutoViewImpl implements GestioneAutoView{
 
     private final JFrame frameAuto;
-    private final JFrame framePreventivo;
-    //private final JTextArea listinoAuto;
     private final JList<ElementoListino> listinoAuto;
     private final DefaultListModel<ElementoListino> modelloLista;
     private final JTextField modelloAuto;
@@ -49,9 +42,7 @@ public class GestioneAutoViewImpl implements GestioneAutoView{
     private final JTextField numeroPorte;
     private final JTextField cilindrata;
     private final JTextField prezzoMax;
-    private final JTextArea specificheAuto;
-    private final JComboBox<String> boxClienti;
-    private List<ConcessionarioViewObserver> osservatori;
+    private List<GestioneAutoViewObserver> osservatori;
     
 
     public GestioneAutoViewImpl() {
@@ -80,8 +71,7 @@ public class GestioneAutoViewImpl implements GestioneAutoView{
                         mostraSpecificheAuto(elementoSelezionato);
                     }
                 }
-            }
-            
+            }   
         });
 
         // filtri per cercare un auto
@@ -136,62 +126,21 @@ public class GestioneAutoViewImpl implements GestioneAutoView{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(checkBoxUsato.isSelected()) {
-                    notifyEvent(TipoEvento.CERCA_AUTO_USATE);
+                    notifyEvent(EventoGestioneAuto.CERCA_AUTO_USATE);
                 } else {
-                    notifyEvent(TipoEvento.CERCA_AUTO);
+                    notifyEvent(EventoGestioneAuto.CERCA_AUTO);
                 }
             }
         });
 
         this.frameAuto.add(panel, BorderLayout.CENTER);
         this.frameAuto.add(panel2, BorderLayout.LINE_START);
-
-        // finestra per i preventivi
-        framePreventivo = new JFrame("Preventivo");
-        framePreventivo.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        framePreventivo.setSize(1280,720);
-        framePreventivo.setLayout(new BorderLayout());
-        // panel per mostrare specifiche auto
-        JPanel panel3 = new JPanel();
-        panel3.setLayout(new BorderLayout());
-        JButton b1 = new JButton("Concludi Vendita");
-        panel3.add(b1, BorderLayout.EAST);
-        b1.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                notifyEvent(TipoEvento.CONCLUDI_VENDITA);
-                framePreventivo.dispose();
-            }
-            
-        });
-        panel3.add(new JLabel("Prezzo totale: "), BorderLayout.WEST);
-        /*
-         * TODO: finisci il frame del preventivo
-         */
-        // panel per specifiche auto del preventivo
-        JPanel panel4 = new JPanel();
-        panel4.setLayout(new BoxLayout(panel4, BoxLayout.Y_AXIS));
-        panel4.add(new JLabel("Specifiche auto"));
-        specificheAuto = new JTextArea();
-        panel4.add(specificheAuto); 
-        
-        // panel per selezioanre i clienti
-        JPanel panel5 = new JPanel();
-        panel5.setLayout(new BorderLayout());
-        boxClienti = new JComboBox<>();
-        boxClienti.setPreferredSize(new Dimension(300, 30));
-        panel5.add(boxClienti, BorderLayout.CENTER);
-
-
-        this.framePreventivo.add(panel3, BorderLayout.PAGE_END);
-        this.framePreventivo.add(panel4, BorderLayout.CENTER);
-        this.framePreventivo.add(panel5, BorderLayout.EAST);
     }
+    
 
-    private void notifyEvent(TipoEvento tipoEvento) {
-        for (ConcessionarioViewObserver concessionarioViewObserver : osservatori) {
-            concessionarioViewObserver.eventNotified(new Event(tipoEvento));
+    private void notifyEvent(EventoGestioneAuto tipoEvento) {
+        for (GestioneAutoViewObserver gestioneAutoViewObserver : osservatori) {
+            gestioneAutoViewObserver.eventNotified((tipoEvento));
         }
     }
 
@@ -223,7 +172,7 @@ public class GestioneAutoViewImpl implements GestioneAutoView{
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                notifyEvent(TipoEvento.MOSTRA_PREVENTIVO);
+                notifyEvent(EventoGestioneAuto.MOSTRA_PREVENTIVO);
                 dialog.dispose();
             }
             
@@ -232,7 +181,6 @@ public class GestioneAutoViewImpl implements GestioneAutoView{
         dialog.add(panel1, BorderLayout.CENTER);
         dialog.add(panelB, BorderLayout.SOUTH);
         dialog.setSize(400, 300);
-        //dialog.pack();
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
     }
@@ -240,16 +188,16 @@ public class GestioneAutoViewImpl implements GestioneAutoView{
     @Override
     public void mostraGestioneAuto() {
         frameAuto.setVisible(true);
-        notifyEvent(TipoEvento.GESTIONE_AUTO_APERTA);
+        notifyEvent(EventoGestioneAuto.GESTIONE_AUTO_APERTA);
     }
 
     @Override
-    public void addObserver(ConcessionarioViewObserver observer) {
+    public void addObserver(GestioneAutoViewObserver observer) {
         osservatori.add(observer);
     }
 
     @Override
-    public void removeObserver(ConcessionarioViewObserver observer) {
+    public void removeObserver(GestioneAutoViewObserver observer) {
         osservatori.remove(observer);
     }
 
@@ -319,39 +267,5 @@ public class GestioneAutoViewImpl implements GestioneAutoView{
         } else {
             return Optional.of(Double.parseDouble(prezzoMax.getText()));
         }
-    }
- 
-    @Override
-    public void mostraCreaPreventivo() {
-        framePreventivo.setVisible(true);
-        
-    }
-
-    @Override
-    public void mostraSpecificheAutoPreventivo(Automobile auto) {
-        ElementoListino autoSelezionata  = listinoAuto.getSelectedValue();
-        if(autoSelezionata != null) {
-
-        }
-    }
-
-    @Override
-    public void mostraListaClienti(List<Cliente> cliente) {
-        for(Cliente c : cliente) {
-            String nomeCognome = c.getNome() + " " + c.getCognome();
-            boxClienti.addItem(nomeCognome);
-        }
-    }
-
-    
-    @Override
-    public Cliente getClienteSelezionato(List<Cliente> listaClienti) {
-        String nomeCognome = (String) boxClienti.getSelectedItem();
-        for (Cliente cliente : listaClienti) {
-            if ((cliente.getNome() + " " + cliente.getCognome()).equals(nomeCognome)) {
-                return cliente;
-            }
-        }
-        return null; 
     }
 }

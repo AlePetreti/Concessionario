@@ -1,11 +1,11 @@
 package concessionario.model.automobile;
 import java.util.Random;
 
-public class FactoryAutomobili {
+public class FactoryAutomobile {
     
     private static Random rnd;
 
-    public FactoryAutomobili() {
+    public FactoryAutomobile() {
         rnd = new Random();
     }
     /**

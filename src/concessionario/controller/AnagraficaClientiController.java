@@ -5,11 +5,11 @@ import java.util.List;
 
 import concessionario.model.cliente.AnagraficaClienti;
 import concessionario.model.cliente.Cliente;
-import concessionario.view.AnagraficaClientiView;
-import concessionario.view.ConcessionarioViewObserver;
-import concessionario.view.Event;
+import concessionario.view.anagraficaView.AnagraficaClientiView;
+import concessionario.view.anagraficaView.AnagraficaClientiViewObserver;
+import concessionario.view.anagraficaView.EventoAnagrafica;
 
-public class AnagraficaClientiController implements ConcessionarioViewObserver{
+public class AnagraficaClientiController implements AnagraficaClientiViewObserver{
 
     private final AnagraficaClientiView view;
     private final AnagraficaClienti anagraficaClienti;
@@ -21,8 +21,8 @@ public class AnagraficaClientiController implements ConcessionarioViewObserver{
     }
 
     @Override
-    public void eventNotified(Event e) {
-        switch (e.getTipoEvento()) {
+    public void eventNotified(EventoAnagrafica e) {
+        switch (e) {
             case ANAGRAFICA_CLIENTI_APERTA:
                 view.mostraListaClienti(anagraficaClienti.getClienti());
             break; 
@@ -48,5 +48,5 @@ public class AnagraficaClientiController implements ConcessionarioViewObserver{
             default: 
             break;    
         }
-    }   
+    }
 }

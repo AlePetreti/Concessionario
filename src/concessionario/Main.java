@@ -3,26 +3,27 @@ package concessionario;
 import concessionario.controller.AnagraficaClientiController;
 import concessionario.controller.ConcessionarioController;
 import concessionario.controller.GestioneAutoController;
-import concessionario.model.CercatoreAuto;
+import concessionario.controller.PreventivoController;
 import concessionario.model.Concessionario;
 import concessionario.model.FactoryPrezzo;
-import concessionario.model.Filtro;
 import concessionario.model.Listino;
 import concessionario.model.RegistroVendite;
-import concessionario.model.automobile.Automobile;
-import concessionario.model.automobile.FactoryAutomobili;
-import concessionario.model.automobile.StatoMacchina;
+import concessionario.model.automobile.FactoryAutomobile;
 import concessionario.model.cliente.AnagraficaClienti;
-import concessionario.model.cliente.Cliente;
 import concessionario.model.cliente.FactoryAnagraficaFile;
 import concessionario.model.cliente.FactoryCliente;
-import concessionario.view.AnagraficaClientiView;
-import concessionario.view.AnagraficaClientiViewImpl;
-import concessionario.view.ConcessionarioView;
-import concessionario.view.ConcessionarioViewImpl;
-import concessionario.view.ConcessionarioViewObserver;
-import concessionario.view.GestioneAutoViewImpl;
-import concessionario.view.GestioneAutoView;
+import concessionario.view.anagraficaView.AnagraficaClientiView;
+import concessionario.view.anagraficaView.AnagraficaClientiViewImpl;
+import concessionario.view.anagraficaView.AnagraficaClientiViewObserver;
+import concessionario.view.concessionario.ConcessionarioView;
+import concessionario.view.concessionario.ConcessionarioViewImpl;
+import concessionario.view.concessionario.ConcessionarioViewObserver;
+import concessionario.view.gestioneAuto.GestioneAutoView;
+import concessionario.view.gestioneAuto.GestioneAutoViewImpl;
+import concessionario.view.gestioneAuto.GestioneAutoViewObserver;
+import concessionario.view.preventivo.PreventivoView;
+import concessionario.view.preventivo.PreventivoViewImpl;
+import concessionario.view.preventivo.PreventivoViewObserver;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -31,21 +32,21 @@ public class Main {
     AnagraficaClienti anagrafica = new AnagraficaClienti();
     FactoryCliente clientefactory = new FactoryCliente();
     FactoryAnagraficaFile anagraficaFile = new FactoryAnagraficaFile("Elenco_clienti.txt");
-    FactoryAutomobili factoryAutomobili = new FactoryAutomobili();
+    FactoryAutomobile factoryAutomobili = new FactoryAutomobile();
     FactoryPrezzo factoryPrezzo= new FactoryPrezzo();
     Listino listinoAuto = new Listino();
     RegistroVendite registroVendite = new RegistroVendite();
     Concessionario concessionario = new Concessionario(listinoAuto, anagrafica, registroVendite);
-    Filtro filtro = new Filtro();
-    CercatoreAuto cercatoreAuto = new CercatoreAuto();
 
     // VIEW
     final ConcessionarioView view = new ConcessionarioViewImpl();
     final AnagraficaClientiView viewAnagrafica = new AnagraficaClientiViewImpl();
     final GestioneAutoView viewGestioneAuto = new GestioneAutoViewImpl();
+    final PreventivoView viewPreventivo = new PreventivoViewImpl();
     final ConcessionarioViewObserver controller = new ConcessionarioController(view, viewAnagrafica, viewGestioneAuto, registroVendite);
-    final AnagraficaClientiController controllerAnagrafica = new AnagraficaClientiController(viewAnagrafica, anagrafica);
-    final GestioneAutoController controllerGestioneAuto = new GestioneAutoController(viewGestioneAuto, listinoAuto, anagrafica, concessionario);
+    final AnagraficaClientiViewObserver controllerAnagrafica = new AnagraficaClientiController(viewAnagrafica, anagrafica);
+    final PreventivoController controllerPreventivo = new PreventivoController(viewPreventivo, anagrafica, concessionario);
+    final GestioneAutoViewObserver controllerGestioneAuto = new GestioneAutoController(viewGestioneAuto, listinoAuto, anagrafica, concessionario, controllerPreventivo);
     view.show();
 
 
@@ -54,7 +55,7 @@ public class Main {
     inizializzaClienti(anagrafica, anagraficaFile, clientefactory);
 }
 
-private static void inizializzaAutomobili(Listino listinoAuto, FactoryAutomobili factoryAutomobili) {
+private static void inizializzaAutomobili(Listino listinoAuto, FactoryAutomobile factoryAutomobili) {
     for(int i = 0; i < 10; i++) {
         listinoAuto.aggiungiAuto(factoryAutomobili.creaAutoRandom(), FactoryPrezzo.generaPrezzo());
     }
