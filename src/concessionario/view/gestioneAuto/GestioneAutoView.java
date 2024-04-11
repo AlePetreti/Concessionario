@@ -1,4 +1,4 @@
-package concessionario.view.gestioneAuto;
+package concessionario.view.gestioneauto;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package concessionario.view.anagraficaView;
+package concessionario.view.anagrafica;
 
 public interface AnagraficaClientiViewObserver {
     

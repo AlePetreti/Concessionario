@@ -1,35 +1,28 @@
 package concessionario.controller;
 
 import concessionario.model.CercatoreAuto;
-import concessionario.model.Concessionario;
 import concessionario.model.Filtro;
 import concessionario.model.Listino;
-import concessionario.model.Preventivo;
-import concessionario.model.cliente.AnagraficaClienti;
-import concessionario.view.gestioneAuto.EventoGestioneAuto;
-import concessionario.view.gestioneAuto.GestioneAutoView;
-import concessionario.view.gestioneAuto.GestioneAutoViewObserver;
-import concessionario.view.preventivo.PreventivoView;
+import concessionario.view.gestioneauto.EventoGestioneAuto;
+import concessionario.view.gestioneauto.GestioneAutoView;
+import concessionario.view.gestioneauto.GestioneAutoViewObserver;
+
 
 public class GestioneAutoController implements GestioneAutoViewObserver{
 
     private final GestioneAutoView view;
     private final Listino listinoAuto;
-    private final Concessionario concessionario;
     private final CercatoreAuto cercatoreAuto;
     private final Filtro filtroAuto;
-    private final AnagraficaClienti anagraficaClienti;
     private final PreventivoController preventivoController;
 
 
-    public GestioneAutoController(GestioneAutoView view, Listino listino, AnagraficaClienti anagraficaClienti, Concessionario concessionario, PreventivoController preventivoController) {
+    public GestioneAutoController(GestioneAutoView view, Listino listino, PreventivoController preventivoController) {
         this.view = view;
         this.listinoAuto = listino;
         this.cercatoreAuto = new CercatoreAuto();
         this.view.addObserver(this);
         this.filtroAuto = new Filtro();
-        this.anagraficaClienti = anagraficaClienti;
-        this.concessionario = concessionario;
         this.preventivoController = preventivoController;
     }
 
@@ -49,8 +42,6 @@ public class GestioneAutoController implements GestioneAutoViewObserver{
             break;
             case MOSTRA_PREVENTIVO:
                 preventivoController.inizializzaPreventivo(view.getElementoListino().getAutomobile());
-                //view.mostraCreaPreventivo();
-                //view.mostraListaClienti(anagraficaClienti.getClienti());
             break; 
          /* case CONCLUDI_VENDITA:
                 Preventivo preventivo = concessionario.generaPreventivo(view.getElementoListino().getAutomobile(), view.getClienteSelezionato(anagraficaClienti.getClienti()));

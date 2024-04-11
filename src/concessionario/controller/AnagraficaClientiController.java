@@ -5,9 +5,9 @@ import java.util.List;
 
 import concessionario.model.cliente.AnagraficaClienti;
 import concessionario.model.cliente.Cliente;
-import concessionario.view.anagraficaView.AnagraficaClientiView;
-import concessionario.view.anagraficaView.AnagraficaClientiViewObserver;
-import concessionario.view.anagraficaView.EventoAnagrafica;
+import concessionario.view.anagrafica.AnagraficaClientiView;
+import concessionario.view.anagrafica.AnagraficaClientiViewObserver;
+import concessionario.view.anagrafica.EventoAnagrafica;
 
 public class AnagraficaClientiController implements AnagraficaClientiViewObserver{
 

@@ -12,15 +12,15 @@ import concessionario.model.automobile.FactoryAutomobile;
 import concessionario.model.cliente.AnagraficaClienti;
 import concessionario.model.cliente.FactoryAnagraficaFile;
 import concessionario.model.cliente.FactoryCliente;
-import concessionario.view.anagraficaView.AnagraficaClientiView;
-import concessionario.view.anagraficaView.AnagraficaClientiViewImpl;
-import concessionario.view.anagraficaView.AnagraficaClientiViewObserver;
+import concessionario.view.anagrafica.AnagraficaClientiView;
+import concessionario.view.anagrafica.AnagraficaClientiViewImpl;
+import concessionario.view.anagrafica.AnagraficaClientiViewObserver;
 import concessionario.view.concessionario.ConcessionarioView;
 import concessionario.view.concessionario.ConcessionarioViewImpl;
 import concessionario.view.concessionario.ConcessionarioViewObserver;
-import concessionario.view.gestioneAuto.GestioneAutoView;
-import concessionario.view.gestioneAuto.GestioneAutoViewImpl;
-import concessionario.view.gestioneAuto.GestioneAutoViewObserver;
+import concessionario.view.gestioneauto.GestioneAutoView;
+import concessionario.view.gestioneauto.GestioneAutoViewImpl;
+import concessionario.view.gestioneauto.GestioneAutoViewObserver;
 import concessionario.view.preventivo.PreventivoView;
 import concessionario.view.preventivo.PreventivoViewImpl;
 import concessionario.view.preventivo.PreventivoViewObserver;
@@ -46,7 +46,7 @@ public class Main {
     final ConcessionarioViewObserver controller = new ConcessionarioController(view, viewAnagrafica, viewGestioneAuto, registroVendite);
     final AnagraficaClientiViewObserver controllerAnagrafica = new AnagraficaClientiController(viewAnagrafica, anagrafica);
     final PreventivoController controllerPreventivo = new PreventivoController(viewPreventivo, anagrafica, concessionario);
-    final GestioneAutoViewObserver controllerGestioneAuto = new GestioneAutoController(viewGestioneAuto, listinoAuto, anagrafica, concessionario, controllerPreventivo);
+    final GestioneAutoViewObserver controllerGestioneAuto = new GestioneAutoController(viewGestioneAuto, listinoAuto, controllerPreventivo);
     view.show();
 
 

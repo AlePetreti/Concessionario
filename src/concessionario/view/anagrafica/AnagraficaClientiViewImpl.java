@@ -1,4 +1,4 @@
-package concessionario.view.anagraficaView;
+package concessionario.view.anagrafica;
 
 import java.util.LinkedList;
 import java.util.List;
