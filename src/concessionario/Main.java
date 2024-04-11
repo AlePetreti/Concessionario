@@ -23,7 +23,6 @@ import concessionario.view.gestioneauto.GestioneAutoViewImpl;
 import concessionario.view.gestioneauto.GestioneAutoViewObserver;
 import concessionario.view.preventivo.PreventivoView;
 import concessionario.view.preventivo.PreventivoViewImpl;
-import concessionario.view.preventivo.PreventivoViewObserver;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -33,7 +32,6 @@ public class Main {
     FactoryCliente clientefactory = new FactoryCliente();
     FactoryAnagraficaFile anagraficaFile = new FactoryAnagraficaFile("Elenco_clienti.txt");
     FactoryAutomobile factoryAutomobili = new FactoryAutomobile();
-    FactoryPrezzo factoryPrezzo= new FactoryPrezzo();
     Listino listinoAuto = new Listino();
     RegistroVendite registroVendite = new RegistroVendite();
     Concessionario concessionario = new Concessionario(listinoAuto, anagrafica, registroVendite);
@@ -49,7 +47,7 @@ public class Main {
     final GestioneAutoViewObserver controllerGestioneAuto = new GestioneAutoController(viewGestioneAuto, listinoAuto, controllerPreventivo);
     view.show();
 
-
+    
     // Inizializzazione di automobili e clienti
     inizializzaAutomobili(listinoAuto, factoryAutomobili);
     inizializzaClienti(anagrafica, anagraficaFile, clientefactory);
