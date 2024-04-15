@@ -42,6 +42,7 @@ public class PreventivoController implements PreventivoViewObserver     {
     public void inizializzaPreventivo(Automobile automobile) {
         view.mostraCreaPreventivo();
         view.mostraListaClienti(anagraficaClienti.getClienti());
+        view.mostraSpecificheAutoPreventivo(automobile);
         this.autoSelezionata = Optional.of(automobile);
     }
     

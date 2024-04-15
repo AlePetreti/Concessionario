@@ -2,6 +2,8 @@ package concessionario.view.preventivo;
 
 import java.util.List;
 
+import concessionario.model.ElementoListino;
+import concessionario.model.automobile.Automobile;
 import concessionario.model.cliente.Cliente;
 
 public interface PreventivoView {
@@ -12,7 +14,9 @@ public interface PreventivoView {
 
     void mostraCreaPreventivo();
 
-    //void mostraSpecificheAutoPreventivo(ElementoListino elemento);
+    void mostraSpecificheAutoPreventivo(Automobile auto);
+
+    void mostraPrezzoTotale(ElementoListino ElementoListino);
 
     void mostraListaClienti(List<Cliente> cliente);
 

@@ -2,7 +2,7 @@ package concessionario.view.gestioneauto;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -13,8 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -52,15 +51,27 @@ public class GestioneAutoViewImpl implements GestioneAutoView{
         this.frameAuto.setLayout(new BorderLayout());
 
         // lista delle auto
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.add(new JLabel("Listino Auto"));
-        panel.add(Box.createRigidArea(new Dimension(0, 8)));
+        frameAuto.add(new JLabel("Listino Auto"), BorderLayout.NORTH);
         modelloLista = new DefaultListModel<>();
         listinoAuto = new JList<>(modelloLista);
         listinoAuto.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         listinoAuto.setLayoutOrientation(JList.VERTICAL);
-        panel.add(listinoAuto);
+        // listinoAuto.setCellRenderer(new CustomRenderer<ElementoListino>(
+        //     elem -> elem.getAutomobile().getModello() + " " + elem.getAutomobile().getMarca() + " " + elem.getPrezzo()
+        // ));
+        
+        listinoAuto.setCellRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus){
+                final var c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (value instanceof ElementoListino) {
+                    final var eleme = ((ElementoListino)value);
+                    setText(eleme.getAutomobile().getModello() + " " + eleme.getAutomobile().getMarca() + " " + eleme.getPrezzo());
+                }
+                return c;
+            }
+        });
+
         listinoAuto.addListSelectionListener(new ListSelectionListener() {
 
             @Override
@@ -133,7 +144,7 @@ public class GestioneAutoViewImpl implements GestioneAutoView{
             }
         });
 
-        this.frameAuto.add(panel, BorderLayout.CENTER);
+        this.frameAuto.add(listinoAuto, BorderLayout.CENTER);
         this.frameAuto.add(panel2, BorderLayout.LINE_START);
     }
     
@@ -214,14 +225,6 @@ public class GestioneAutoViewImpl implements GestioneAutoView{
     public ElementoListino getElementoListino() {
         return listinoAuto.getSelectedValue();
     }
-
-    /*
-    private String formattaElementoListino(ElementoListino elemento) {
-        String formatoStringa = new String();
-        formatoStringa  = elemento.getAutomobile().getMarca() + " " + elemento.getAutomobile().getModello() + " " +  elemento.getPrezzo();
-        return formatoStringa;
-    }
-    */
 
     @Override
     public String getModelloAuto() {
