@@ -15,12 +15,12 @@ import concessionario.model.cliente.FactoryCliente;
 import concessionario.view.anagrafica.AnagraficaClientiView;
 import concessionario.view.anagrafica.AnagraficaClientiViewImpl;
 import concessionario.view.anagrafica.AnagraficaClientiViewObserver;
+import concessionario.view.auto.GestioneAutoView;
+import concessionario.view.auto.GestioneAutoViewImpl;
+import concessionario.view.auto.GestioneAutoViewObserver;
 import concessionario.view.concessionario.ConcessionarioView;
 import concessionario.view.concessionario.ConcessionarioViewImpl;
 import concessionario.view.concessionario.ConcessionarioViewObserver;
-import concessionario.view.gestioneauto.GestioneAutoView;
-import concessionario.view.gestioneauto.GestioneAutoViewImpl;
-import concessionario.view.gestioneauto.GestioneAutoViewObserver;
 import concessionario.view.preventivo.PreventivoView;
 import concessionario.view.preventivo.PreventivoViewImpl;
 

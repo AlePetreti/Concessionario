@@ -1,4 +1,4 @@
-package concessionario.view.gestioneauto;
+package concessionario.view.auto;
 
 public enum EventoGestioneAuto {
 

@@ -2,10 +2,10 @@ package concessionario.controller;
 
 import concessionario.model.RegistroVendite;
 import concessionario.view.anagrafica.AnagraficaClientiView;
+import concessionario.view.auto.GestioneAutoView;
 import concessionario.view.concessionario.ConcessionarioView;
 import concessionario.view.concessionario.ConcessionarioViewObserver;
 import concessionario.view.concessionario.EventoConcessionario;
-import concessionario.view.gestioneauto.GestioneAutoView;
 
 public class ConcessionarioController implements ConcessionarioViewObserver {
 

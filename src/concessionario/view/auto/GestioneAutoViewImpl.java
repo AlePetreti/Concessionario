@@ -1,4 +1,4 @@
-package concessionario.view.gestioneauto;
+package concessionario.view.auto;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
