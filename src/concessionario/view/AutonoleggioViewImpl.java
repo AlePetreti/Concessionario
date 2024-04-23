@@ -4,6 +4,8 @@ package concessionario.view;
 import concessionario.controller.AutonoleggioController;
 import concessionario.model.autonoleggio.Assicurazione;
 import concessionario.model.autonoleggio.auto_noleggio.AutomobileNoleggio;
+import concessionario.view.concessionario.ConcessionarioViewObserver;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;

@@ -4,8 +4,8 @@ import concessionario.model.automobile.Automobile;
 
 public class ElementoListino {
 
-    private Automobile automobile;
-    private double prezzo;
+    private final Automobile automobile;
+    private final double prezzo;
 
     public ElementoListino(Automobile automobile, double prezzo) {
         this.automobile = automobile;

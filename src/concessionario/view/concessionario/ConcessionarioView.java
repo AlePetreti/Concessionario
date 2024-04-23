@@ -1,4 +1,8 @@
-package concessionario.view;
+package concessionario.view.concessionario;
+
+import java.util.List;
+
+import concessionario.model.Preventivo;
 
 public interface ConcessionarioView {
 
@@ -7,4 +11,6 @@ public interface ConcessionarioView {
     void addObserver(ConcessionarioViewObserver observer);
 
     void removeObserver(ConcessionarioViewObserver observer);
+
+    void mostraPreventiviCompletati(List<Preventivo> preventivi);
 }

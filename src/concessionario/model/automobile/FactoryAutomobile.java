@@ -1,21 +1,18 @@
 package concessionario.model.automobile;
 import java.util.Random;
-import java.util.List;
-import java.util.ArrayList;
 
-public class FactoryAutomobili {
+public class FactoryAutomobile {
     
-    private Random rnd;
+    private static Random rnd;
 
-    public FactoryAutomobili() {
-        this.rnd = new Random();
+    public FactoryAutomobile() {
+        rnd = new Random();
     }
-
     /**
      * 
      * @return un auto generato random
      */
-    public Automobile creaAutoRandom1() {
+    public Automobile creaAutoRandom() {
         
         String[] marche = {"MERCEDES", "FIAT", "TOYOTA", "AUDI", "VOLKSWAGEN", "ALFAROMEO", "SUZUKI"};
         int[] numeroPorte = {3,5};
@@ -27,23 +24,6 @@ public class FactoryAutomobili {
         int cilindrataAuto = cilindrata[rnd.nextInt(cilindrata.length)];
         int cavalliAuto = cavalli[rnd.nextInt(cavalli.length)];
         return new Automobile(modelloAuto, marcaAuto, 0, numeroPorteAuto, cilindrataAuto, cavalliAuto, StatoMacchina.NUOVO); 
-    }
-    /**
-     * 
-     * @return una lista di auto generate random
-     */
-    public List<Automobile> creaAutoRandom() {
-        
-        List<Automobile> automobili = new ArrayList<Automobile>();
-        String[] marche = {"MERCEDES", "FIAT", "TOYOTA", "AUDI", "VOLKSWAGEN", "ALFAROMEO", "SUZUKI"};
-        int[] numeroPorte = {3,5};
-        int[] cilindrata = {1200, 1400, 1600, 1900, 2000, 2200, 3000, 4000};
-        int[] cavalli = {75, 90, 116, 120, 150, 190, 210, 350, 400};
-        for(int i = 0; i < 10; i++) {
-            String marcaAuto = marche[rnd.nextInt(marche.length)];
-            automobili.add(new Automobile(selezionaModello(marcaAuto), marcaAuto, 0, numeroPorte[rnd.nextInt(numeroPorte.length)], cilindrata[rnd.nextInt(cilindrata.length)], cavalli[rnd.nextInt(cavalli.length)], StatoMacchina.NUOVO));
-        }
-        return automobili;
     }
     
     private String selezionaModello(String marca) {

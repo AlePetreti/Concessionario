@@ -6,7 +6,7 @@ import concessionario.model.automobile.Automobile;
 
 public class Listino {
     
-    private LinkedList<ElementoListino> listino;
+    private final LinkedList<ElementoListino> listino;
 
     public Listino() {
         this.listino = new LinkedList<ElementoListino>();
@@ -41,9 +41,5 @@ public class Listino {
      */
     public List<ElementoListino> getListino() {
         return new LinkedList<>(listino);
-    }
-
-    public void stampaListino(List<Automobile> auto) {
-        auto.forEach((c)->System.out.println( "\n" + c + "\n"));
     }
 }

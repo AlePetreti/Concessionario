@@ -3,9 +3,9 @@ package concessionario.controller;
 import java.util.List;
 import concessionario.model.autonoleggio.auto_noleggio.AutomobileNoleggio;
 import concessionario.model.autonoleggio.auto_noleggio.FactoryAutomobiliNoleggio;
-import concessionario.view.ConcessionarioViewObserver;
-import concessionario.view.Event;
 import concessionario.view.LeasingAutoView;
+import concessionario.view.concessionario.ConcessionarioViewObserver;
+import concessionario.view.concessionario.EventoConcessionario;
 
 public class LeasingController implements ConcessionarioViewObserver {
 
@@ -18,8 +18,8 @@ public class LeasingController implements ConcessionarioViewObserver {
     }
 
     @Override
-    public void eventNotified(Event e) {
-        switch (e.getTipoEvento()) {
+    public void eventNotified(EventoConcessionario e) {
+        switch (e) {
             case LEASING_AUTO:
                 mostraAutoDisponibili();
                 break;

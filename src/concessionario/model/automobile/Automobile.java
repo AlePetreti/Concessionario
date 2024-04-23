@@ -2,16 +2,14 @@ package concessionario.model.automobile;
 
 public class Automobile {
 
-    private String modello;
-    private String marca;
-    private int km;
-    private int numeroPorte;
-    private int cilindrata;
-    private int cavalli;
-    private StatoMacchina statoMacchina;
+    private final String modello;
+    private final String marca;
+    private final int km;
+    private final int numeroPorte;
+    private final int cilindrata;
+    private final int cavalli;
+    private final StatoMacchina statoMacchina;
 
-
-    
     public Automobile(String modello, String marca, int km, int numeroPorte, int cilindrata, int cavalli, StatoMacchina statoMacchina) {
         this.modello = modello;
         this.marca = marca;

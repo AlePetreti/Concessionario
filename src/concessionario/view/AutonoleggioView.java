@@ -1,5 +1,6 @@
 package concessionario.view;
 
+import concessionario.view.concessionario.ConcessionarioViewObserver;
 
 public interface AutonoleggioView{
     

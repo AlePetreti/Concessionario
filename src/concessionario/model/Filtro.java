@@ -1,5 +1,7 @@
 package concessionario.model;
 
+import java.util.Objects;
+
 import concessionario.model.automobile.StatoMacchina;
 
 public class Filtro {
@@ -15,13 +17,17 @@ public class Filtro {
     public Filtro() {
         this.statoMacchina = StatoMacchina.NUOVO;
         this.km = -1;
+        this.modello = "";
+        this.marca = "";
     }
 
     public void setModello(String modello) {
+        Objects.requireNonNull(modello);
         this.modello = modello;
     }
 
     public void setMarca(String marca) {
+        Objects.requireNonNull(marca);
         this.marca = marca;
     }
 
@@ -72,13 +78,6 @@ public class Filtro {
     public StatoMacchina getStatoMacchina() {
         return statoMacchina;
     }
-
-    
-
-    
-
-
-    
 }
 
 
