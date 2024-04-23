@@ -56,9 +56,6 @@ public class GestioneAutoViewImpl implements GestioneAutoView{
         listinoAuto = new JList<>(modelloLista);
         listinoAuto.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         listinoAuto.setLayoutOrientation(JList.VERTICAL);
-        // listinoAuto.setCellRenderer(new CustomRenderer<ElementoListino>(
-        //     elem -> elem.getAutomobile().getModello() + " " + elem.getAutomobile().getMarca() + " " + elem.getPrezzo()
-        // ));
         
         listinoAuto.setCellRenderer(new DefaultListCellRenderer() {
             @Override

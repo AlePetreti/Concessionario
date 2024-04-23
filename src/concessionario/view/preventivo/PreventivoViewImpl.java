@@ -50,8 +50,9 @@ public class PreventivoViewImpl implements PreventivoView{
             }
         });
         this.prezzoTotale = new JLabel();
-        panel.add(new JLabel("Prezzo totale: " + prezzoTotale), BorderLayout.WEST);
-        // finire di visuallizare il prezzo
+        panel.add(prezzoTotale, BorderLayout.WEST);
+        
+
 
         // panel per specifiche auto del preventivo
         JPanel panel1 = new JPanel();
