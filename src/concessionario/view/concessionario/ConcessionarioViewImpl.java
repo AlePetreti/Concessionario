@@ -15,7 +15,11 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import concessionario.controller.AutonoleggioController;
 import concessionario.model.Preventivo;
+import concessionario.model.autonoleggio.Autonoleggio;
+import concessionario.model.autonoleggio.auto_noleggio.FactoryAutomobiliNoleggio;
+import concessionario.view.AutonoleggioViewImpl;
 
 
 public class ConcessionarioViewImpl implements ConcessionarioView {
@@ -36,7 +40,7 @@ public class ConcessionarioViewImpl implements ConcessionarioView {
         this.frame.setLayout(new BorderLayout());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout(FlowLayout.LEADING, 200, 10));
+        panel.setLayout(new FlowLayout(FlowLayout.LEADING));
         // bottone anagrafica cliente
         JButton bAnagrafica = new JButton("Anagrafica Cliente");
         panel.add(bAnagrafica);
@@ -59,6 +63,24 @@ public class ConcessionarioViewImpl implements ConcessionarioView {
             }
         });
 
+        JButton bNoleggiaAuto = new JButton("Noleggia Auto");
+        panel.add(bNoleggiaAuto);
+        bNoleggiaAuto.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                notifyEvent(EventoConcessionario.NOLEGGIA_AUTO);
+            }
+        });
+
+        JButton bLeasingAuto = new JButton("Leasing Auto");
+        panel.add(bLeasingAuto);
+        bLeasingAuto.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                notifyEvent(EventoConcessionario.LEASING_AUTO);
+            }
+        });
+
         // panel per mostrare i preventivi completati
         JPanel panel1 = new JPanel();
         panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
@@ -73,11 +95,7 @@ public class ConcessionarioViewImpl implements ConcessionarioView {
             }
             
         });
-        /*modelloLista = new DefaultListModel<>();
-        preventiviCompletati = new JList<>(modelloLista);
-        preventiviCompletati.setLayoutOrientation(JList.VERTICAL);
-        panel1.add(preventiviCompletati);
-        */
+
         panel1.add(Box.createVerticalStrut(10)); // Aggiunge uno spazio verticale tra il pulsante e la tabella
         String nomiColonne[] = {"Marca" , "Modello", "StatoMacchina", "Cognome", "Nome", "Prezzo"};
         modelloTabella = new DefaultTableModel(nomiColonne,0);
@@ -97,6 +115,14 @@ public class ConcessionarioViewImpl implements ConcessionarioView {
         for (ConcessionarioViewObserver concessionarioViewObserver : osservatori) {
             concessionarioViewObserver.eventNotified(tipoEvento);
         }
+        // sarebbe meglio spostarli nel main 
+        if (tipoEvento == EventoConcessionario.NOLEGGIA_AUTO) {
+            Autonoleggio autonoleggio = new Autonoleggio();
+            autonoleggio.getAutomobili().addAll(new FactoryAutomobiliNoleggio().creaAutoRandom());
+            AutonoleggioController autonoleggioController = new AutonoleggioController(autonoleggio);
+            AutonoleggioViewImpl autonoleggioView = new AutonoleggioViewImpl(autonoleggioController);
+            autonoleggioView.setVisible(true);
+        }
     }
 
     @Override
@@ -113,16 +139,6 @@ public class ConcessionarioViewImpl implements ConcessionarioView {
     public void removeObserver(ConcessionarioViewObserver observer) {
         osservatori.remove(observer);
     }
-
-    /*@Override
-    public void mostraPreventiviCompletati(List<Preventivo> preventivi) {
-        modelloLista.clear();
-
-        for(Preventivo preventivo : preventivi) {
-            modelloLista.addElement(preventivo);
-        }
-    }
-    */
 
     @Override
     public void mostraPreventiviCompletati(List<Preventivo> preventivi) {

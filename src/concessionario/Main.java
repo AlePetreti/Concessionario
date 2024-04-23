@@ -9,6 +9,7 @@ import concessionario.model.FactoryPrezzo;
 import concessionario.model.Listino;
 import concessionario.model.RegistroVendite;
 import concessionario.model.automobile.FactoryAutomobile;
+import concessionario.model.autonoleggio.auto_noleggio.FactoryAutomobiliNoleggio;
 import concessionario.model.cliente.AnagraficaClienti;
 import concessionario.model.cliente.FactoryAnagraficaFile;
 import concessionario.model.cliente.FactoryCliente;
@@ -23,8 +24,12 @@ import concessionario.view.concessionario.ConcessionarioViewImpl;
 import concessionario.view.concessionario.ConcessionarioViewObserver;
 import concessionario.view.preventivo.PreventivoView;
 import concessionario.view.preventivo.PreventivoViewImpl;
+import concessionario.view.LeasingAutoView;
+import concessionario.view.LeasingAutoViewImpl;
+import concessionario.controller.LeasingController;
 
 public class Main {
+
     public static void main(String[] args) throws Exception {
 
 
@@ -40,11 +45,13 @@ public class Main {
     final ConcessionarioView view = new ConcessionarioViewImpl();
     final AnagraficaClientiView viewAnagrafica = new AnagraficaClientiViewImpl();
     final GestioneAutoView viewGestioneAuto = new GestioneAutoViewImpl();
+    final LeasingAutoView viewLeasingAuto = new LeasingAutoViewImpl(new FactoryAutomobiliNoleggio());
     final PreventivoView viewPreventivo = new PreventivoViewImpl();
-    final ConcessionarioViewObserver controller = new ConcessionarioController(view, viewAnagrafica, viewGestioneAuto, registroVendite);
+    final ConcessionarioViewObserver controller = new ConcessionarioController(view, viewAnagrafica, viewGestioneAuto, registroVendite, viewLeasingAuto);
     final AnagraficaClientiViewObserver controllerAnagrafica = new AnagraficaClientiController(viewAnagrafica, anagrafica);
     final PreventivoController controllerPreventivo = new PreventivoController(viewPreventivo, anagrafica, concessionario);
     final GestioneAutoViewObserver controllerGestioneAuto = new GestioneAutoController(viewGestioneAuto, listinoAuto, controllerPreventivo);
+    final LeasingController leasingController = new LeasingController(viewLeasingAuto, new FactoryAutomobiliNoleggio());
     view.show();
 
     
@@ -59,9 +66,12 @@ private static void inizializzaAutomobili(Listino listinoAuto, FactoryAutomobile
     }
 }
 
-private static void inizializzaClienti(AnagraficaClienti anagrafica, FactoryAnagraficaFile anagraficaFile, FactoryCliente clientefactory) {
-    for (int i = 0; i < 10; i++) {
-        anagrafica.registraCliente(clientefactory.creaClienteRandom());
+    private static void inizializzaClienti(AnagraficaClienti anagrafica, FactoryAnagraficaFile anagraficaFile, FactoryCliente clientefactory) {
+        for (int i = 0; i < 10; i++) {
+            anagrafica.registraCliente(clientefactory.creaClienteRandom());
+        }
     }
 }
-}
+
+
+

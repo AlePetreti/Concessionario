@@ -5,7 +5,7 @@ import java.util.List;
 import concessionario.model.Preventivo;
 
 public interface ConcessionarioView {
-    
+
     void show();
 
     void addObserver(ConcessionarioViewObserver observer);
