@@ -4,7 +4,7 @@ import concessionario.controller.AnagraficaClientiController;
 import concessionario.controller.ConcessionarioController;
 import concessionario.controller.GestioneAutoController;
 import concessionario.controller.PreventivoController;
-import concessionario.model.Concessionario;
+import concessionario.model.ServizioVendite;
 import concessionario.model.FactoryPrezzo;
 import concessionario.model.Listino;
 import concessionario.model.RegistroVendite;
@@ -39,7 +39,7 @@ public class Main {
     FactoryAutomobile factoryAutomobili = new FactoryAutomobile();
     Listino listinoAuto = new Listino();
     RegistroVendite registroVendite = new RegistroVendite();
-    Concessionario concessionario = new Concessionario(listinoAuto, anagrafica, registroVendite);
+    ServizioVendite concessionario = new ServizioVendite(listinoAuto, anagrafica, registroVendite);
 
     // VIEW
     final ConcessionarioView view = new ConcessionarioViewImpl();

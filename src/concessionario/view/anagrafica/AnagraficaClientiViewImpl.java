@@ -14,12 +14,14 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import concessionario.model.cliente.Cliente;
 
-public class AnagraficaClientiViewImpl implements AnagraficaClientiView{
+public class AnagraficaClientiViewImpl implements AnagraficaClientiView {
 
     private final JFrame frameClienti;
     private final JTable tabella;
@@ -33,14 +35,13 @@ public class AnagraficaClientiViewImpl implements AnagraficaClientiView{
 
     private List<AnagraficaClientiViewObserver> osservatori;
 
-
     public AnagraficaClientiViewImpl() {
         this.osservatori = new LinkedList<>();
         frameClienti = new JFrame("Anagrafica Clienti");
         this.frameClienti.setSize(1280, 720);
         this.frameClienti.setLayout(new BorderLayout());
 
-        // tabvella clienti
+        // tabella clienti
         JPanel panel = new JPanel();
         panel.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -49,9 +50,11 @@ public class AnagraficaClientiViewImpl implements AnagraficaClientiView{
         String[] columnNames = {"CF", "Nome", "Cognome", "Email", "Telefono"};
         model = new DefaultTableModel(columnNames, 0);
         tabella = new JTable(model);
-        panel.add(tabella);
         
-        
+        // Aggiunge la tabella ad un JScrollPane
+        JScrollPane scrollPane = new JScrollPane(tabella);
+        panel.add(scrollPane);
+
         // registrazione clienti
         JPanel panel1 = new JPanel();
         panel1.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -97,7 +100,9 @@ public class AnagraficaClientiViewImpl implements AnagraficaClientiView{
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                notifyEvent(EventoAnagrafica.REGISTRA_CLIENTI);
+                if(isValidInput()) {
+                    notifyEvent(EventoAnagrafica.REGISTRA_CLIENTI);
+                }
             }
         });
         
@@ -126,7 +131,6 @@ public class AnagraficaClientiViewImpl implements AnagraficaClientiView{
             }    
         });
 
-
         this.frameClienti.add(panel, BorderLayout.CENTER);
         this.frameClienti.add(panel1, BorderLayout.LINE_END);
         this.frameClienti.add(panel2, BorderLayout.PAGE_START);
@@ -138,12 +142,47 @@ public class AnagraficaClientiViewImpl implements AnagraficaClientiView{
         }
     }
 
+    private boolean isValidInput() {
+        String nome = nomeCliente.getText().trim();
+        String cognome = cognomeCliente.getText().trim();
+        String email = emailCliente.getText().trim();
+        String telefono = telCliente.getText().trim();
+        String cf = cfCliente.getText().trim();
+
+        if (!nome.matches("[a-zA-Z]+")) {
+            JOptionPane.showMessageDialog(frameClienti, "Il nome deve contenere solo lettere.", "Errore di validazione", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        if (!cognome.matches("[a-zA-Z]+")) {
+            JOptionPane.showMessageDialog(frameClienti, "Il cognome deve contenere solo lettere.", "Errore di validazione", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        if (!email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+            JOptionPane.showMessageDialog(frameClienti, "L'email non è valida.", "Errore di validazione", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        if (!telefono.matches("\\d{10}")) {
+            JOptionPane.showMessageDialog(frameClienti, "Il telefono deve contenere solo numeri e deve essere lungo 10 cifre.", "Errore di validazione", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        if (!cf.matches("[A-Za-z0-9]{16}")) {
+            JOptionPane.showMessageDialog(frameClienti, "Il codice fiscale deve contenere 16 caratteri alfanumerici.", "Errore di validazione", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+
     @Override
     public void mostraAnagraficaClienti() {
         frameClienti.setVisible(true);
         notifyEvent(EventoAnagrafica.ANAGRAFICA_CLIENTI_APERTA);
     }
 
+    @Override
     public void mostraListaClienti(List<Cliente> clienti) {
         model.setRowCount(0);
         for (Cliente cliente : clienti) {
@@ -191,5 +230,4 @@ public class AnagraficaClientiViewImpl implements AnagraficaClientiView{
     public void removeObserver(AnagraficaClientiViewObserver observer) {
         osservatori.remove(observer);
     }
-    
 }

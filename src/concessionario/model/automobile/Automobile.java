@@ -44,7 +44,7 @@ public class Automobile {
         return cavalli;
     }
 
-    public StatoMacchina geStatoMacchina() {
+    public StatoMacchina getStatoMacchina() {
         return statoMacchina;
     }
 

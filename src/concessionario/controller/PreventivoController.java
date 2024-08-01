@@ -2,7 +2,7 @@ package concessionario.controller;
 
 import java.util.Optional;
 
-import concessionario.model.Concessionario;
+import concessionario.model.ServizioVendite;
 import concessionario.model.Preventivo;
 import concessionario.model.automobile.Automobile;
 import concessionario.model.cliente.AnagraficaClienti;
@@ -14,10 +14,10 @@ public class PreventivoController implements PreventivoViewObserver     {
 
     private final PreventivoView view;
     private final AnagraficaClienti anagraficaClienti;
-    private final Concessionario concessionario;
+    private final ServizioVendite concessionario;
     private Optional<Automobile> autoSelezionata;
 
-    public PreventivoController(PreventivoView view, AnagraficaClienti anagraficaClienti, Concessionario concessionario) {
+    public PreventivoController(PreventivoView view, AnagraficaClienti anagraficaClienti, ServizioVendite concessionario) {
         this.view = view;
         this.anagraficaClienti = anagraficaClienti;
         this.concessionario = concessionario;

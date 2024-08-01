@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -21,12 +22,9 @@ import concessionario.model.autonoleggio.Autonoleggio;
 import concessionario.model.autonoleggio.auto_noleggio.FactoryAutomobiliNoleggio;
 import concessionario.view.AutonoleggioViewImpl;
 
-
 public class ConcessionarioViewImpl implements ConcessionarioView {
 
     private final JFrame frame;
-    //private final JList<Preventivo> preventiviCompletati;
-    //private final DefaultListModel<Preventivo> modelloLista;
     private final JTable tabella;
     private final DefaultTableModel modelloTabella;
 
@@ -97,11 +95,13 @@ public class ConcessionarioViewImpl implements ConcessionarioView {
         });
 
         panel1.add(Box.createVerticalStrut(10)); // Aggiunge uno spazio verticale tra il pulsante e la tabella
-        String nomiColonne[] = {"Marca" , "Modello", "StatoMacchina", "Cognome", "Nome", "Prezzo"};
-        modelloTabella = new DefaultTableModel(nomiColonne,0);
+        String nomiColonne[] = {"Marca", "Modello", "StatoMacchina", "Cognome", "Nome", "Prezzo"};
+        modelloTabella = new DefaultTableModel(nomiColonne, 0);
         tabella = new JTable(modelloTabella);
-        panel1.add(tabella);
-
+        
+        // Aggiunge la tabella ad un JScrollPane
+        JScrollPane scrollPane = new JScrollPane(tabella);
+        panel1.add(scrollPane);
 
         this.frame.add(panel, BorderLayout.PAGE_START);
         this.frame.add(panel1, BorderLayout.CENTER);
@@ -142,14 +142,14 @@ public class ConcessionarioViewImpl implements ConcessionarioView {
 
     @Override
     public void mostraPreventiviCompletati(List<Preventivo> preventivi) {
-       modelloTabella.setRowCount(0);
-       for(Preventivo preventivo : preventivi) {
-            Object [] rowData = { preventivo.getAuto().getMarca(),
-                                  preventivo.getAuto().getModello(),
-                                  preventivo.getAuto().geStatoMacchina(),
-                                  preventivo.getCliente().getCognome(),
-                                  preventivo.getCliente().getNome(),
-                                  preventivo.getPrezzoTotale() };
+        modelloTabella.setRowCount(0);
+        for(Preventivo preventivo : preventivi) {
+            Object[] rowData = { preventivo.getAuto().getMarca(),
+                                 preventivo.getAuto().getModello(),
+                                 preventivo.getAuto().getStatoMacchina(),
+                                 preventivo.getCliente().getCognome(),
+                                 preventivo.getCliente().getNome(),
+                                 preventivo.getPrezzoTotale() };
             modelloTabella.addRow(rowData);
         }
     }

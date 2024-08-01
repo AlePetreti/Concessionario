@@ -2,7 +2,6 @@ package concessionario.view.auto;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -13,28 +12,29 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import javax.swing.BorderFactory;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 
 import concessionario.model.ElementoListino;
+import concessionario.model.automobile.Automobile;
 import concessionario.model.automobile.StatoMacchina;
 
-public class GestioneAutoViewImpl implements GestioneAutoView{
+public class GestioneAutoViewImpl implements GestioneAutoView {
 
     private final JFrame frameAuto;
-    private final JList<ElementoListino> listinoAuto;
-    private final DefaultListModel<ElementoListino> modelloLista;
+    private final JTable listinoAuto;
+    private final DefaultTableModel modelloTabella;
     private final JTextField modelloAuto;
     private final JTextField marcaAuto;
     private final JTextField kmAuto;
@@ -42,7 +42,7 @@ public class GestioneAutoViewImpl implements GestioneAutoView{
     private final JTextField cilindrata;
     private final JTextField prezzoMax;
     private List<GestioneAutoViewObserver> osservatori;
-    
+    private List<ElementoListino> listinoCorrente;
 
     public GestioneAutoViewImpl() {
         this.osservatori = new LinkedList<>();
@@ -50,36 +50,35 @@ public class GestioneAutoViewImpl implements GestioneAutoView{
         this.frameAuto.setSize(1280, 720);
         this.frameAuto.setLayout(new BorderLayout());
 
-        // lista delle auto
-        frameAuto.add(new JLabel("Listino Auto"), BorderLayout.NORTH);
-        modelloLista = new DefaultListModel<>();
-        listinoAuto = new JList<>(modelloLista);
-        listinoAuto.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        listinoAuto.setLayoutOrientation(JList.VERTICAL);
-        
-        listinoAuto.setCellRenderer(new DefaultListCellRenderer() {
+        // Creazione del modello della tabella
+        String[] nomiColonne = {"Modello", "Marca", "Km", "Numero Porte", "Cilindrata", "Stato", "Prezzo"};
+        modelloTabella = new DefaultTableModel(nomiColonne, 0) {
             @Override
-            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus){
-                final var c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-                if (value instanceof ElementoListino) {
-                    final var eleme = ((ElementoListino)value);
-                    setText(eleme.getAutomobile().getModello() + " " + eleme.getAutomobile().getMarca() + " " + eleme.getPrezzo());
-                }
-                return c;
+            public boolean isCellEditable(int row, int column) {
+                return false; // Rende tutte le celle non modificabili
             }
-        });
+        };
 
-        listinoAuto.addListSelectionListener(new ListSelectionListener() {
+        // Creazione della tabella
+        listinoAuto = new JTable(modelloTabella);
+        listinoAuto.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
+        // Aggiunta della tabella al frame
+        frameAuto.add(new JLabel("Listino Auto"), BorderLayout.NORTH);
+        frameAuto.add(new JScrollPane(listinoAuto), BorderLayout.CENTER);
+
+        // Aggiunta del listener per la selezione delle righe
+        listinoAuto.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if(!e.getValueIsAdjusting()) {
-                    ElementoListino elementoSelezionato = listinoAuto.getSelectedValue();
-                    if(elementoSelezionato != null) {
+                if (!e.getValueIsAdjusting()) {
+                    int selectedRow = listinoAuto.getSelectedRow();
+                    if (selectedRow != -1) {
+                        ElementoListino elementoSelezionato = listinoCorrente.get(selectedRow);
                         mostraSpecificheAuto(elementoSelezionato);
                     }
                 }
-            }   
+            }
         });
 
         // filtri per cercare un auto
@@ -98,7 +97,7 @@ public class GestioneAutoViewImpl implements GestioneAutoView{
         constraints.gridy = 2;
         // campo per modello auto
         panel2.add(new JLabel("Modello Auto"), constraints);
-        constraints.gridy = 3; 
+        constraints.gridy = 3;
         panel2.add(modelloAuto = new JTextField(), constraints);
         constraints.gridy = 4;
         // campo per KM auto
@@ -130,10 +129,9 @@ public class GestioneAutoViewImpl implements GestioneAutoView{
         panel2.add(bRicerca, constraints);
         constraints.gridy = 14;
         bRicerca.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(checkBoxUsato.isSelected()) {
+                if (checkBoxUsato.isSelected()) {
                     notifyEvent(EventoGestioneAuto.CERCA_AUTO_USATE);
                 } else {
                     notifyEvent(EventoGestioneAuto.CERCA_AUTO);
@@ -141,14 +139,12 @@ public class GestioneAutoViewImpl implements GestioneAutoView{
             }
         });
 
-        this.frameAuto.add(listinoAuto, BorderLayout.CENTER);
         this.frameAuto.add(panel2, BorderLayout.LINE_START);
     }
-    
 
     private void notifyEvent(EventoGestioneAuto tipoEvento) {
         for (GestioneAutoViewObserver gestioneAutoViewObserver : osservatori) {
-            gestioneAutoViewObserver.eventNotified((tipoEvento));
+            gestioneAutoViewObserver.eventNotified(tipoEvento);
         }
     }
 
@@ -165,10 +161,10 @@ public class GestioneAutoViewImpl implements GestioneAutoView{
         panel1.add(new JLabel("Numero porte: " + elemento.getAutomobile().getNumeroPorte()));
         panel1.add(new JLabel("Cilindrata: " + elemento.getAutomobile().getCilindrata()));
         panel1.add(new JLabel("Cavalli: " + elemento.getAutomobile().getCavalli()));
-        if(elemento.getAutomobile().geStatoMacchina().equals(StatoMacchina.USATO)) {
+        if (elemento.getAutomobile().getStatoMacchina().equals(StatoMacchina.USATO)) {
             panel1.add(new JLabel("KM: " + elemento.getAutomobile().getKm()));
         }
-        panel1.add(new JLabel("Stato Auto: " + elemento.getAutomobile().geStatoMacchina()));
+        panel1.add(new JLabel("Stato Auto: " + elemento.getAutomobile().getStatoMacchina()));
         panel1.add(new JLabel("Prezzo: " + elemento.getPrezzo()));
 
         JPanel panelB = new JPanel();
@@ -177,13 +173,11 @@ public class GestioneAutoViewImpl implements GestioneAutoView{
         panelB.add(preButton);
 
         preButton.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 notifyEvent(EventoGestioneAuto.MOSTRA_PREVENTIVO);
                 dialog.dispose();
             }
-            
         });
 
         dialog.add(panel1, BorderLayout.CENTER);
@@ -211,16 +205,31 @@ public class GestioneAutoViewImpl implements GestioneAutoView{
 
     @Override
     public void mostraListino(List<ElementoListino> listino) {
-        modelloLista.clear();
+        modelloTabella.setRowCount(0); // Pulisce la tabella
+        listinoCorrente = listino; // Aggiorna la lista corrente
 
         for (ElementoListino elementoListino : listino) {
-            modelloLista.addElement(elementoListino);
+            Automobile auto = elementoListino.getAutomobile();
+            Object[] row = {
+                auto.getModello(),
+                auto.getMarca(),
+                auto.getKm(),
+                auto.getNumeroPorte(),
+                auto.getCilindrata(),
+                auto.getStatoMacchina(),
+                elementoListino.getPrezzo()
+            };
+            modelloTabella.addRow(row);
         }
     }
 
     @Override
     public ElementoListino getElementoListino() {
-        return listinoAuto.getSelectedValue();
+        int selectedRow = listinoAuto.getSelectedRow();
+        if (selectedRow != -1) {
+            return listinoCorrente.get(selectedRow);
+        }
+        return null;
     }
 
     @Override
@@ -235,7 +244,7 @@ public class GestioneAutoViewImpl implements GestioneAutoView{
 
     @Override
     public Optional<Integer> getKmAuto() {
-        if(kmAuto.getText().isEmpty()) {
+        if (kmAuto.getText().isEmpty()) {
             return Optional.empty();
         } else {
             return Optional.of(Integer.parseInt(kmAuto.getText()));
@@ -244,7 +253,7 @@ public class GestioneAutoViewImpl implements GestioneAutoView{
 
     @Override
     public Optional<Integer> getNumeroPorte() {
-        if(numeroPorte.getText().isEmpty()) {
+        if (numeroPorte.getText().isEmpty()) {
             return Optional.empty();
         } else {
             return Optional.of(Integer.parseInt(numeroPorte.getText()));
@@ -253,7 +262,7 @@ public class GestioneAutoViewImpl implements GestioneAutoView{
 
     @Override
     public Optional<Integer> getCilindrata() {
-        if(cilindrata.getText().isEmpty()) {
+        if (cilindrata.getText().isEmpty()) {
             return Optional.empty();
         } else {
             return Optional.of(Integer.parseInt(cilindrata.getText()));
@@ -262,7 +271,7 @@ public class GestioneAutoViewImpl implements GestioneAutoView{
 
     @Override
     public Optional<Double> getPrezzoMax() {
-        if(prezzoMax.getText().isEmpty()) {
+        if (prezzoMax.getText().isEmpty()) {
             return Optional.empty();
         } else {
             return Optional.of(Double.parseDouble(prezzoMax.getText()));

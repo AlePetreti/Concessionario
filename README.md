@@ -1,3 +1,7 @@
-## casi d'uso
+## cose da fare
 
-- Compra auto da privato: acquisto auto da un privato, l'auto acquistata dal privato viene aggiunta al listino come auto usato col il prezzo pari al prezzo di acquisto o con una logica custom. Il prezzo di acquisto e' il prezzo della la macchina che viene acquistata dal concessioanrio. 
+- Macchine usate da aggiungere o togliere?
+- Riguardare la creazione dei clienti(cambiare?)
+- sistemare le classi fuori directory in apposite directory
+- sistemare modello e view per il prezzo e sconti
+- Test

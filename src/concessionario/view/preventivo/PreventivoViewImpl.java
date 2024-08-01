@@ -108,10 +108,10 @@ public class PreventivoViewImpl implements PreventivoView{
         specificheAutoPreventivo.append("Numero porte: " + auto.getNumeroPorte() + "\n");
         specificheAutoPreventivo.append("Cilindrata: " + auto.getCilindrata() + "\n");
         specificheAutoPreventivo.append("Cavalli: " + auto.getCavalli() + "\n");
-        if (auto.geStatoMacchina().equals(StatoMacchina.USATO)) {
+        if (auto.getStatoMacchina().equals(StatoMacchina.USATO)) {
             specificheAutoPreventivo.append("KM: " + auto.getKm() + "\n");
         }
-        specificheAutoPreventivo.append("Stato Auto: " + auto.geStatoMacchina() + "\n");
+        specificheAutoPreventivo.append("Stato Auto: " + auto.getStatoMacchina() + "\n");
     }
     
     
