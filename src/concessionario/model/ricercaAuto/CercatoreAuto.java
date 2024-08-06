@@ -1,4 +1,5 @@
-package concessionario.model;
+package concessionario.model.ricercaAuto;
+import concessionario.model.Listino;
 import concessionario.model.automobile.StatoMacchina;
 
 

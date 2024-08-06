@@ -2,10 +2,10 @@ package concessionario.controller;
 
 import java.util.Optional;
 
-import concessionario.model.ServizioVendite;
-import concessionario.model.Preventivo;
 import concessionario.model.automobile.Automobile;
 import concessionario.model.cliente.AnagraficaClienti;
+import concessionario.model.repartoVendita.Preventivo;
+import concessionario.model.repartoVendita.ServizioVendite;
 import concessionario.view.preventivo.EventoPreventivo;
 import concessionario.view.preventivo.PreventivoView;
 import concessionario.view.preventivo.PreventivoViewObserver;

@@ -1,5 +1,6 @@
-package concessionario.model;
+package concessionario.model.repartoVendita;
 
+import concessionario.model.Listino;
 import concessionario.model.automobile.Automobile;
 import concessionario.model.automobile.StatoMacchina;
 import concessionario.model.cliente.AnagraficaClienti;

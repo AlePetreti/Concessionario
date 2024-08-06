@@ -1,4 +1,4 @@
-package concessionario.model;
+package concessionario.model.ricercaAuto;
 
 import java.util.Objects;
 

@@ -1,4 +1,4 @@
-package concessionario.model;
+package concessionario.model.repartoVendita;
 
 import java.util.LinkedList;
 import java.util.List;

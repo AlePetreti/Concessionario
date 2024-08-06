@@ -2,7 +2,7 @@ package concessionario.view.concessionario;
 
 import java.util.List;
 
-import concessionario.model.Preventivo;
+import concessionario.model.repartoVendita.Preventivo;
 
 public interface ConcessionarioView {
 

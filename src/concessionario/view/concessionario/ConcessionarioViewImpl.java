@@ -17,9 +17,9 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import concessionario.controller.AutonoleggioController;
-import concessionario.model.Preventivo;
 import concessionario.model.autonoleggio.Autonoleggio;
 import concessionario.model.autonoleggio.auto_noleggio.FactoryAutomobiliNoleggio;
+import concessionario.model.repartoVendita.Preventivo;
 import concessionario.view.AutonoleggioViewImpl;
 
 public class ConcessionarioViewImpl implements ConcessionarioView {
