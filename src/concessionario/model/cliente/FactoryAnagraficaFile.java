@@ -16,7 +16,7 @@ public class FactoryAnagraficaFile implements FactoryAnagraficaCliente{
     @Override
     public AnagraficaClienti creaAnagraficaClienti() {
 
-        AnagraficaClienti anagraficaClienti = new AnagraficaClienti();
+        AnagraficaClienti anagraficaClienti = new AnagraficaClientiImpl();
         String linea = new String();
         BufferedReader bufferedReader = null;
         try {

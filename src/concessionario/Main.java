@@ -9,6 +9,7 @@ import concessionario.model.Listino;
 import concessionario.model.automobile.FactoryAutomobile;
 import concessionario.model.autonoleggio.auto_noleggio.FactoryAutomobiliNoleggio;
 import concessionario.model.cliente.AnagraficaClienti;
+import concessionario.model.cliente.AnagraficaClientiImpl;
 import concessionario.model.cliente.FactoryAnagraficaFile;
 import concessionario.model.cliente.FactoryCliente;
 import concessionario.model.repartoVendita.RegistroVendite;
@@ -33,7 +34,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
 
-    AnagraficaClienti anagrafica = new AnagraficaClienti();
+    AnagraficaClienti anagrafica = new AnagraficaClientiImpl();
     FactoryCliente clientefactory = new FactoryCliente();
     FactoryAnagraficaFile anagraficaFile = new FactoryAnagraficaFile("Elenco_clienti.txt");
     FactoryAutomobile factoryAutomobili = new FactoryAutomobile();
