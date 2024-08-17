@@ -1,4 +1,4 @@
-package concessionario.model;
+package concessionario.model.Leasing;
 
 import java.util.List;
 
