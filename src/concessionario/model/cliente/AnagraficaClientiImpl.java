@@ -13,7 +13,7 @@ public class AnagraficaClientiImpl implements AnagraficaClienti {
     // aggiungi cliente alla lista 
     @Override
     public boolean registraCliente(Cliente cliente) {
-        if(!isPresent(cliente)) {
+        if(!ePresente(cliente)) {
             listaClienti.add(cliente);
             return true;
         }
@@ -34,22 +34,7 @@ public class AnagraficaClientiImpl implements AnagraficaClienti {
         }
         return null;  
     }
-    /**
-     * cerca tutti i clienti che hanno il nome o il cognome uguali a quelli passati
-     * @param nome
-     * @param cognome
-     * @return lista di clienti trovati altrimenti lista vuota
-     */
-    @Override
-    public List<Cliente> cercaClienti(String nome, String cognome) {
-        List<Cliente> clientiTrovati = new LinkedList<Cliente>();
-        for(Cliente e : listaClienti) {
-            if(e.getNome().equalsIgnoreCase(nome) || e.getCognome().equalsIgnoreCase(cognome)){
-                clientiTrovati.add(e);
-            }
-        }
-        return clientiTrovati;
-    }
+    
     /**
      * cerca tutti i clienti che contengono la parola chiave
      * @param parolaChiave
@@ -80,7 +65,7 @@ public class AnagraficaClientiImpl implements AnagraficaClienti {
      * @return TRUE se il cliente é presente nella lista dei clienti
      */
     @Override
-    public boolean isPresent(Cliente cliente) {
+    public boolean ePresente(Cliente cliente) {
         if(listaClienti.contains(cliente)) {
             return true;
         }
