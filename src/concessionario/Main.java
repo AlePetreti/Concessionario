@@ -4,7 +4,6 @@ import concessionario.controller.AnagraficaClientiController;
 import concessionario.controller.ConcessionarioController;
 import concessionario.controller.GestioneAutoController;
 import concessionario.controller.PreventivoController;
-import concessionario.model.FactoryPrezzo;
 import concessionario.model.Listino;
 import concessionario.model.automobile.FactoryAutomobile;
 import concessionario.model.autonoleggio.auto_noleggio.FactoryAutomobiliNoleggio;
@@ -12,6 +11,7 @@ import concessionario.model.cliente.AnagraficaClienti;
 import concessionario.model.cliente.AnagraficaClientiImpl;
 import concessionario.model.cliente.FactoryAnagraficaFile;
 import concessionario.model.cliente.FactoryCliente;
+import concessionario.model.generatorePrezzo.GeneratorePrezzo;
 import concessionario.model.repartoVendita.RegistroVendite;
 import concessionario.model.repartoVendita.ServizioVendite;
 import concessionario.view.anagrafica.AnagraficaClientiView;
@@ -63,7 +63,7 @@ public class Main {
 
 private static void inizializzaAutomobili(Listino listinoAuto, FactoryAutomobile factoryAutomobili) {
     for(int i = 0; i < 10; i++) {
-        listinoAuto.aggiungiAuto(factoryAutomobili.creaAutoRandom(), FactoryPrezzo.generaPrezzo());
+        listinoAuto.aggiungiAuto(factoryAutomobili.creaAutoRandom(), GeneratorePrezzo.generaPrezzo());
     }
 }
 
