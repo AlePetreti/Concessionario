@@ -19,7 +19,7 @@ public class AutonoleggioTest {
         autonoleggio = new Autonoleggio();
 
         // Inizializza l'istanza di AutomobileNoleggio con stato iniziale Disponibile
-        auto = new AutomobileNoleggio("ModelloX", "MarcaY", 4, 2000, 150, DisponibilitàAuto.Disponibile);
+        auto = new AutomobileNoleggio("CooperD", "Mini", 5, 2000, 116, DisponibilitàAuto.Disponibile);
     }
 
     @Test
@@ -30,11 +30,11 @@ public class AutonoleggioTest {
         // Verifica che l'auto sia settata come non disponibile
         assertEquals(DisponibilitàAuto.NonDisponibile, auto.getDisponibilitàAuto());
 
-        // Verifica che il costo di noleggio sia stato impostato
+        // Verifica che il costo del noleggio sia stato impostato
         double costo = auto.getCostoNoleggio();
-        assertTrue(costo >= 60.0 && costo <= 150.0, "Il costo di noleggio dovrebbe essere tra 60.0 e 150.0");
+        assertTrue(costo >= 60.0 && costo <= 150.0, "Il costo del noleggio dovrebbe essere tra 60.0 e 150.0");
 
-        // Attendere per un tempo leggermente superiore a 5 minuti per garantire che il thread di attesa sia passato
+        // Attendere per un tempo superiore a 5 minuti per garantire che il thread di attesa sia passato
         Thread.sleep(6000); 
 
         // Verifica che l'auto diventi disponibile dopo il ritardo
