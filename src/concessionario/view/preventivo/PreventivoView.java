@@ -2,9 +2,9 @@ package concessionario.view.preventivo;
 
 import java.util.List;
 
-import concessionario.model.ElementoListino;
 import concessionario.model.automobile.Automobile;
 import concessionario.model.cliente.Cliente;
+import concessionario.model.listino.ElementoListino;
 
 public interface PreventivoView {
     

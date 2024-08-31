@@ -3,7 +3,7 @@ package concessionario.view.auto;
 import java.util.List;
 import java.util.Optional;
 
-import concessionario.model.ElementoListino;
+import concessionario.model.listino.ElementoListino;
 
 public interface GestioneAutoView {
     

@@ -26,9 +26,9 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-import concessionario.model.ElementoListino;
 import concessionario.model.automobile.Automobile;
 import concessionario.model.automobile.StatoMacchina;
+import concessionario.model.listino.ElementoListino;
 
 public class GestioneAutoViewImpl implements GestioneAutoView {
 

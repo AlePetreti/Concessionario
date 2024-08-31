@@ -1,6 +1,6 @@
 package concessionario.controller;
 
-import concessionario.model.Listino;
+import concessionario.model.listino.Listino;
 import concessionario.model.ricercaAuto.CercatoreAuto;
 import concessionario.model.ricercaAuto.Filtro;
 import concessionario.view.auto.EventoGestioneAuto;

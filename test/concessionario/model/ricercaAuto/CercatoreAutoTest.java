@@ -6,9 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import concessionario.model.Listino;
 import concessionario.model.automobile.Automobile;
 import concessionario.model.automobile.StatoMacchina;
+import concessionario.model.listino.Listino;
 
 public class CercatoreAutoTest {
 

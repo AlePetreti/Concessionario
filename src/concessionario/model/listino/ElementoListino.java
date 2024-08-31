@@ -1,4 +1,4 @@
-package concessionario.model;
+package concessionario.model.listino;
 
 import concessionario.model.automobile.Automobile;
 

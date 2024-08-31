@@ -10,7 +10,7 @@ public class AutomobileNoleggioTest {
 
     @BeforeEach
     public void setUp() {
-        auto = new AutomobileNoleggio("KugA", "Ford", 5, 1600, 120, DisponibilitàAuto.Disponibile);
+        auto = new AutomobileNoleggio("Kuga", "Ford", 5, 1600, 120, DisponibilitàAuto.Disponibile);
     }
 
     @Test

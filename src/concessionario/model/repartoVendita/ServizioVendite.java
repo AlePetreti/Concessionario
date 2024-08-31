@@ -1,10 +1,10 @@
 package concessionario.model.repartoVendita;
 
-import concessionario.model.Listino;
 import concessionario.model.automobile.Automobile;
 import concessionario.model.automobile.StatoMacchina;
 import concessionario.model.cliente.AnagraficaClienti;
 import concessionario.model.cliente.Cliente;
+import concessionario.model.listino.Listino;
 
 public class ServizioVendite {
     private final Listino listino;
