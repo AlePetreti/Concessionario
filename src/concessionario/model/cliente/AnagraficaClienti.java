@@ -12,22 +12,14 @@ public interface AnagraficaClienti {
      * @param cf
      * @return cliente altrimenti null
      */
-    Cliente cercaCliente(String cf);
-
-    /**
-     * cerca tutti i clienti che hanno il nome o il cognome uguali a quelli passati
-     * @param nome
-     * @param cognome
-     * @return lista di clienti trovati altrimenti lista vuota
-     */
-    List<Cliente> cercaClienti(String nome, String cognome);
+    public Cliente cercaCliente(String criterio, StrategiaDiRicerca strategia);
 
     /**
      * cerca tutti i clienti che contengono la parola chiave
      * @param parolaChiave
      * @return lista di clienti trovati altrimenti lista vuota
      */
-    List<Cliente> cercaClienti(String parolaChiave);
+    List<Cliente> cercaClienti(String parolaChiave, StrategiaDiRicerca strategiaDiRicerca);
 
     /**
      * 
@@ -40,6 +32,6 @@ public interface AnagraficaClienti {
      * @param cliente
      * @return TRUE se il cliente é presente nella lista dei clienti
      */
-    boolean isPresent(Cliente cliente);
+    boolean ePresente(Cliente cliente);
 
 }

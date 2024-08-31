@@ -6,3 +6,5 @@
 - sistemare modello e view per il prezzo e sconti
 - officina
 - Test
+- UML
+- Relazione

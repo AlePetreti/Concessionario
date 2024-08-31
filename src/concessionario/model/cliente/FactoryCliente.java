@@ -4,14 +4,22 @@ import java.util.Random;
 
 public class FactoryCliente {
 
+    private static FactoryCliente instance;
     private Random rnd;
-
-    public FactoryCliente() {
+    
+    private FactoryCliente() {
         this.rnd = new Random();
     }
 
-    public Cliente creaClienteRandom() {
+    // Metodo per ottenere l'unica istanza di FactoryCliente
+    public static synchronized FactoryCliente getInstance() {
+        if (instance == null) {
+            instance = new FactoryCliente();
+        }
+        return instance;
+    }
 
+    public Cliente creaClienteRandom() {
         String[] nomi = {"Alessandro", "Andrea", "Giovanni", "Fabio", "Luca", "Ciro"};
         String[] cognomi ={"Petreti", "Rossi", "Bianchi", "Verdi", "Esposito", "Messi"};
         String nome = nomi[rnd.nextInt(nomi.length)];
@@ -19,18 +27,24 @@ public class FactoryCliente {
         String email = nome.toLowerCase() + "." + cognome.toLowerCase() + "@gmail.com";
         String telefono = String.valueOf(3000000000L + rnd.nextInt(1000000000));
         String codiceFiscale = generaCodiceFiscaleRandom();
-        return new Cliente(nome, cognome, email, telefono, codiceFiscale);
+
+        return new Cliente.Builder()
+                .nome(nome)
+                .cognome(cognome)
+                .email(email)
+                .telefono(telefono)
+                .codiceFiscale(codiceFiscale)
+                .build();
     }
 
     private String generaCodiceFiscaleRandom() {
-
-        String cf = new String();
+        StringBuilder cf = new StringBuilder();
         String simboli = "ABCDEFGHIJKLMOPQRSTUVXYZ0123456789";
         for(int i = 0; i < 16; i++) {
-            cf = cf + simboli.charAt(rnd.nextInt(simboli.length()));
+            cf.append(simboli.charAt(rnd.nextInt(simboli.length())));
         }
-        return cf;
+        return cf.toString();
     }
-    
 
 }
+

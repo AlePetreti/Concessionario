@@ -1,4 +1,5 @@
 package concessionario.model.cliente;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -7,83 +8,38 @@ public class AnagraficaClientiImpl implements AnagraficaClienti {
     private final List<Cliente> listaClienti;
 
     public AnagraficaClientiImpl() {
-        listaClienti = new LinkedList<Cliente>();
-
+        listaClienti = new LinkedList<>();
     }
-    // aggiungi cliente alla lista 
+
     @Override
     public boolean registraCliente(Cliente cliente) {
-        if(!isPresent(cliente)) {
+        if (!ePresente(cliente)) {
             listaClienti.add(cliente);
             return true;
         }
-        return false; 
+        return false;
     }
 
-    /**
-     * ricerca un cliente in base al codice fiscale
-     * @param cf
-     * @return cliente altrimenti null
-     */
+    // Usa la strategia di ricerca per codice fiscale
     @Override
-    public Cliente cercaCliente(String cf) {
-        for(Cliente e : listaClienti) {
-            if(e.getCf().equalsIgnoreCase(cf)) {
-                return e;
-            }
-        }
-        return null;  
+    public Cliente cercaCliente(String codiceFiscale, StrategiaDiRicerca strategia) {
+        List<Cliente> risultato = strategia.cerca(listaClienti, codiceFiscale);
+        return risultato.isEmpty() ? null : risultato.get(0);
     }
-    /**
-     * cerca tutti i clienti che hanno il nome o il cognome uguali a quelli passati
-     * @param nome
-     * @param cognome
-     * @return lista di clienti trovati altrimenti lista vuota
-     */
+
+    // Usa la strategia di ricerca per nome o cognome
     @Override
-    public List<Cliente> cercaClienti(String nome, String cognome) {
-        List<Cliente> clientiTrovati = new LinkedList<Cliente>();
-        for(Cliente e : listaClienti) {
-            if(e.getNome().equalsIgnoreCase(nome) || e.getCognome().equalsIgnoreCase(cognome)){
-                clientiTrovati.add(e);
-            }
-        }
-        return clientiTrovati;
+    public List<Cliente> cercaClienti(String parolaChiave, StrategiaDiRicerca strategia) {
+        return strategia.cerca(listaClienti, parolaChiave);
     }
-    /**
-     * cerca tutti i clienti che contengono la parola chiave
-     * @param parolaChiave
-     * @return lista di clienti trovati altrimenti lista vuota
-     */
-    @Override
-    public List<Cliente> cercaClienti(String parolaChiave) {
-        List<Cliente> clientiTrovati = new LinkedList<Cliente>();
-        for(Cliente e : listaClienti) {
-            if(e.getNome().toLowerCase().contains(parolaChiave.toLowerCase()) || 
-               e.getCognome().toLowerCase().contains(parolaChiave.toLowerCase())) {
-                clientiTrovati.add(e);
-            }
-        }
-        return clientiTrovati;
-    }
-    /**
-     * 
-     * @return lista dei clienti
-     */
+
     @Override
     public List<Cliente> getClienti() {
         return new LinkedList<>(listaClienti);
     }
-    /**
-     * 
-     * @param cliente
-     * @return TRUE se il cliente é presente nella lista dei clienti
-     */
+
     @Override
-    public boolean isPresent(Cliente cliente) {
-        if(listaClienti.contains(cliente)) {
-            return true;
-        }
-        return false;
+    public boolean ePresente(Cliente cliente) {
+        return listaClienti.contains(cliente);
     }
 }

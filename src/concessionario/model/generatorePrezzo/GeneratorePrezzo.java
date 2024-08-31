@@ -1,8 +1,8 @@
-package concessionario.model;
+package concessionario.model.generatorePrezzo;
 
 import java.util.Random;
 
-public class FactoryPrezzo {
+public class GeneratorePrezzo {
     private static final double PREZZO_MIN = 10000.0;
     private static final double PREZZO_MAX = 50000.0;
     private static Random rand = new Random();

@@ -25,7 +25,7 @@ public class ServizioVendite {
     * @return il preventivo generato o null se il cliente non è presente
     */
     public Preventivo generaPreventivo(Automobile auto, Cliente cliente) {
-        if(listaClienti.isPresent(cliente)) {
+        if(listaClienti.ePresente(cliente)) {
             double prezzoAuto = listino.getPrezzoAuto(auto);
             return new Preventivo(auto, prezzoAuto, cliente);
         }
