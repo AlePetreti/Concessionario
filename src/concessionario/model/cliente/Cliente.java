@@ -1,20 +1,57 @@
 package concessionario.model.cliente;
 
 public class Cliente {
-
     private String nome;
     private String cognome;
     private String email;
     private String telefono;
     private String codiceFiscale;
     
-    public Cliente(String name, String  cognome, String email, String telefono, String codiceFiscale) {
-        this.nome = name;
-        this.cognome =  cognome;
-        this.email = email;
-        this.telefono = telefono;
-        this.codiceFiscale = codiceFiscale;
+    private Cliente(Builder builder) {
+        this.nome = builder.nome;
+        this.cognome = builder.cognome;
+        this.email = builder.email;
+        this.telefono = builder.telefono;
+        this.codiceFiscale = builder.codiceFiscale;
     }
+    
+    public static class Builder {
+        private String nome;
+        private String cognome;
+        private String email;
+        private String telefono;
+        private String codiceFiscale;
+        
+        public Builder nome(String nome) {
+            this.nome = nome;
+            return this;
+        }
+
+        public Builder cognome(String cognome) {
+            this.cognome = cognome;
+            return this;
+        }
+
+        public Builder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder telefono(String telefono) {
+            this.telefono = telefono;
+            return this;
+        }
+
+        public Builder codiceFiscale(String codiceFiscale) {
+            this.codiceFiscale = codiceFiscale;
+            return this;
+        }
+
+        public Cliente build() {
+            return new Cliente(this);
+        } 
+        
+    }    
 
     public String getNome() {
         return nome;

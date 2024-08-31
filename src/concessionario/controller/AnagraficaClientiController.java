@@ -5,11 +5,12 @@ import java.util.List;
 
 import concessionario.model.cliente.AnagraficaClienti;
 import concessionario.model.cliente.Cliente;
+import concessionario.model.cliente.StrategiaRicercaPerCf;
 import concessionario.view.anagrafica.AnagraficaClientiView;
 import concessionario.view.anagrafica.AnagraficaClientiViewObserver;
 import concessionario.view.anagrafica.EventoAnagrafica;
 
-public class AnagraficaClientiController implements AnagraficaClientiViewObserver{
+public class AnagraficaClientiController implements AnagraficaClientiViewObserver {
 
     private final AnagraficaClientiView view;
     private final AnagraficaClienti anagraficaClienti;
@@ -25,28 +26,35 @@ public class AnagraficaClientiController implements AnagraficaClientiViewObserve
         switch (e) {
             case ANAGRAFICA_CLIENTI_APERTA:
                 view.mostraListaClienti(anagraficaClienti.getClienti());
-            break; 
+                break;
             case REGISTRA_CLIENTI:
-                Cliente nuovoCliente = new Cliente(view.getNomeInserito(), view.getCognomeInserito(), view.getEmailInserita(),
-                                                   view.getTelefonoInserito(), view.getCfInserito());
+                Cliente nuovoCliente = new Cliente.Builder()
+                    .nome(view.getNomeInserito())
+                    .cognome(view.getCognomeInserito())
+                    .email(view.getEmailInserita())
+                    .telefono(view.getTelefonoInserito())
+                    .codiceFiscale(view.getCfInserito())
+                    .build();
+                
                 anagraficaClienti.registraCliente(nuovoCliente);
                 view.mostraListaClienti(anagraficaClienti.getClienti());
-            break;
+                break;
             case CERCA_CLIENTI:
                 List<Cliente> clientiTrovati = anagraficaClienti.cercaClienti(view.getParolaChiave());
                 view.mostraListaClienti(clientiTrovati);
-            break;
+                break;
             case CERCA_CLIENTI_CF: {
-                Cliente clienteTrovato = anagraficaClienti.cercaCliente(view.getParolaChiave());
-                if(clienteTrovato != null) {
+                // Usa la strategia di ricerca per codice fiscale
+                Cliente clienteTrovato = anagraficaClienti.cercaCliente(view.getParolaChiave(), new StrategiaRicercaPerCf());
+                if (clienteTrovato != null) {
                     view.mostraListaClienti(Collections.singletonList(clienteTrovato));
-                }else {
+                } else {
                     view.mostraListaClienti(Collections.emptyList());
                 }
                 break;
             }
-            default: 
-            break;    
+            default:
+                break;
         }
     }
 }

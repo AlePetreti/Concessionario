@@ -12,7 +12,7 @@ public interface AnagraficaClienti {
      * @param cf
      * @return cliente altrimenti null
      */
-    Cliente cercaCliente(String cf);
+    public Cliente cercaCliente(String criterio, StrategiaDiRicerca strategia);
 
     /**
      * cerca tutti i clienti che contengono la parola chiave
