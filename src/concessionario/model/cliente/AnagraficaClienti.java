@@ -19,7 +19,7 @@ public interface AnagraficaClienti {
      * @param parolaChiave
      * @return lista di clienti trovati altrimenti lista vuota
      */
-    List<Cliente> cercaClienti(String parolaChiave);
+    List<Cliente> cercaClienti(String parolaChiave, StrategiaDiRicerca strategiaDiRicerca);
 
     /**
      * 

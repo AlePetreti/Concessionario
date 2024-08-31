@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface StrategiaDiRicerca {
     
-    Cliente cerca(List<Cliente> clienti, String criterio);
+    List<Cliente> cerca(List<Cliente> clienti, String criterio);
 }

@@ -13,28 +13,24 @@ public class AnagraficaClientiImpl implements AnagraficaClienti {
 
     @Override
     public boolean registraCliente(Cliente cliente) {
-        if(!ePresente(cliente)) {
+        if (!ePresente(cliente)) {
             listaClienti.add(cliente);
             return true;
         }
-        return false; 
+        return false;
     }
 
+    // Usa la strategia di ricerca per codice fiscale
     @Override
-    public Cliente cercaCliente(String codiceFiscale, StrategiaDiRicerca CercaTramiteCf) {
-        return CercaTramiteCf.cerca(listaClienti, codiceFiscale);
+    public Cliente cercaCliente(String codiceFiscale, StrategiaDiRicerca strategia) {
+        List<Cliente> risultato = strategia.cerca(listaClienti, codiceFiscale);
+        return risultato.isEmpty() ? null : risultato.get(0);
     }
 
+    // Usa la strategia di ricerca per nome o cognome
     @Override
-    public List<Cliente> cercaClienti(String parolaChiave) {
-        List<Cliente> clientiTrovati = new LinkedList<>();
-        for(Cliente e : listaClienti) {
-            if(e.getNome().toLowerCase().contains(parolaChiave.toLowerCase()) || 
-               e.getCognome().toLowerCase().contains(parolaChiave.toLowerCase())) { 
-                clientiTrovati.add(e);
-            }
-        }
-        return clientiTrovati;
+    public List<Cliente> cercaClienti(String parolaChiave, StrategiaDiRicerca strategia) {
+        return strategia.cerca(listaClienti, parolaChiave);
     }
 
     @Override

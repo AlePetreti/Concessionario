@@ -20,13 +20,25 @@ public class AnagraficaTest {
     @BeforeEach
     public void init() {
         anagraficaClienti = new AnagraficaClientiImpl();
-        cliente = new Cliente("Mario", "Rossi", "mario.rossi@example.com", "1234567890", "MRORSS80A01H501T");
-        cliente2 = new Cliente("Luigi", "Verdi", "luigi.verdi@example.com", "0987654321", "VRDLGU80A01H501Z");
+        cliente = new Cliente.Builder()
+                .nome("Mario")
+                .cognome("Rossi")
+                .email("mario.rossi@example.com")
+                .telefono("1234567890")
+                .codiceFiscale("MRORSS80A01H501T")
+                .build();
+
+        cliente2 = new Cliente.Builder()
+                .nome("Luigi")
+                .cognome("Verdi")
+                .email("luigi.verdi@example.com")
+                .telefono("0987654321")
+                .codiceFiscale("VRDLGU80A01H501Z")
+                .build();
     }
 
     @Test
     public void testRegistraClienteSuccesso() {
-
         assertTrue(anagraficaClienti.registraCliente(cliente));
         assertTrue(anagraficaClienti.registraCliente(cliente2));
         List<Cliente> clienti = anagraficaClienti.getClienti();
@@ -45,7 +57,7 @@ public class AnagraficaTest {
     @Test
     public void testCercaClienteSuccesso() {
         anagraficaClienti.registraCliente(cliente);
-        Cliente trovato = anagraficaClienti.cercaCliente("MRORSS80A01H501T");
+        Cliente trovato = anagraficaClienti.cercaCliente("MRORSS80A01H501T", new StrategiaRicercaPerCf());
         assertNotNull(trovato);
         assertEquals(cliente, trovato);
     }
@@ -53,7 +65,7 @@ public class AnagraficaTest {
     @Test
     public void testCercaClienteNonTrovato() {
         anagraficaClienti.registraCliente(cliente);
-        Cliente trovato = anagraficaClienti.cercaCliente("VRDLGU80A01H501Z");
+        Cliente trovato = anagraficaClienti.cercaCliente("VRDLGU80A01H501Z", new StrategiaRicercaPerCf());
         assertNull(trovato);
     }
 
@@ -61,7 +73,7 @@ public class AnagraficaTest {
     public void testCercaClientiSuccesso() {
         anagraficaClienti.registraCliente(cliente);
         anagraficaClienti.registraCliente(cliente2);
-        List<Cliente> trovati = anagraficaClienti.cercaClienti("Mario");
+        List<Cliente> trovati = anagraficaClienti.cercaClienti("Mario", new StrategiaRicercaPerNomeOCognome());
         assertEquals(1, trovati.size());
         assertEquals(cliente, trovati.get(0));
     }
@@ -70,7 +82,7 @@ public class AnagraficaTest {
     public void testCercaClientiParolaChiaveNonTrovata() {
         anagraficaClienti.registraCliente(cliente);
         anagraficaClienti.registraCliente(cliente2);
-        List<Cliente> trovati = anagraficaClienti.cercaClienti("Giovanni");
+        List<Cliente> trovati = anagraficaClienti.cercaClienti("Giovanni", new StrategiaRicercaPerNomeOCognome());
         assertTrue(trovati.isEmpty());
     }
 
@@ -84,7 +96,14 @@ public class AnagraficaTest {
         assertTrue(clienti.contains(cliente2));
 
         // Verifico che la lista restituita sia una copia e non la lista originale
-        clienti.add(new Cliente("Giovanni", "Bianchi", "giovanni.bianchi@example.com", "0987654322", "BNCGVN80A01H501L"));
+        clienti.add(new Cliente.Builder()
+            .nome("Giovanni")
+            .cognome("Bianchi")
+            .email("giovanni.bianchi@example.com")
+            .telefono("0987654322")
+            .codiceFiscale("BNCGVN80A01H501L")
+            .build());
+
         assertEquals(2, anagraficaClienti.getClienti().size());
     }
 }

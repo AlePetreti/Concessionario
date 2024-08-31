@@ -6,6 +6,7 @@ import java.util.List;
 import concessionario.model.cliente.AnagraficaClienti;
 import concessionario.model.cliente.Cliente;
 import concessionario.model.cliente.StrategiaRicercaPerCf;
+import concessionario.model.cliente.StrategiaRicercaPerNomeOCognome;
 import concessionario.view.anagrafica.AnagraficaClientiView;
 import concessionario.view.anagrafica.AnagraficaClientiViewObserver;
 import concessionario.view.anagrafica.EventoAnagrafica;
@@ -35,17 +36,19 @@ public class AnagraficaClientiController implements AnagraficaClientiViewObserve
                     .telefono(view.getTelefonoInserito())
                     .codiceFiscale(view.getCfInserito())
                     .build();
-                
+
                 anagraficaClienti.registraCliente(nuovoCliente);
                 view.mostraListaClienti(anagraficaClienti.getClienti());
                 break;
             case CERCA_CLIENTI:
-                List<Cliente> clientiTrovati = anagraficaClienti.cercaClienti(view.getParolaChiave());
+                // Usa la strategia di ricerca per nome o cognome
+                List<Cliente> clientiTrovati = anagraficaClienti.cercaClienti(view.getParolaChiave(), new StrategiaRicercaPerNomeOCognome());
                 view.mostraListaClienti(clientiTrovati);
                 break;
             case CERCA_CLIENTI_CF: {
                 // Usa la strategia di ricerca per codice fiscale
-                Cliente clienteTrovato = anagraficaClienti.cercaCliente(view.getParolaChiave(), new StrategiaRicercaPerCf());
+                Cliente clienteTrovato = anagraficaClienti.cercaCliente(
+                    view.getParolaChiave(), new StrategiaRicercaPerCf());
                 if (clienteTrovato != null) {
                     view.mostraListaClienti(Collections.singletonList(clienteTrovato));
                 } else {

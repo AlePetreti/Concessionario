@@ -13,7 +13,8 @@ public class FactoryClienteTest {
 
     @BeforeEach
     public void init() {
-        factory = new FactoryCliente();
+        // Ottieni l'istanza Singleton di FactoryCliente
+        factory = FactoryCliente.getInstance();
     }
 
     @Test
@@ -65,6 +66,7 @@ public class FactoryClienteTest {
         assertTrue(codiceFiscale.matches("[A-Z0-9]{16}"), "Il codice fiscale dovrebbe contenere solo lettere maiuscole e numeri");
     }
 
+    // Metodo di utilità per verificare se un valore è in un array
     private boolean isValueInArray(String value, String[] array) {
         for (String s : array) {
             if (s.equals(value)) {

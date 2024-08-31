@@ -1,16 +1,16 @@
 package concessionario.model.cliente;
 
+import java.util.Collections;
 import java.util.List;
 
 public class StrategiaRicercaPerCf implements StrategiaDiRicerca{
 
-    @Override
-    public Cliente cerca(List<Cliente> clienti, String codiceFiscale) {
+     public List<Cliente> cerca(List<Cliente> clienti, String codiceFiscale) {
         for (Cliente cliente : clienti) {
             if (cliente.getCf().equalsIgnoreCase(codiceFiscale)) {
-                return cliente;
+                return Collections.singletonList(cliente);
             }
         }
-        return null;
+        return Collections.emptyList();
     }
 }
