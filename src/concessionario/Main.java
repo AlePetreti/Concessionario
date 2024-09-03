@@ -24,8 +24,8 @@ import concessionario.view.concessionario.ConcessionarioViewImpl;
 import concessionario.view.concessionario.ConcessionarioViewObserver;
 import concessionario.view.preventivo.PreventivoView;
 import concessionario.view.preventivo.PreventivoViewImpl;
-import concessionario.view.LeasingAutoView;
-import concessionario.view.LeasingAutoViewImpl;
+import concessionario.view.leasing.LeasingAutoView;
+import concessionario.view.leasing.LeasingAutoViewImpl;
 import concessionario.controller.LeasingController;
 
 public class Main {

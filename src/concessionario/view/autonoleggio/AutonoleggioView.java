@@ -1,4 +1,4 @@
-package concessionario.view;
+package concessionario.view.autonoleggio;
 
 import concessionario.view.concessionario.ConcessionarioViewObserver;
 

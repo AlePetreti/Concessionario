@@ -6,7 +6,7 @@ import concessionario.view.concessionario.ConcessionarioView;
 import concessionario.view.concessionario.ConcessionarioViewObserver;
 import concessionario.view.concessionario.EventoConcessionario;
 import concessionario.model.repartoVendita.RegistroVendite;
-import concessionario.view.LeasingAutoView; 
+import concessionario.view.leasing.LeasingAutoView; 
 
 public class ConcessionarioController implements ConcessionarioViewObserver {
 

@@ -20,7 +20,7 @@ import concessionario.controller.AutonoleggioController;
 import concessionario.model.autonoleggio.Autonoleggio;
 import concessionario.model.autonoleggio.auto_noleggio.FactoryAutomobiliNoleggio;
 import concessionario.model.repartoVendita.Preventivo;
-import concessionario.view.AutonoleggioViewImpl;
+import concessionario.view.autonoleggio.AutonoleggioViewImpl;
 
 public class ConcessionarioViewImpl implements ConcessionarioView {
 

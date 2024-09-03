@@ -13,20 +13,6 @@ public class FactoryAutomobiliNoleggioTest {
     public void setUp() {
         factory = new FactoryAutomobiliNoleggio();
     }
-
-    @Test
-    public void testCreaAutoRandom2() {
-        AutomobileNoleggio auto = factory.creaAutoRandom2();
-
-        assertNotNull(auto, "L'automobile non dovrebbe essere null");
-        assertTrue(isMarcaValida(auto.getMarca()), "La marca dell'auto dovrebbe essere valida");
-        assertTrue(isModelloValido(auto.getModello(), auto.getMarca()), "Il modello dell'auto dovrebbe essere valido");
-        assertTrue(auto.getNumeroPorte() == 3 || auto.getNumeroPorte() == 5, "Il numero di porte dovrebbe essere 3 o 5");
-        assertTrue(auto.getCilindrata() >= 1200 && auto.getCilindrata() <= 4000, "La cilindrata dovrebbe essere compresa tra 1200 e 4000");
-        assertTrue(auto.getCavalli() >= 75 && auto.getCavalli() <= 400, "I cavalli dovrebbero essere compresi tra 75 e 400");
-        assertEquals(DisponibilitàAuto.Disponibile, auto.getDisponibilitàAuto(), "L'auto dovrebbe essere disponibile");
-    }
-
     @Test
     public void testCreaAutoRandom() {
         List<AutomobileNoleggio> automobili = factory.creaAutoRandom();

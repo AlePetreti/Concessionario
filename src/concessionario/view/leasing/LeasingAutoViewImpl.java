@@ -1,4 +1,4 @@
-package concessionario.view;
+package concessionario.view.leasing;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

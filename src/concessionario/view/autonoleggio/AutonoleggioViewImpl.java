@@ -1,4 +1,4 @@
-package concessionario.view;
+package concessionario.view.autonoleggio;
 
 
 import concessionario.controller.AutonoleggioController;
@@ -130,10 +130,9 @@ public class AutonoleggioViewImpl extends JFrame implements AutonoleggioView{
     public void removeObserver(ConcessionarioViewObserver observer) {
         osservatori.remove(observer);
     }
-
+ 
     @Override
     public void autonoleggioView() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'autonoleggioView'");
     }
 }
