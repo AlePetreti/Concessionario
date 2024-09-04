@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import concessionario.model.automobile.Automobile;
+import concessionario.model.automobile.GeneratoreTarga;
 import concessionario.model.automobile.StatoMacchina;
 import concessionario.model.cliente.Cliente;
 
@@ -23,7 +24,7 @@ public class RegistroVenditeTest {
         registroVendite = new RegistroVendite();
 
         // Inizializzazione degli oggetti per i test
-        Automobile auto1 = new Automobile("Classe A", "Mercedes", 0, 5, 1600, 120, StatoMacchina.NUOVO);
+        Automobile auto1 = new Automobile("Classe A", "Mercedes", 0, 5, 1600, 120, GeneratoreTarga.generateTarga(), StatoMacchina.NUOVO);
         Cliente cliente1 = new Cliente.Builder()
                 .nome("Mario")
                 .cognome("Rossi")
@@ -33,7 +34,7 @@ public class RegistroVenditeTest {
                 .build();
         preventivo1 = new Preventivo(auto1, 25000.0, cliente1);
 
-        Automobile auto2 = new Automobile("Punto", "Fiat", 0, 5, 1200, 75, StatoMacchina.NUOVO);
+        Automobile auto2 = new Automobile("Punto", "Fiat", 0, 5, 1200, 75, GeneratoreTarga.generateTarga(), StatoMacchina.NUOVO);
         Cliente cliente2 = new Cliente.Builder()
                 .nome("Luigi")
                 .cognome("Verdi")

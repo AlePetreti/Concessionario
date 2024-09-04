@@ -6,5 +6,6 @@ public enum EventoConcessionario {
     GESTIONE_AUTO,
     AGGIORNA_VENDITE,
     NOLEGGIA_AUTO,
-    LEASING_AUTO
+    LEASING_AUTO, 
+    RIPARA_AUTO
 }

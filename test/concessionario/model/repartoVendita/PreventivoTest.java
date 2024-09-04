@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import concessionario.model.automobile.Automobile;
+import concessionario.model.automobile.GeneratoreTarga;
 import concessionario.model.automobile.StatoMacchina;
 import concessionario.model.cliente.Cliente;
 
@@ -17,7 +18,7 @@ public class PreventivoTest {
     @BeforeEach
     public void init() {
         // Inizializzazione di Automobile e Cliente
-        auto = new Automobile("Classe A", "Mercedes", 0, 5, 2000, 500, StatoMacchina.NUOVO);
+        auto = new Automobile("Classe A", "Mercedes", 0, 5, 2000, 500,GeneratoreTarga.generateTarga(), StatoMacchina.NUOVO);
         cliente = new Cliente.Builder()
                 .nome("Mario")
                 .cognome("Rossi")
