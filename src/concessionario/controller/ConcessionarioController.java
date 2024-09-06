@@ -56,6 +56,7 @@ public class ConcessionarioController implements ConcessionarioViewObserver {
                 break;
             case AGGIORNA_VENDITE:
                 view.mostraPreventiviCompletati(registroVendite.getListaPreventivi());
+                break;
             case RIPARA_AUTO:
                 // Recupera le auto usate e le mostra nella vista dell'officina
                 viewOfficina.mostraAutoDisponibili(officina.getAutoUsate().getListino().stream()
