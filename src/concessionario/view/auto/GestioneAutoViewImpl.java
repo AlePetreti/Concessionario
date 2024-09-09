@@ -164,6 +164,7 @@ public class GestioneAutoViewImpl implements GestioneAutoView {
         if (elemento.getAutomobile().getStatoMacchina().equals(StatoMacchina.USATO)) {
             panel1.add(new JLabel("KM: " + elemento.getAutomobile().getKm()));
         }
+        panel1.add(new JLabel("Targa: " + elemento.getAutomobile().getTarga()));
         panel1.add(new JLabel("Stato Auto: " + elemento.getAutomobile().getStatoMacchina()));
         panel1.add(new JLabel("Prezzo: " + elemento.getPrezzo()));
 

@@ -23,8 +23,30 @@ public class FactoryAutomobile {
         int numeroPorteAuto = numeroPorte[rnd.nextInt(numeroPorte.length)];
         int cilindrataAuto = cilindrata[rnd.nextInt(cilindrata.length)];
         int cavalliAuto = cavalli[rnd.nextInt(cavalli.length)];
-        return new Automobile(modelloAuto, marcaAuto, 0, numeroPorteAuto, cilindrataAuto, cavalliAuto, StatoMacchina.NUOVO); 
+        return new Automobile(modelloAuto, marcaAuto, 0, numeroPorteAuto, cilindrataAuto, cavalliAuto, GeneratoreTarga.generateTarga(),StatoMacchina.NUOVO); 
     }
+    
+    
+    
+    public Automobile creaAutoRandomUsata() {
+    	
+    	String[] marche = {"MERCEDES", "FIAT", "TOYOTA", "AUDI", "VOLKSWAGEN", "ALFAROMEO", "SUZUKI"};
+        int[] numeroPorte = {3,5};
+        int[] cilindrata = {1200, 1400, 1600, 1900, 2000, 2200, 3000, 4000};
+        int[] cavalli = {75, 90, 116, 120, 150, 190, 210, 350, 400};
+        String marcaAuto = marche[rnd.nextInt(marche.length)];
+        String modelloAuto = selezionaModello(marcaAuto);
+        int numeroPorteAuto = numeroPorte[rnd.nextInt(numeroPorte.length)];
+        int cilindrataAuto = cilindrata[rnd.nextInt(cilindrata.length)];
+        int cavalliAuto = cavalli[rnd.nextInt(cavalli.length)];
+        return new Automobile(modelloAuto, marcaAuto, 0, numeroPorteAuto, cilindrataAuto, cavalliAuto, GeneratoreTarga.generateTarga(),StatoMacchina.USATO); 
+    	
+    }
+    
+
+    
+    
+    
     
     private String selezionaModello(String marca) {
         

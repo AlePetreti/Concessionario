@@ -42,4 +42,11 @@ public class Listino {
     public List<ElementoListino> getListino() {
         return new LinkedList<>(listino);
     }
+	
+    
+    public boolean rimuoviAuto(Automobile auto) {
+        return listino.removeIf(e -> e.getAutomobile().equals(auto));
+    }
+    
+    
 }
