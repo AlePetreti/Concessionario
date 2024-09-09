@@ -5,14 +5,14 @@ import concessionario.view.auto.GestioneAutoView;
 import concessionario.view.concessionario.ConcessionarioView;
 import concessionario.view.concessionario.ConcessionarioViewObserver;
 import concessionario.view.concessionario.EventoConcessionario;
+import concessionario.view.leasing.LeasingAutoView;
 import concessionario.view.officina.OfficinaView;
 
 import java.util.stream.Collectors;
 
 import concessionario.model.listino.ElementoListino;
 import concessionario.model.officina.OfficinaModel;
-import concessionario.model.repartoVendita.RegistroVendite;
-import concessionario.view.LeasingAutoView; 
+import concessionario.model.repartoVendita.RegistroVendite; 
 
 public class ConcessionarioController implements ConcessionarioViewObserver {
 

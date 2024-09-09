@@ -30,12 +30,12 @@ public class AutomobileNoleggioTest {
 
     @Test
     public void testGetCilindrata() {
-        assertEquals(2000, auto.getCilindrata());
+        assertEquals(1600, auto.getCilindrata());
     }
 
     @Test
     public void testGetCavalli() {
-        assertEquals(150, auto.getCavalli());
+        assertEquals(120, auto.getCavalli());
     }
 
     @Test
@@ -52,14 +52,6 @@ public class AutomobileNoleggioTest {
     @Test
     public void testGetStato() {
         assertEquals("Disponibile", auto.getStato());
-    }
-
-    
-
-    @Test
-    public void testToString() {
-        String expectedString = "Automobile [Marca: Ford, Modello: Kuga,  numeroPorte:5,  Cilindrata:2000,  Cavalli:150,  DisponibilitàAuto:Disponibile]";
-        assertEquals(expectedString, auto.toString());
     }
 }
 

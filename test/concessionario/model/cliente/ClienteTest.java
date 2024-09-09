@@ -14,7 +14,6 @@ public class ClienteTest {
 
     @BeforeEach
     public void init() {
-        // Utilizzo del Builder per creare gli oggetti Cliente
         cliente = new Cliente.Builder()
                 .nome("Mario")
                 .cognome("Rossi")

@@ -8,39 +8,35 @@ import concessionario.model.listino.Listino;
 
 public class ServizioVendite {
     private final Listino listino;
+    private final Listino listinoUsato;
     private final AnagraficaClienti listaClienti;
     private final RegistroVendite registroVendite;
 
-    public ServizioVendite(Listino listino, AnagraficaClienti listaClienti, RegistroVendite registroVendite) {
+    public ServizioVendite(Listino listino, Listino listinoUsato, AnagraficaClienti listaClienti, RegistroVendite registroVendite) {
         this.listino = listino;
+        this.listinoUsato = listinoUsato;
         this.listaClienti = listaClienti;
         this.registroVendite = registroVendite;
     }
-        
-    /**
-    * Genera un preventivo per una determinata automobile e cliente.
-    *
-    * @param auto l'automobile per cui generare il preventivo
-    * @param cliente il cliente a cui il preventivo è destinato
-    * @return il preventivo generato o null se il cliente non è presente
-    */
+    
     public Preventivo generaPreventivo(Automobile auto, Cliente cliente) {
         if(listaClienti.ePresente(cliente)) {
-            double prezzoAuto = listino.getPrezzoAuto(auto);
+            double prezzoAuto;
+            if (auto.getStatoMacchina().equals(StatoMacchina.USATO)) {
+                prezzoAuto = listinoUsato.getPrezzoAuto(auto);
+            } else {
+                prezzoAuto = listino.getPrezzoAuto(auto);
+            }
             return new Preventivo(auto, prezzoAuto, cliente);
         }
         return null;
     }
     
-    /**
-    * Vende un'automobile basata su un preventivo.
-    *
-    * @param preventivo il preventivo su cui si basa la vendita
-    * @return true se la vendita è stata registrata correttamente
-    */
     public boolean vendiAuto(Preventivo preventivo) {
-        if(preventivo.getAuto().getStatoMacchina().equals(StatoMacchina.USATO)) {
-            // rimuovi auto usata dalla lista di auto usate
+        Automobile auto = preventivo.getAuto();
+        
+        if(auto.getStatoMacchina().equals(StatoMacchina.USATO)) {
+            listinoUsato.rimuoviAuto(auto);
         }
         registroVendite.addPreventivo(preventivo);
         return true;

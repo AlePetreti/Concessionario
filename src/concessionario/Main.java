@@ -23,11 +23,11 @@ import concessionario.view.auto.GestioneAutoViewObserver;
 import concessionario.view.concessionario.ConcessionarioView;
 import concessionario.view.concessionario.ConcessionarioViewImpl;
 import concessionario.view.concessionario.ConcessionarioViewObserver;
+import concessionario.view.leasing.LeasingAutoView;
+import concessionario.view.leasing.LeasingAutoViewImpl;
 import concessionario.view.officina.OfficinaView;
 import concessionario.view.preventivo.PreventivoView;
 import concessionario.view.preventivo.PreventivoViewImpl;
-import concessionario.view.LeasingAutoView;
-import concessionario.view.LeasingAutoViewImpl;
 import concessionario.controller.LeasingController;
 import concessionario.controller.OfficinaController;
 
@@ -35,20 +35,18 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        // Creazione delle istanze utilizzando il Singleton Pattern
         FactoryCliente factoryCliente = FactoryCliente.getInstance();
         FactoryAutomobile factoryAutomobile = new FactoryAutomobile();
         
-        // Inizializzazione dei modelli
         AnagraficaClienti anagrafica = new AnagraficaClientiImpl();
         Listino listinoAuto = new Listino();
         Listino listinoUsato = new Listino();
         RegistroVendite registroVendite = new RegistroVendite();
-        ServizioVendite concessionario = new ServizioVendite(listinoAuto, anagrafica, registroVendite);
+        ServizioVendite concessionario = new ServizioVendite(listinoAuto, listinoUsato, anagrafica, registroVendite);
         OfficinaModel officina = new OfficinaModel(listinoUsato);
         
         // VIEW
-        final OfficinaView  officinaView = new OfficinaView();
+        final OfficinaView officinaView = new OfficinaView();
         final ConcessionarioView view = new ConcessionarioViewImpl();
         final AnagraficaClientiView viewAnagrafica = new AnagraficaClientiViewImpl();
         final GestioneAutoView viewGestioneAuto = new GestioneAutoViewImpl();
@@ -57,7 +55,7 @@ public class Main {
         final ConcessionarioViewObserver controller = new ConcessionarioController(view, viewAnagrafica, viewGestioneAuto, registroVendite, viewLeasingAuto, officinaView, officina);
         final AnagraficaClientiViewObserver controllerAnagrafica = new AnagraficaClientiController(viewAnagrafica, anagrafica);
         final PreventivoController controllerPreventivo = new PreventivoController(viewPreventivo, anagrafica, concessionario);
-        final GestioneAutoViewObserver controllerGestioneAuto = new GestioneAutoController(viewGestioneAuto, listinoAuto, controllerPreventivo);
+        final GestioneAutoController controllerGestioneAuto = new GestioneAutoController(viewGestioneAuto, listinoAuto, listinoUsato, controllerPreventivo);
         final LeasingController leasingController = new LeasingController(viewLeasingAuto, new FactoryAutomobiliNoleggio());
         final OfficinaController officinaController = new OfficinaController(officina, officinaView);
         view.show();
@@ -80,7 +78,6 @@ public class Main {
         }
     }
 
-    
     private static void inizializzaClienti(AnagraficaClienti anagrafica, FactoryCliente factoryCliente) {
         for (int i = 0; i < 10; i++) {
             anagrafica.registraCliente(factoryCliente.creaClienteRandom());

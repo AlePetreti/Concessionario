@@ -1,10 +1,6 @@
 ## cose da fare
 
-- Macchine usate da aggiungere o togliere?
-- Riguardare la creazione dei clienti(cambiare?)
-- sistemare le classi fuori directory in apposite directory
-- sistemare modello e view per il prezzo e sconti
-- officina
-- Test
-- UML
-- Relazione
+- sistemare prezzo sulla view
+- decidere se fare il filtro anche per le auto usate(ochhio ci sono dei problemi)
+- sistemare testNoleggioAuto()
+- controllare commenti in generale

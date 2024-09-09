@@ -1,4 +1,4 @@
-package concessionario.view;
+package concessionario.view.autonoleggio;
 
 
 import concessionario.controller.AutonoleggioController;
@@ -32,7 +32,6 @@ public class AutonoleggioViewImpl extends JFrame implements AutonoleggioView{
         setLayout(new BorderLayout());
         Dimension preferredSize = new Dimension(1440, 720);
         setPreferredSize(preferredSize);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         coperturaAssicurativa = new JComboBox<>(new String[]{"Copertura Bassa", "Copertura Media", "Copertura Alta"});
         coperturaAssicurativa.setSelectedIndex(0); // Imposta il default su Copertura Bassa

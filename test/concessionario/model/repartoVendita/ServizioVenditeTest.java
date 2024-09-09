@@ -19,6 +19,7 @@ import concessionario.model.listino.Listino;
 public class ServizioVenditeTest {
     
     private Listino listino;
+    private Listino listinoUsato;
     private AnagraficaClienti anagraficaClienti;
     private RegistroVendite registroVendite;
     private ServizioVendite servizioVendite;
@@ -30,10 +31,9 @@ public class ServizioVenditeTest {
         listino = new Listino();
         anagraficaClienti = new AnagraficaClientiImpl();
         registroVendite = new RegistroVendite();
-        servizioVendite = new ServizioVendite(listino, anagraficaClienti, registroVendite);
+        servizioVendite = new ServizioVendite(listino, listinoUsato, anagraficaClienti, registroVendite);
         auto = new Automobile("Golf", "Volkswagen", 0, 5, 1400, 120, GeneratoreTarga.generateTarga(), StatoMacchina.NUOVO);
 
-        // Uso del pattern Builder per Cliente
         cliente = new Cliente.Builder()
                 .nome("Mario")
                 .cognome("Rossi")

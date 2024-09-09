@@ -3,9 +3,9 @@ package concessionario.controller;
 import java.util.List;
 import concessionario.model.autonoleggio.auto_noleggio.AutomobileNoleggio;
 import concessionario.model.autonoleggio.auto_noleggio.FactoryAutomobiliNoleggio;
-import concessionario.view.LeasingAutoView;
 import concessionario.view.concessionario.ConcessionarioViewObserver;
 import concessionario.view.concessionario.EventoConcessionario;
+import concessionario.view.leasing.LeasingAutoView;
 
 public class LeasingController implements ConcessionarioViewObserver {
 

@@ -15,6 +15,7 @@ public class CercatoreAutoTest {
 
     Listino listinoAuto;
     Filtro filtro;
+    Filtro.Builder filtroBuilder;
     CercatoreAuto cercatore;
     Automobile auto;
     Automobile auto1;
@@ -23,19 +24,19 @@ public class CercatoreAutoTest {
     @BeforeEach
     public void init() {
         listinoAuto = new Listino();
-        filtro = new Filtro();
+        filtroBuilder = new Filtro.Builder();
         cercatore = new CercatoreAuto();
         auto = new Automobile("Punto", "Fiat", 50000, 3, 1200, 75, GeneratoreTarga.generateTarga(), StatoMacchina.USATO);
         auto1 = new Automobile("Golf", "Volkswagen", 30000, 5, 1600, 110, GeneratoreTarga.generateTarga(), StatoMacchina.NUOVO);
         auto2 = new Automobile("Classe A", "Mercedes", 45000, 3, 1600, 110, GeneratoreTarga.generateTarga(), StatoMacchina.USATO);
     }
-    
 
     @Test
     public void testCercaAutoFiltroVuoto() {
         listinoAuto.aggiungiAuto(auto, 5000);
         listinoAuto.aggiungiAuto(auto1, 15000);
 
+        filtro = filtroBuilder.build();
         Listino risultato = cercatore.cercaAuto(filtro, listinoAuto);
 
         assertEquals(2, risultato.getListino().size());
@@ -46,7 +47,7 @@ public class CercatoreAutoTest {
         listinoAuto.aggiungiAuto(auto, 5000);
         listinoAuto.aggiungiAuto(auto1, 15000);
         
-        filtro.setModello("Golf");
+        filtro = filtroBuilder.setModello("Golf").build();
 
         Listino risultato = cercatore.cercaAuto(filtro, listinoAuto);
 
@@ -59,7 +60,7 @@ public class CercatoreAutoTest {
         listinoAuto.aggiungiAuto(auto, 5000);
         listinoAuto.aggiungiAuto(auto1, 15000);
         
-        filtro.setMarca("Fiat");
+        filtro = filtroBuilder.setMarca("Fiat").build();
 
         Listino risultato = cercatore.cercaAuto(filtro, listinoAuto);
 
@@ -72,7 +73,7 @@ public class CercatoreAutoTest {
         listinoAuto.aggiungiAuto(auto, 5000);
         listinoAuto.aggiungiAuto(auto1, 15000);
         
-        filtro.setStatoMacchina(StatoMacchina.USATO);
+        filtro = filtroBuilder.setStatoMacchina(StatoMacchina.USATO).build();
 
         Listino risultato = cercatore.cercaAuto(filtro, listinoAuto);
 
@@ -85,7 +86,7 @@ public class CercatoreAutoTest {
         listinoAuto.aggiungiAuto(auto, 5000);
         listinoAuto.aggiungiAuto(auto1, 15000);
         
-        filtro.setPrezzoMax(10000);
+        filtro = filtroBuilder.setPrezzoMax(10000).build();
 
         Listino risultato = cercatore.cercaAuto(filtro, listinoAuto);
 
@@ -98,7 +99,7 @@ public class CercatoreAutoTest {
         listinoAuto.aggiungiAuto(auto, 5000);
         listinoAuto.aggiungiAuto(auto1, 15000);
         
-        filtro.setCilindrata(1600);
+        filtro = filtroBuilder.setCilindrata(1600).build();
 
         Listino risultato = cercatore.cercaAuto(filtro, listinoAuto);
 
@@ -111,7 +112,7 @@ public class CercatoreAutoTest {
         listinoAuto.aggiungiAuto(auto, 5000);
         listinoAuto.aggiungiAuto(auto1, 15000);
         
-        filtro.setKm(40000);
+        filtro = filtroBuilder.setKm(40000).build();
 
         Listino risultato = cercatore.cercaAuto(filtro, listinoAuto);
 
@@ -124,7 +125,7 @@ public class CercatoreAutoTest {
         listinoAuto.aggiungiAuto(auto, 5000);
         listinoAuto.aggiungiAuto(auto1, 15000);
         
-        filtro.setNumeroPorte(5);
+        filtro = filtroBuilder.setNumeroPorte(5).build();
 
         Listino risultato = cercatore.cercaAuto(filtro, listinoAuto);
 
@@ -138,9 +139,11 @@ public class CercatoreAutoTest {
         listinoAuto.aggiungiAuto(auto1, 15000);
         listinoAuto.aggiungiAuto(auto2, 8000);
         
-        filtro.setMarca("Mercedes");
-        filtro.setModello("Classe A");
-        filtro.setPrezzoMax(10000);
+        filtro = filtroBuilder
+            .setMarca("Mercedes")
+            .setModello("Classe A")
+            .setPrezzoMax(10000)
+            .build();
 
         Listino risultato = cercatore.cercaAuto(filtro, listinoAuto);
 
