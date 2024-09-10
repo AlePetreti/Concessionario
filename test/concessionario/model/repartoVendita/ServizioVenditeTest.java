@@ -1,9 +1,10 @@
 package concessionario.model.repartoVendita;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,7 +18,7 @@ import concessionario.model.cliente.Cliente;
 import concessionario.model.listino.Listino;
 
 public class ServizioVenditeTest {
-    
+
     private Listino listino;
     private Listino listinoUsato;
     private AnagraficaClienti anagraficaClienti;
@@ -29,6 +30,7 @@ public class ServizioVenditeTest {
     @BeforeEach
     public void init() {
         listino = new Listino();
+        listinoUsato = new Listino();
         anagraficaClienti = new AnagraficaClientiImpl();
         registroVendite = new RegistroVendite();
         servizioVendite = new ServizioVendite(listino, listinoUsato, anagraficaClienti, registroVendite);
@@ -45,15 +47,14 @@ public class ServizioVenditeTest {
 
     @Test
     public void testGeneraPreventivoClientePresente() {
-        // Aggiungi il cliente e l'auto al listino
         anagraficaClienti.registraCliente(cliente);
         listino.aggiungiAuto(auto, 25000.0);
 
-        // Genera il preventivo
-        Preventivo preventivo = servizioVendite.generaPreventivo(auto, cliente);
+        Optional<Preventivo> preventivoOpt = servizioVendite.generaPreventivo(auto, cliente);
 
         // Verifica che il preventivo non sia nullo e che contenga i dati corretti
-        assertNotNull(preventivo, "Il preventivo generato non dovrebbe essere null");
+        assertTrue(preventivoOpt.isPresent(), "Il preventivo generato dovrebbe essere presente");
+        Preventivo preventivo = preventivoOpt.get();
         assertEquals(cliente, preventivo.getCliente(), "Il cliente del preventivo dovrebbe essere corretto");
         assertEquals(auto, preventivo.getAuto(), "L'auto del preventivo dovrebbe essere corretta");
         assertEquals(25000.0, preventivo.getPrezzoTotale(), 0.01, "Il prezzo totale del preventivo dovrebbe essere corretto");
@@ -61,24 +62,24 @@ public class ServizioVenditeTest {
 
     @Test
     public void testGeneraPreventivoClienteNonPresente() {
-        // Aggiungi solo l'auto al listino
         listino.aggiungiAuto(auto, 200000.0);
 
         // Tenta di generare un preventivo per un cliente non registrato
-        Preventivo preventivo = servizioVendite.generaPreventivo(auto, cliente);
+        Optional<Preventivo> preventivoOpt = servizioVendite.generaPreventivo(auto, cliente);
 
-        // Verifica che il preventivo sia nullo poiché il cliente non è registrato
-        assertNull(preventivo, "Il preventivo dovrebbe essere null se il cliente non è presente");
+        // Verifica che il preventivo sia vuoto poiché il cliente non è registrato
+        assertFalse(preventivoOpt.isPresent(), "Il preventivo dovrebbe essere assente se il cliente non è presente");
     }
 
     @Test
     public void testVendiAuto() {
-        // Aggiungi il cliente e l'auto al listino
         anagraficaClienti.registraCliente(cliente);
         listino.aggiungiAuto(auto, 20000.0);
 
         // Crea un preventivo e vendi l'auto
-        Preventivo preventivo = new Preventivo(auto, 20000.0, cliente);
+        Optional<Preventivo> preventivoOpt = servizioVendite.generaPreventivo(auto, cliente);
+        assertTrue(preventivoOpt.isPresent(), "Il preventivo dovrebbe essere presente per un cliente registrato");
+        Preventivo preventivo = preventivoOpt.get();
         boolean venditaEffettuata = servizioVendite.vendiAuto(preventivo);
 
         // Verifica che la vendita sia stata effettuata e che il preventivo sia stato registrato

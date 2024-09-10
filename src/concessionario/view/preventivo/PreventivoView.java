@@ -4,7 +4,6 @@ import java.util.List;
 
 import concessionario.model.automobile.Automobile;
 import concessionario.model.cliente.Cliente;
-import concessionario.model.listino.ElementoListino;
 
 public interface PreventivoView {
     
@@ -16,7 +15,7 @@ public interface PreventivoView {
 
     void mostraSpecificheAutoPreventivo(Automobile auto);
 
-    void mostraPrezzoTotale(ElementoListino ElementoListino);
+    void mostraPrezzoTotale(double prezzo);
 
     void mostraListaClienti(List<Cliente> cliente);
 

@@ -206,8 +206,8 @@ public class GestioneAutoViewImpl implements GestioneAutoView {
 
     @Override
     public void mostraListino(List<ElementoListino> listino) {
-        modelloTabella.setRowCount(0); // Pulisce la tabella
-        listinoCorrente = listino; // Aggiorna la lista corrente
+        modelloTabella.setRowCount(0);
+        listinoCorrente = listino;
 
         for (ElementoListino elementoListino : listino) {
             Automobile auto = elementoListino.getAutomobile();

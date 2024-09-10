@@ -6,14 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import concessionario.controller.AutonoleggioController;
@@ -37,32 +30,42 @@ public class ConcessionarioViewImpl implements ConcessionarioView {
         this.frame.setSize(1280, 720);
         this.frame.setLayout(new BorderLayout());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout(FlowLayout.LEADING));
-        // bottone anagrafica cliente
-        JButton bAnagrafica = new JButton("Anagrafica Cliente");
-        panel.add(bAnagrafica);
-        bAnagrafica.addActionListener(new ActionListener() {
 
+        // Panel per i bottoni
+        JPanel panelBottoni = new JPanel();
+        panelBottoni.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5); // Margine tra i bottoni
+
+        // Bottone Anagrafica Cliente
+        JButton bAnagrafica = new JButton("Anagrafica Cliente");
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panelBottoni.add(bAnagrafica, gbc);
+        bAnagrafica.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 notifyEvent(EventoConcessionario.ANAGRAFICA_CLIENTI);
             }
         });
 
-        // bottone gestione auto
+        // Bottone Gestione Auto
         JButton bGestioneAuto = new JButton("Gestione Auto");
-        panel.add(bGestioneAuto);
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        panelBottoni.add(bGestioneAuto, gbc);
         bGestioneAuto.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 notifyEvent(EventoConcessionario.GESTIONE_AUTO);
             }
         });
 
+        // Bottone Noleggia Auto
         JButton bNoleggiaAuto = new JButton("Noleggia Auto");
-        panel.add(bNoleggiaAuto);
+        gbc.gridx = 2;
+        gbc.gridy = 0;
+        panelBottoni.add(bNoleggiaAuto, gbc);
         bNoleggiaAuto.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -70,8 +73,11 @@ public class ConcessionarioViewImpl implements ConcessionarioView {
             }
         });
 
+        // Bottone Leasing Auto
         JButton bLeasingAuto = new JButton("Leasing Auto");
-        panel.add(bLeasingAuto);
+        gbc.gridx = 3;
+        gbc.gridy = 0;
+        panelBottoni.add(bLeasingAuto, gbc);
         bLeasingAuto.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -79,52 +85,55 @@ public class ConcessionarioViewImpl implements ConcessionarioView {
             }
         });
 
-        // panel per mostrare i preventivi completati
-        JPanel panel1 = new JPanel();
-        panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
-        panel1.add(new JLabel("Registro Vendite"));
-        JButton aggiornaVendite = new JButton("Aggiorna Vendite");
-        panel1.add(aggiornaVendite);
-        aggiornaVendite.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                notifyEvent(EventoConcessionario.AGGIORNA_VENDITE);
-            }
-            
-        });
-        
-        JButton bofficina= new JButton("Officina");
-        panel.add(bofficina);
-        bofficina.addActionListener(new ActionListener() {
+        // Bottone Officina
+        JButton bOfficina = new JButton("Officina");
+        gbc.gridx = 4;
+        gbc.gridy = 0;
+        panelBottoni.add(bOfficina, gbc);
+        bOfficina.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 notifyEvent(EventoConcessionario.RIPARA_AUTO);
             }
         });
 
-        panel1.add(Box.createVerticalStrut(10)); // Aggiunge uno spazio verticale tra il pulsante e la tabella
-        String nomiColonne[] = {"Marca", "Modello", "StatoMacchina", "Cognome", "Nome", "Prezzo"};
+        // Panel per mostrare i preventivi completati
+        JPanel panelPreventivi = new JPanel();
+        panelPreventivi.setLayout(new BoxLayout(panelPreventivi, BoxLayout.Y_AXIS));
+        panelPreventivi.add(new JLabel("Registro Vendite"));
+
+        JButton aggiornaVendite = new JButton("Aggiorna Vendite");
+        panelPreventivi.add(aggiornaVendite);
+        aggiornaVendite.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                notifyEvent(EventoConcessionario.AGGIORNA_VENDITE);
+            }
+        });
+
+        // Spazio verticale tra il pulsante e la tabella
+        panelPreventivi.add(Box.createVerticalStrut(10));
+
+        // Creazione della tabella
+        String[] nomiColonne = {"Marca", "Modello", "StatoMacchina", "Cognome", "Nome", "Prezzo"};
         modelloTabella = new DefaultTableModel(nomiColonne, 0);
         tabella = new JTable(modelloTabella);
-        
-        // Aggiunge la tabella ad un JScrollPane
         JScrollPane scrollPane = new JScrollPane(tabella);
-        panel1.add(scrollPane);
+        panelPreventivi.add(scrollPane);
 
-        this.frame.add(panel, BorderLayout.PAGE_START);
-        this.frame.add(panel1, BorderLayout.CENTER);
+        // Aggiungi i pannelli al frame
+        this.frame.add(panelBottoni, BorderLayout.PAGE_START);
+        this.frame.add(panelPreventivi, BorderLayout.CENTER);
     }
 
     /**
-     * metodo per notificare un evento
+     * Metodo per notificare un evento
      * @param tipoEvento
      */
     private void notifyEvent(EventoConcessionario tipoEvento) {
         for (ConcessionarioViewObserver concessionarioViewObserver : osservatori) {
             concessionarioViewObserver.eventNotified(tipoEvento);
         }
-        // sarebbe meglio spostarli nel main 
         if (tipoEvento == EventoConcessionario.NOLEGGIA_AUTO) {
             Autonoleggio autonoleggio = new Autonoleggio();
             autonoleggio.getAutomobili().addAll(new FactoryAutomobiliNoleggio().creaAutoRandom());
@@ -138,7 +147,7 @@ public class ConcessionarioViewImpl implements ConcessionarioView {
     public void show() {
         frame.setVisible(true);
     }
-    
+
     @Override
     public void addObserver(ConcessionarioViewObserver observer) {
         osservatori.add(observer);
@@ -152,13 +161,15 @@ public class ConcessionarioViewImpl implements ConcessionarioView {
     @Override
     public void mostraPreventiviCompletati(List<Preventivo> preventivi) {
         modelloTabella.setRowCount(0);
-        for(Preventivo preventivo : preventivi) {
-            Object[] rowData = { preventivo.getAuto().getMarca(),
-                                 preventivo.getAuto().getModello(),
-                                 preventivo.getAuto().getStatoMacchina(),
-                                 preventivo.getCliente().getCognome(),
-                                 preventivo.getCliente().getNome(),
-                                 preventivo.getPrezzoTotale() };
+        for (Preventivo preventivo : preventivi) {
+            Object[] rowData = {
+                preventivo.getAuto().getMarca(),
+                preventivo.getAuto().getModello(),
+                preventivo.getAuto().getStatoMacchina(),
+                preventivo.getCliente().getCognome(),
+                preventivo.getCliente().getNome(),
+                preventivo.getPrezzoTotale()
+            };
             modelloTabella.addRow(rowData);
         }
     }

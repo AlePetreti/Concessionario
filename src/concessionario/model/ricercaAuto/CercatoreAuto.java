@@ -17,7 +17,7 @@ public class CercatoreAuto {
         .filter(e -> filtro.getStatoMacchina().equals(StatoMacchina.NUOVO) || filtro.getStatoMacchina().equals(e.getAutomobile().getStatoMacchina()))
         .filter(e -> filtro.getPrezzoMax() == 0.0 || filtro.getPrezzoMax() >= e.getPrezzo())
         .forEach(e -> autoFiltrate.aggiungiAuto(e.getAutomobile(), e.getPrezzo()));
-    
-    return autoFiltrate;
+        
+        return autoFiltrate;
     }
 }

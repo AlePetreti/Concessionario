@@ -32,14 +32,12 @@ public class GestioneAutoController implements GestioneAutoViewObserver {
                 view.mostraListino(listinoAuto.getListino());
                 break;
             case CERCA_AUTO:
-                Filtro filtroAuto = creaFiltro();
+                Filtro filtroAuto = creaFiltro(false); // Filtro per auto nuove
                 Listino autoTrovate = cercatoreAuto.cercaAuto(filtroAuto, listinoAuto);
                 view.mostraListino(autoTrovate.getListino());
                 break;
             case CERCA_AUTO_USATE:
-                Filtro filtroAutoUsate = new Filtro.Builder()
-                    .setStatoMacchina(StatoMacchina.USATO)
-                    .build();
+                Filtro filtroAutoUsate = creaFiltro(true); // Filtro per auto usate
                 Listino autoUsate = cercatoreAuto.cercaAuto(filtroAutoUsate, listinoUsato);
                 view.mostraListino(autoUsate.getListino());
                 break;
@@ -51,14 +49,19 @@ public class GestioneAutoController implements GestioneAutoViewObserver {
         }
     }
 
-    private Filtro creaFiltro() {
-        return new Filtro.Builder()
+    private Filtro creaFiltro(boolean perAutoUsate) {
+        Filtro.Builder filtroBuilder = new Filtro.Builder()
                 .setModello(view.getModelloAuto())
                 .setMarca(view.getMarcaAuto())
                 .setKm(view.getKmAuto().orElse(-1))
                 .setNumeroPorte(view.getNumeroPorte().orElse(0))
                 .setCilindrata(view.getCilindrata().orElse(0))
-                .setPrezzoMax(view.getPrezzoMax().orElse(0.0))
-                .build();
+                .setPrezzoMax(view.getPrezzoMax().orElse(0.0));
+
+        if (perAutoUsate) {
+            filtroBuilder.setStatoMacchina(StatoMacchina.USATO);
+        }
+
+        return filtroBuilder.build();
     }
 }
