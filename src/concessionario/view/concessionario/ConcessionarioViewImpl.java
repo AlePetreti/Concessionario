@@ -93,6 +93,15 @@ public class ConcessionarioViewImpl implements ConcessionarioView {
             }
             
         });
+        
+        JButton bofficina= new JButton("Officina");
+        panel.add(bofficina);
+        bofficina.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                notifyEvent(EventoConcessionario.RIPARA_AUTO);
+            }
+        });
 
         panel1.add(Box.createVerticalStrut(10)); // Aggiunge uno spazio verticale tra il pulsante e la tabella
         String nomiColonne[] = {"Marca", "Modello", "StatoMacchina", "Cognome", "Nome", "Prezzo"};

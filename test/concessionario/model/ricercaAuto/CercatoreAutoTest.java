@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import concessionario.model.automobile.Automobile;
+import concessionario.model.automobile.GeneratoreTarga;
 import concessionario.model.automobile.StatoMacchina;
 import concessionario.model.listino.Listino;
 
@@ -24,9 +25,9 @@ public class CercatoreAutoTest {
         listinoAuto = new Listino();
         filtro = new Filtro();
         cercatore = new CercatoreAuto();
-        auto = new Automobile("Punto", "Fiat", 50000, 3, 1200, 75, StatoMacchina.USATO);
-        auto1 = new Automobile("Golf", "Volkswagen", 30000, 5, 1600, 110, StatoMacchina.NUOVO);
-        auto2 = new Automobile("Classe A", "Mercedes", 45000, 3, 1600, 110, StatoMacchina.USATO);
+        auto = new Automobile("Punto", "Fiat", 50000, 3, 1200, 75, GeneratoreTarga.generateTarga(), StatoMacchina.USATO);
+        auto1 = new Automobile("Golf", "Volkswagen", 30000, 5, 1600, 110, GeneratoreTarga.generateTarga(), StatoMacchina.NUOVO);
+        auto2 = new Automobile("Classe A", "Mercedes", 45000, 3, 1600, 110, GeneratoreTarga.generateTarga(), StatoMacchina.USATO);
     }
     
 

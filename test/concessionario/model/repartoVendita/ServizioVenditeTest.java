@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import concessionario.model.automobile.Automobile;
+import concessionario.model.automobile.GeneratoreTarga;
 import concessionario.model.automobile.StatoMacchina;
 import concessionario.model.cliente.AnagraficaClienti;
 import concessionario.model.cliente.AnagraficaClientiImpl;
@@ -30,7 +31,7 @@ public class ServizioVenditeTest {
         anagraficaClienti = new AnagraficaClientiImpl();
         registroVendite = new RegistroVendite();
         servizioVendite = new ServizioVendite(listino, anagraficaClienti, registroVendite);
-        auto = new Automobile("Golf", "Volkswagen", 0, 5, 1400, 120, StatoMacchina.NUOVO);
+        auto = new Automobile("Golf", "Volkswagen", 0, 5, 1400, 120, GeneratoreTarga.generateTarga(), StatoMacchina.NUOVO);
 
         // Uso del pattern Builder per Cliente
         cliente = new Cliente.Builder()

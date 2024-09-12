@@ -11,6 +11,7 @@ import concessionario.model.cliente.AnagraficaClientiImpl;
 import concessionario.model.cliente.FactoryCliente;
 import concessionario.model.generatorePrezzo.GeneratorePrezzo;
 import concessionario.model.listino.Listino;
+import concessionario.model.officina.OfficinaModel;
 import concessionario.model.repartoVendita.RegistroVendite;
 import concessionario.model.repartoVendita.ServizioVendite;
 import concessionario.view.anagrafica.AnagraficaClientiView;
@@ -22,11 +23,13 @@ import concessionario.view.auto.GestioneAutoViewObserver;
 import concessionario.view.concessionario.ConcessionarioView;
 import concessionario.view.concessionario.ConcessionarioViewImpl;
 import concessionario.view.concessionario.ConcessionarioViewObserver;
+import concessionario.view.officina.OfficinaView;
 import concessionario.view.preventivo.PreventivoView;
 import concessionario.view.preventivo.PreventivoViewImpl;
 import concessionario.view.leasing.LeasingAutoView;
 import concessionario.view.leasing.LeasingAutoViewImpl;
 import concessionario.controller.LeasingController;
+import concessionario.controller.OfficinaController;
 
 public class Main {
 
@@ -39,24 +42,29 @@ public class Main {
         // Inizializzazione dei modelli
         AnagraficaClienti anagrafica = new AnagraficaClientiImpl();
         Listino listinoAuto = new Listino();
+        Listino listinoUsato = new Listino();
         RegistroVendite registroVendite = new RegistroVendite();
         ServizioVendite concessionario = new ServizioVendite(listinoAuto, anagrafica, registroVendite);
-
+        OfficinaModel officina = new OfficinaModel(listinoUsato);
+        
         // VIEW
+        final OfficinaView  officinaView = new OfficinaView();
         final ConcessionarioView view = new ConcessionarioViewImpl();
         final AnagraficaClientiView viewAnagrafica = new AnagraficaClientiViewImpl();
         final GestioneAutoView viewGestioneAuto = new GestioneAutoViewImpl();
         final LeasingAutoView viewLeasingAuto = new LeasingAutoViewImpl(new FactoryAutomobiliNoleggio());
         final PreventivoView viewPreventivo = new PreventivoViewImpl();
-        final ConcessionarioViewObserver controller = new ConcessionarioController(view, viewAnagrafica, viewGestioneAuto, registroVendite, viewLeasingAuto);
+        final ConcessionarioViewObserver controller = new ConcessionarioController(view, viewAnagrafica, viewGestioneAuto, registroVendite, viewLeasingAuto, officinaView, officina);
         final AnagraficaClientiViewObserver controllerAnagrafica = new AnagraficaClientiController(viewAnagrafica, anagrafica);
         final PreventivoController controllerPreventivo = new PreventivoController(viewPreventivo, anagrafica, concessionario);
         final GestioneAutoViewObserver controllerGestioneAuto = new GestioneAutoController(viewGestioneAuto, listinoAuto, controllerPreventivo);
         final LeasingController leasingController = new LeasingController(viewLeasingAuto, new FactoryAutomobiliNoleggio());
+        final OfficinaController officinaController = new OfficinaController(officina, officinaView);
         view.show();
 
         // Inizializzazione di automobili e clienti
         inizializzaAutomobili(listinoAuto, factoryAutomobile);
+        inizializzaAutoUsate(listinoUsato, factoryAutomobile);
         inizializzaClienti(anagrafica, factoryCliente);
     }
 
@@ -66,6 +74,13 @@ public class Main {
         }
     }
 
+    private static void inizializzaAutoUsate(Listino listinoUsato, FactoryAutomobile factoryAutomobile) {
+        for (int i = 0; i < 10; i++) {
+            listinoUsato.aggiungiAuto(factoryAutomobile.creaAutoRandomUsata(), GeneratorePrezzo.generaPrezzo());
+        }
+    }
+
+    
     private static void inizializzaClienti(AnagraficaClienti anagrafica, FactoryCliente factoryCliente) {
         for (int i = 0; i < 10; i++) {
             anagrafica.registraCliente(factoryCliente.creaClienteRandom());

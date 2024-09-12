@@ -11,7 +11,7 @@ public class AutomobileTest {
     
     @BeforeEach
     private void init() {
-        auto = new Automobile("Classe A", "Mercedes", 0, 5, 2000, 500, StatoMacchina.NUOVO);
+        auto = new Automobile("Classe A", "Mercedes", 0, 5, 2000, 500, GeneratoreTarga.generateTarga(), StatoMacchina.NUOVO);
     }
 
     @Test
