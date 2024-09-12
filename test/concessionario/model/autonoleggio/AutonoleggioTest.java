@@ -23,32 +23,24 @@ public class AutonoleggioTest {
     }
 
     @Test
-    public void testNoleggiaAuto() {
-        // Aggiungi l'auto alla lista
-        autonoleggio.getAutomobili().add(auto);
+    public void testNoleggiaAuto() throws InterruptedException {
+        // Noleggia l'auto per 3 giorni
+        autonoleggio.noleggiaAuto(auto, 3);
 
-        // Chiama il metodo da testare
-        autonoleggio.noleggiaAuto(auto, 3); // Noleggio per 3 giorni
+        // Verifica che l'auto sia settata come non disponibile
+        assertEquals(DisponibilitàAuto.NonDisponibile, auto.getDisponibilitàAuto());
 
-        // Attendi brevemente per permettere al thread di modificare lo stato (se necessario)
-        try {
-            Thread.sleep(100); // Attesa breve per assicurarsi che il thread non interferisca
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        // Verifica che il costo del noleggio sia stato impostato
+        double costo = auto.getCostoNoleggio();
+        assertTrue(costo >= 60.0 && costo <= 150.0, "Il costo del noleggio dovrebbe essere tra 60.0 e 150.0");
 
-        // Verifica che lo stato dell'auto sia stato impostato su "NonDisponibile"
-        String statoPrevisto = DisponibilitàAuto.NonDisponibile.toString();
-        String statoEffettivo = auto.getStato();
+        // Attendere per un tempo superiore a 5 minuti per garantire che il thread di attesa sia passato
+        Thread.sleep(6000); 
 
-        // Log dello stato per il debug
-        System.out.println("Stato previsto: " + statoPrevisto);
-        System.out.println("Stato effettivo: " + statoEffettivo);
-
-        // Verifica dello stato
-        assertEquals(statoPrevisto, statoEffettivo, "L'auto dovrebbe essere non disponibile subito dopo il noleggio.");
+        // Verifica che l'auto diventi disponibile dopo il ritardo
+        assertEquals(DisponibilitàAuto.Disponibile, auto.getDisponibilitàAuto());
     }
-    
+
     @Test
     public void testGetAutomobili() {
         // Verifica che la lista delle automobili sia vuota inizialmente

@@ -12,7 +12,25 @@ public class FactoryAutomobiliNoleggio {
         this.rnd = new Random();
     }
 
-    /*
+    /**
+     * 
+     * @return un auto generato random
+     */
+    public AutomobileNoleggio creaAutoRandom2() {
+        
+        String[] marche = {"KIA", "NISSAN", "MINI", "BMW", "FORD", "TESLA", "HONDA"};
+        int[] numeroPorte = {3,5};
+        int[] cilindrata = {1200, 1400, 1600, 1900, 2000, 2200, 3000, 4000};
+        int[] cavalli = {75, 90, 116, 120, 150, 190, 210, 350, 400};
+        String marcaAuto = marche[rnd.nextInt(marche.length)];
+        String modelloAuto = selezionaModello(marcaAuto);
+        int numeroPorteAuto = numeroPorte[rnd.nextInt(numeroPorte.length)];
+        int cilindrataAuto = cilindrata[rnd.nextInt(cilindrata.length)];
+        int cavalliAuto = cavalli[rnd.nextInt(cavalli.length)];
+        return new AutomobileNoleggio(modelloAuto, marcaAuto, numeroPorteAuto, cilindrataAuto, cavalliAuto, DisponibilitàAuto.Disponibile); 
+    }
+    /**
+     * 
      * @return una lista di auto generate random
      */
     public List<AutomobileNoleggio> creaAutoRandom() {
