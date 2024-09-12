@@ -35,7 +35,7 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        FactoryCliente factoryCliente = FactoryCliente.getInstance();
+        FactoryCliente factoryCliente = new FactoryCliente();
         FactoryAutomobile factoryAutomobile = new FactoryAutomobile();
         
         AnagraficaClienti anagrafica = new AnagraficaClientiImpl();
