@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 
 import concessionario.model.listino.ElementoListino;
 import concessionario.model.officina.OfficinaModel;
-import concessionario.model.repartoVendita.RegistroVendite; 
 
 public class ConcessionarioController implements ConcessionarioViewObserver {
 
