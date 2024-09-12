@@ -17,7 +17,7 @@ public class PreventivoTest {
 
     @BeforeEach
     public void init() {
-        // Inizializzazione di Automobile e Cliente
+        
         auto = new Automobile("Classe A", "Mercedes", 0, 5, 2000, 500,GeneratoreTarga.generateTarga(), StatoMacchina.NUOVO);
         cliente = new Cliente.Builder()
                 .nome("Mario")

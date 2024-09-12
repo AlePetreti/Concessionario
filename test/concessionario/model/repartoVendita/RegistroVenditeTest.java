@@ -23,7 +23,6 @@ public class RegistroVenditeTest {
     public void init() {
         registroVendite = new RegistroVendite();
 
-        // Inizializzazione degli oggetti per i test
         Automobile auto1 = new Automobile("Classe A", "Mercedes", 0, 5, 1600, 120, GeneratoreTarga.generateTarga(), StatoMacchina.NUOVO);
         Cliente cliente1 = new Cliente.Builder()
                 .nome("Mario")

@@ -31,6 +31,4 @@ public class Preventivo {
     public String toString() {
         return "Preventivo [auto=" + auto + ", cliente=" + cliente + ", prezzoTotale=" + prezzoTotale + "]";
     }
-
-    // qua si possono aggiungere vari tipi di logiche per variare il prezzo del preventivo per esempio: sconti, optional etc...
 }

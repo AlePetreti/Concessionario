@@ -7,73 +7,73 @@ import concessionario.model.automobile.StatoMacchina;
 
 public class FiltroTest {
 
-    private Filtro filtro;
+    private Filtro.Builder filtroBuilder;
 
     @BeforeEach
     public void init() {
-        filtro = new Filtro();
+        filtroBuilder = new Filtro.Builder();
     }
 
     @Test
     public void testSetModello() {
         String modello = "Classe A";
-        filtro.setModello(modello);
+        Filtro filtro = filtroBuilder.setModello(modello).build();
         assertEquals(modello, filtro.getModello());
     }
 
     @Test
     public void testSetMarca() {
         String marca = "Mercedes";
-        filtro.setMarca(marca);
+        Filtro filtro = filtroBuilder.setMarca(marca).build();
         assertEquals(marca, filtro.getMarca());
     }
 
     @Test
     public void testSetKm() {
         int km = 10000;
-        filtro.setKm(km);
+        Filtro filtro = filtroBuilder.setKm(km).build();
         assertEquals(km, filtro.getKm());
     }
 
     @Test
     public void testSetNumeroPorte() {
         int numeroPorte = 5;
-        filtro.setNumeroPorte(numeroPorte);
+        Filtro filtro = filtroBuilder.setNumeroPorte(numeroPorte).build();
         assertEquals(numeroPorte, filtro.getNumeroPorte());
     }
 
     @Test
     public void testSetCilindrata() {
         int cilindrata = 1600;
-        filtro.setCilindrata(cilindrata);
+        Filtro filtro = filtroBuilder.setCilindrata(cilindrata).build();
         assertEquals(cilindrata, filtro.getCilindrata());
     }
 
     @Test
     public void testSetPrezzoMax() {
         double prezzoMax = 30000.0;
-        filtro.setPrezzoMax(prezzoMax);
+        Filtro filtro = filtroBuilder.setPrezzoMax(prezzoMax).build();
         assertEquals(prezzoMax, filtro.getPrezzoMax());
     }
 
     @Test
     public void testSetStatoMacchina() {
         StatoMacchina statoMacchina = StatoMacchina.USATO;
-        filtro.setStatoMacchina(statoMacchina);
+        Filtro filtro = filtroBuilder.setStatoMacchina(statoMacchina).build();
         assertEquals(statoMacchina, filtro.getStatoMacchina());
     }
 
     @Test
     public void testSetModelloNull() {
         assertThrows(NullPointerException.class, () -> {
-            filtro.setModello(null);
+            filtroBuilder.setModello(null).build();
         }, "Dovrebbe essere lanciata una NullPointerException quando il modello è null");
     }
 
     @Test
     public void testSetMarcaNull() {
         assertThrows(NullPointerException.class, () -> {
-            filtro.setMarca(null);
+            filtroBuilder.setMarca(null).build();
         }, "Dovrebbe essere lanciata una NullPointerException quando la marca è null");
     }
 }

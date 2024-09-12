@@ -6,41 +6,44 @@ import concessionario.model.cliente.AnagraficaClienti;
 import concessionario.model.cliente.Cliente;
 import concessionario.model.listino.Listino;
 
+import java.util.Optional;
+
 public class ServizioVendite {
     private final Listino listino;
+    private final Listino listinoUsato;
     private final AnagraficaClienti listaClienti;
     private final RegistroVendite registroVendite;
 
-    public ServizioVendite(Listino listino, AnagraficaClienti listaClienti, RegistroVendite registroVendite) {
+    public ServizioVendite(Listino listino, Listino listinoUsato, AnagraficaClienti listaClienti, RegistroVendite registroVendite) {
         this.listino = listino;
+        this.listinoUsato = listinoUsato;
         this.listaClienti = listaClienti;
         this.registroVendite = registroVendite;
     }
-        
-    /**
-    * Genera un preventivo per una determinata automobile e cliente.
-    *
-    * @param auto l'automobile per cui generare il preventivo
-    * @param cliente il cliente a cui il preventivo è destinato
-    * @return il preventivo generato o null se il cliente non è presente
-    */
-    public Preventivo generaPreventivo(Automobile auto, Cliente cliente) {
-        if(listaClienti.ePresente(cliente)) {
-            double prezzoAuto = listino.getPrezzoAuto(auto);
-            return new Preventivo(auto, prezzoAuto, cliente);
-        }
-        return null;
+
+    // Metodo per calcolare il prezzo in base allo stato della macchina
+    public double calcolaPrezzoAuto(Automobile auto) {
+        return auto.getStatoMacchina().equals(StatoMacchina.USATO)
+                ? listinoUsato.getPrezzoAuto(auto)
+                : listino.getPrezzoAuto(auto);
     }
-    
-    /**
-    * Vende un'automobile basata su un preventivo.
-    *
-    * @param preventivo il preventivo su cui si basa la vendita
-    * @return true se la vendita è stata registrata correttamente
-    */
+
+    // Metodo per generare il preventivo solo se il cliente è presente
+    public Optional<Preventivo> generaPreventivo(Automobile auto, Cliente cliente) {
+        if (listaClienti.ePresente(cliente)) {
+            double prezzoAuto = calcolaPrezzoAuto(auto);
+            return Optional.of(new Preventivo(auto, prezzoAuto, cliente));
+        }
+        return Optional.empty();
+    }
+
     public boolean vendiAuto(Preventivo preventivo) {
-        if(preventivo.getAuto().getStatoMacchina().equals(StatoMacchina.USATO)) {
-            // rimuovi auto usata dalla lista di auto usate
+        Automobile auto = preventivo.getAuto();
+
+        if (auto.getStatoMacchina().equals(StatoMacchina.USATO)) {
+            if (!listinoUsato.rimuoviAuto(auto)) {
+                throw new IllegalStateException("Errore nella rimozione dell'auto usata dal listino.");
+            }
         }
         registroVendite.addPreventivo(preventivo);
         return true;

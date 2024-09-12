@@ -5,14 +5,13 @@ import concessionario.view.auto.GestioneAutoView;
 import concessionario.view.concessionario.ConcessionarioView;
 import concessionario.view.concessionario.ConcessionarioViewObserver;
 import concessionario.view.concessionario.EventoConcessionario;
+import concessionario.view.leasing.LeasingAutoView;
 import concessionario.view.officina.OfficinaView;
 
 import java.util.stream.Collectors;
 
 import concessionario.model.listino.ElementoListino;
 import concessionario.model.officina.OfficinaModel;
-import concessionario.model.repartoVendita.RegistroVendite;
-import concessionario.view.leasing.LeasingAutoView; 
 
 public class ConcessionarioController implements ConcessionarioViewObserver {
 
@@ -58,13 +57,11 @@ public class ConcessionarioController implements ConcessionarioViewObserver {
                 view.mostraPreventiviCompletati(registroVendite.getListaPreventivi());
                 break;
             case RIPARA_AUTO:
-                // Recupera le auto usate e le mostra nella vista dell'officina
                 viewOfficina.mostraAutoDisponibili(officina.getAutoUsate().getListino().stream()
                     .map(ElementoListino::getAutomobile)
                     .collect(Collectors.toList()));
-                viewOfficina.setVisible(true); // Mostra la finestra dell'officina
+                viewOfficina.setVisible(true);
                 break;
-           
             default:
                 break;
         }

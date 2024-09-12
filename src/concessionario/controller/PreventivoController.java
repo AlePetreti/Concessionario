@@ -10,32 +10,33 @@ import concessionario.view.preventivo.EventoPreventivo;
 import concessionario.view.preventivo.PreventivoView;
 import concessionario.view.preventivo.PreventivoViewObserver;
 
-public class PreventivoController implements PreventivoViewObserver     {
+public class PreventivoController implements PreventivoViewObserver {
 
     private final PreventivoView view;
     private final AnagraficaClienti anagraficaClienti;
-    private final ServizioVendite concessionario;
+    private final ServizioVendite servizioVendite;
     private Optional<Automobile> autoSelezionata;
 
-    public PreventivoController(PreventivoView view, AnagraficaClienti anagraficaClienti, ServizioVendite concessionario) {
+    public PreventivoController(PreventivoView view, AnagraficaClienti anagraficaClienti, ServizioVendite servizioVendite) {
         this.view = view;
         this.anagraficaClienti = anagraficaClienti;
-        this.concessionario = concessionario;
+        this.servizioVendite = servizioVendite;
         this.autoSelezionata = Optional.empty();
         this.view.addObserver(this);
-
     }
 
     @Override
     public void eventNotified(EventoPreventivo e) {
-        switch(e) {
+        switch (e) {
             case CONCLUDI_VENDITA:
-                Preventivo preventivo = concessionario.generaPreventivo(autoSelezionata.get(), view.getClienteSelezionato(anagraficaClienti.getClienti()));
-                concessionario.vendiAuto(preventivo);
-            break;
+                Optional<Preventivo> preventivo = servizioVendite.generaPreventivo(
+                    autoSelezionata.orElse(null), 
+                    view.getClienteSelezionato(anagraficaClienti.getClienti())
+                );
+                preventivo.ifPresent(servizioVendite::vendiAuto);
+                break;
             default:
-            break;
-
+                break;
         }
     }
 
@@ -43,7 +44,8 @@ public class PreventivoController implements PreventivoViewObserver     {
         view.mostraCreaPreventivo();
         view.mostraListaClienti(anagraficaClienti.getClienti());
         view.mostraSpecificheAutoPreventivo(automobile);
+        double prezzoAuto = servizioVendite.calcolaPrezzoAuto(automobile);
+        view.mostraPrezzoTotale(prezzoAuto);
         this.autoSelezionata = Optional.of(automobile);
     }
-    
 }

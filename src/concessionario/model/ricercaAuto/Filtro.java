@@ -6,49 +6,71 @@ import concessionario.model.automobile.StatoMacchina;
 
 public class Filtro {
 
-    private String modello;
-    private String marca;
-    private int km;
-    private int numeroPorte;
-    private int cilindrata;
-    private double prezzoMax;
-    private StatoMacchina statoMacchina;
+    private final String modello;
+    private final String marca;
+    private final int km;
+    private final int numeroPorte;
+    private final int cilindrata;
+    private final double prezzoMax;
+    private final StatoMacchina statoMacchina;
 
-    public Filtro() {
-        this.statoMacchina = StatoMacchina.NUOVO;
-        this.km = -1;
-        this.modello = "";
-        this.marca = "";
+    private Filtro(Builder builder) {
+        this.modello = builder.modello;
+        this.marca = builder.marca;
+        this.km = builder.km;
+        this.numeroPorte = builder.numeroPorte;
+        this.cilindrata = builder.cilindrata;
+        this.prezzoMax = builder.prezzoMax;
+        this.statoMacchina = builder.statoMacchina;
     }
 
-    public void setModello(String modello) {
-        Objects.requireNonNull(modello);
-        this.modello = modello;
-    }
+    public static class Builder {
+        private String modello = "";
+        private String marca = "";
+        private int km = -1;
+        private int numeroPorte = 0;
+        private int cilindrata = 0;
+        private double prezzoMax = 0.0;
+        private StatoMacchina statoMacchina = StatoMacchina.NUOVO;
 
-    public void setMarca(String marca) {
-        Objects.requireNonNull(marca);
-        this.marca = marca;
-    }
+        public Builder setModello(String modello) {
+            this.modello = Objects.requireNonNull(modello, "Il modello non può essere null");
+            return this;
+        }
 
-    public void setKm(int km) {
-        this.km = km;
-    }
+        public Builder setMarca(String marca) {
+            this.marca = Objects.requireNonNull(marca, "La marca non può essere null");
+            return this;
+        }
 
-    public void setNumeroPorte(int numeroPorte) {
-        this.numeroPorte = numeroPorte;
-    }
+        public Builder setKm(int km) {
+            this.km = km;
+            return this;
+        }
 
-    public void setCilindrata(int cilindrata) {
-        this.cilindrata = cilindrata;
-    }
+        public Builder setNumeroPorte(int numeroPorte) {
+            this.numeroPorte = numeroPorte;
+            return this;
+        }
 
-    public void setPrezzoMax(double prezzoMax) {
-        this.prezzoMax = prezzoMax;
-    }
+        public Builder setCilindrata(int cilindrata) {
+            this.cilindrata = cilindrata;
+            return this;
+        }
 
-    public void setStatoMacchina(StatoMacchina statoMacchina) {
-        this.statoMacchina = statoMacchina;
+        public Builder setPrezzoMax(double prezzoMax) {
+            this.prezzoMax = prezzoMax;
+            return this;
+        }
+
+        public Builder setStatoMacchina(StatoMacchina statoMacchina) {
+            this.statoMacchina = Objects.requireNonNull(statoMacchina, "Lo stato della macchina non può essere null");
+            return this;
+        }
+
+        public Filtro build() {
+            return new Filtro(this);
+        }
     }
 
     public String getModello() {
@@ -79,5 +101,3 @@ public class Filtro {
         return statoMacchina;
     }
 }
-
-

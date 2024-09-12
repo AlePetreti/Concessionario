@@ -24,6 +24,4 @@ public class AutomobileTest {
         assertEquals(500, auto.getCavalli());
         assertEquals(StatoMacchina.NUOVO, auto.getStatoMacchina());
     }
-
-    // vedere se fare test degli equals e in caso fare il metodo equals e hashcode nel automobile
 }

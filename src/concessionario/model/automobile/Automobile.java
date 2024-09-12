@@ -18,7 +18,7 @@ public class Automobile {
         this.numeroPorte = numeroPorte;
         this.cilindrata = cilindrata;
         this.cavalli = cavalli;
-        this.targa   = targa;
+        this.targa = targa;
         this.statoMacchina = statoMacchina;
     }
 

@@ -1,4 +1,4 @@
-package concessionario.model.Leasing;
+package concessionario.model.leasing;
 
 
 import static org.junit.jupiter.api.Assertions.*;

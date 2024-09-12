@@ -13,8 +13,7 @@ public class FactoryClienteTest {
 
     @BeforeEach
     public void init() {
-        // Ottieni l'istanza Singleton di FactoryCliente
-        factory = FactoryCliente.getInstance();
+        factory = new FactoryCliente();
     }
 
     @Test

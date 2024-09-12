@@ -1,78 +1,59 @@
 package concessionario.view.preventivo;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
-
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
 
 import concessionario.model.automobile.Automobile;
 import concessionario.model.automobile.StatoMacchina;
 import concessionario.model.cliente.Cliente;
-import concessionario.model.listino.ElementoListino;
 
-public class PreventivoViewImpl implements PreventivoView{
-    
+public class PreventivoViewImpl implements PreventivoView {
+
     private final List<PreventivoViewObserver> osservatori;
     private final JFrame framePreventivo;
-    private final JTextArea specificheAutoPreventivo;
-    private final JLabel prezzoTotale; 
+    private final JTable specificheAutoTable;
+    private final JLabel prezzoTotale;
     private final JComboBox<String> boxClienti;
 
     public PreventivoViewImpl() {
         this.osservatori = new LinkedList<>();
 
-        // finestra per i preventivi
         framePreventivo = new JFrame("Preventivo");
         framePreventivo.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        framePreventivo.setSize(1280,720);
+        framePreventivo.setSize(1280, 720);
         framePreventivo.setLayout(new BorderLayout());
-        // panel per mostrare specifiche auto
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
+
+        JPanel bottomPanel = new JPanel(new BorderLayout());
         JButton b1 = new JButton("Concludi Vendita");
-        panel.add(b1, BorderLayout.EAST);
-        b1.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                notifyEvent(EventoPreventivo.CONCLUDI_VENDITA);
-                framePreventivo.dispose();
-            }
+        bottomPanel.add(b1, BorderLayout.EAST);
+        b1.addActionListener(e -> {
+            notifyEvent(EventoPreventivo.CONCLUDI_VENDITA);
+            framePreventivo.dispose();
         });
-        this.prezzoTotale = new JLabel();
-        panel.add(prezzoTotale, BorderLayout.WEST);
-        
+        this.prezzoTotale = new JLabel("Prezzo: ");
+        bottomPanel.add(prezzoTotale, BorderLayout.WEST);
 
-
-        // panel per specifiche auto del preventivo
+        // Pannello per le specifiche dell'auto
         JPanel panel1 = new JPanel();
-        //panel1.setLayout(new GridLayout(0, 1));
-        panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
-        panel1.add(new JLabel("Specifiche auto"));
-        specificheAutoPreventivo = new JTextArea();
-        specificheAutoPreventivo.setEditable(false);
-        specificheAutoPreventivo.setFocusable(false);
-        panel1.add(specificheAutoPreventivo); 
-        
-        // panel per selezionare i clienti
+        panel1.setLayout(new BorderLayout());
+        panel1.add(new JLabel("Specifiche auto"), BorderLayout.NORTH);
+
+        // Tabella per le specifiche dell'auto
+        specificheAutoTable = new JTable(new DefaultTableModel(new Object[]{"Proprietà", "Valore"}, 0));
+        JScrollPane scrollPane = new JScrollPane(specificheAutoTable);
+        panel1.add(scrollPane, BorderLayout.CENTER);
+
+        // Pannello per la selezione dei clienti
         JPanel panel2 = new JPanel();
         panel2.setLayout(new BorderLayout());
         boxClienti = new JComboBox<>();
         boxClienti.setPreferredSize(new Dimension(300, 30));
         panel2.add(boxClienti, BorderLayout.CENTER);
 
-
-        this.framePreventivo.add(panel, BorderLayout.PAGE_END);
+        this.framePreventivo.add(bottomPanel, BorderLayout.PAGE_END);
         this.framePreventivo.add(panel1, BorderLayout.CENTER);
         this.framePreventivo.add(panel2, BorderLayout.EAST);
     }
@@ -88,41 +69,40 @@ public class PreventivoViewImpl implements PreventivoView{
     }
 
     private void notifyEvent(EventoPreventivo tipoEvento) {
-        for(PreventivoViewObserver preventivoViewObserver : osservatori) {
+        for (PreventivoViewObserver preventivoViewObserver : osservatori) {
             preventivoViewObserver.eventNotified(tipoEvento);
-        } 
+        }
     }
 
-    
     @Override
     public void mostraCreaPreventivo() {
         framePreventivo.setVisible(true);
     }
-    
-    
+
     @Override
     public void mostraSpecificheAutoPreventivo(Automobile auto) {
-        specificheAutoPreventivo.setText("");
-        specificheAutoPreventivo.append("Marca: " + auto.getMarca() + "\n");
-        specificheAutoPreventivo.append("Modello: " + auto.getModello() + "\n");
-        specificheAutoPreventivo.append("Numero porte: " + auto.getNumeroPorte() + "\n");
-        specificheAutoPreventivo.append("Cilindrata: " + auto.getCilindrata() + "\n");
-        specificheAutoPreventivo.append("Cavalli: " + auto.getCavalli() + "\n");
+        DefaultTableModel model = (DefaultTableModel) specificheAutoTable.getModel();
+        model.setRowCount(0);
+        model.addRow(new Object[]{"Marca", auto.getMarca()});
+        model.addRow(new Object[]{"Modello", auto.getModello()});
+        model.addRow(new Object[]{"Numero Porte", auto.getNumeroPorte()});
+        model.addRow(new Object[]{"Cilindrata", auto.getCilindrata()});
+        model.addRow(new Object[]{"Cavalli", auto.getCavalli()});
         if (auto.getStatoMacchina().equals(StatoMacchina.USATO)) {
-            specificheAutoPreventivo.append("KM: " + auto.getKm() + "\n");
+            model.addRow(new Object[]{"KM", auto.getKm()});
         }
-        specificheAutoPreventivo.append("Stato Auto: " + auto.getStatoMacchina() + "\n");
+        model.addRow(new Object[]{"Stato Auto", auto.getStatoMacchina()});
     }
-    
-    
+
     @Override
     public void mostraListaClienti(List<Cliente> cliente) {
-        for(Cliente c : cliente) {
+        boxClienti.removeAllItems();
+        for (Cliente c : cliente) {
             String nomeCognome = c.getNome() + " " + c.getCognome();
             boxClienti.addItem(nomeCognome);
         }
     }
-    
+
     @Override
     public Cliente getClienteSelezionato(List<Cliente> listaClienti) {
         String nomeCognome = (String) boxClienti.getSelectedItem();
@@ -131,10 +111,11 @@ public class PreventivoViewImpl implements PreventivoView{
                 return cliente;
             }
         }
-        return null; 
+        return null;
     }
 
     @Override
-    public void mostraPrezzoTotale(ElementoListino ElementoListino) {
+    public void mostraPrezzoTotale(double prezzo) {
+        prezzoTotale.setText("Prezzo: € " + prezzo);
     }
 }
