@@ -1,5 +1,4 @@
 package concessionario.model.cliente;
-
 import java.util.Random;
 
 public class FactoryCliente {
@@ -18,6 +17,8 @@ public class FactoryCliente {
         String email = nome.toLowerCase() + "." + cognome.toLowerCase() + "@gmail.com";
         String telefono = String.valueOf(3000000000L + rnd.nextInt(1000000000));
         String codiceFiscale = generaCodiceFiscaleRandom();
+        double redditoAnnuale = 20000 + rnd.nextInt(80000); // Valore casuale tra 20.000 e 100.000
+        String preferenzeMarca = generaPreferenzeMarcaRandom();
 
         return new Cliente.Builder()
                 .nome(nome)
@@ -25,6 +26,8 @@ public class FactoryCliente {
                 .email(email)
                 .telefono(telefono)
                 .codiceFiscale(codiceFiscale)
+                .redditoAnnuale(redditoAnnuale)
+                .preferenzeAuto(preferenzeMarca)
                 .build();
     }
 
@@ -35,5 +38,10 @@ public class FactoryCliente {
             cf.append(simboli.charAt(rnd.nextInt(simboli.length())));
         }
         return cf.toString();
+    }
+
+    private String generaPreferenzeMarcaRandom() {
+        String[] marche = {"MERCEDES", "FIAT", "TOYOTA", "AUDI", "VOLKSWAGEN", "ALFAROMEO", "SUZUKI"};
+        return marche[rnd.nextInt(marche.length)];
     }
 }

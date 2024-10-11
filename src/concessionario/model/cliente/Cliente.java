@@ -6,6 +6,10 @@ public class Cliente {
     private String email;
     private String telefono;
     private String codiceFiscale;
+    private double redditoAnnuale;
+    private String preferenzeAuto;
+    private int preferenzeNumeroPorte;
+    private String preferenzeAlimentazione;
     
     private Cliente(Builder builder) {
         this.nome = builder.nome;
@@ -13,6 +17,10 @@ public class Cliente {
         this.email = builder.email;
         this.telefono = builder.telefono;
         this.codiceFiscale = builder.codiceFiscale;
+        this.redditoAnnuale = builder.redditoAnnuale;
+        this.preferenzeAuto = builder.preferenzeAuto;
+        this.preferenzeNumeroPorte = builder.preferenzeNumeroPorte;
+        this.preferenzeAlimentazione = builder.preferenzeAlimentazione;
     }
     
     public static class Builder {
@@ -21,6 +29,10 @@ public class Cliente {
         private String email;
         private String telefono;
         private String codiceFiscale;
+        private double redditoAnnuale;
+        private String preferenzeAuto;
+        private int preferenzeNumeroPorte;
+        private String preferenzeAlimentazione; 
         
         public Builder nome(String nome) {
             this.nome = nome;
@@ -47,10 +59,29 @@ public class Cliente {
             return this;
         }
 
+        public Builder redditoAnnuale(double redditoAnnuale) {
+            this.redditoAnnuale = redditoAnnuale;
+            return this;
+        }
+
+        public Builder preferenzeAuto(String preferenzeAuto) {
+            this.preferenzeAuto = preferenzeAuto;
+            return this;
+        }
+
+        public Builder preferenzeNumeroPorte(int numeroPorte) {
+            this.preferenzeNumeroPorte = numeroPorte;
+            return this;
+        }
+
+        public Builder preferenzeAlimentazione(String alimentazione) {
+            this.preferenzeAlimentazione = alimentazione;
+            return this;
+        }
+
         public Cliente build() {
             return new Cliente(this);
         } 
-        
     }    
 
     public String getNome() {
@@ -70,13 +101,31 @@ public class Cliente {
     }
 
     public String getCf() {
-        return this.codiceFiscale;
+        return codiceFiscale;
+    }
+
+    public double getRedditoAnnuale() {
+        return redditoAnnuale;
+    }
+
+    public String getPreferenzeAuto() {
+        return preferenzeAuto;
+    }
+    
+    public int getPreferenzeNumeroPorte() {
+        return preferenzeNumeroPorte;
+    }
+
+    public String getPreferenzeAlimentazione() {
+        return preferenzeAlimentazione;
     }
 
     @Override
     public String toString() {
         return "Cliente [nome=" + nome + ", cognome=" + cognome + ", email=" + email + ", telefono=" + telefono
-                + ", codiceFiscale=" + codiceFiscale + "]";  
+                + ", codiceFiscale=" + codiceFiscale + ", redditoAnnuale=" + redditoAnnuale + ", preferenzeAuto="
+                + preferenzeAuto + ", preferenzeNumeroPorte=" + preferenzeNumeroPorte + ", preferenzeAlimentazione=" 
+                + preferenzeAlimentazione + "]";  
     }
 
     @Override
@@ -115,6 +164,4 @@ public class Cliente {
             return false;
         return true;
     }
-
-    
 }

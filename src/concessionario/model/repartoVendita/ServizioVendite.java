@@ -37,15 +37,19 @@ public class ServizioVendite {
         return Optional.empty();
     }
 
+    // Modifica il metodo vendiAuto per passare anche il cliente
     public boolean vendiAuto(Preventivo preventivo) {
         Automobile auto = preventivo.getAuto();
+        Cliente cliente = preventivo.getCliente();
 
         if (auto.getStatoMacchina().equals(StatoMacchina.USATO)) {
             if (!listinoUsato.rimuoviAuto(auto)) {
                 throw new IllegalStateException("Errore nella rimozione dell'auto usata dal listino.");
             }
         }
-        registroVendite.addPreventivo(preventivo);
+
+        // Aggiunge il preventivo e il cliente al registro delle vendite
+        registroVendite.addPreventivo(preventivo, cliente);
         return true;
     }
 }

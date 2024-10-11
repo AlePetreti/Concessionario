@@ -18,13 +18,15 @@ public class RegistroVenditeTest {
     private RegistroVendite registroVendite;
     private Preventivo preventivo1;
     private Preventivo preventivo2;
+    private Cliente cliente1;
+    private Cliente cliente2;
 
     @BeforeEach
     public void init() {
         registroVendite = new RegistroVendite();
 
         Automobile auto1 = new Automobile("Classe A", "Mercedes", 0, 5, 1600, 120, GeneratoreTarga.generateTarga(), StatoMacchina.NUOVO);
-        Cliente cliente1 = new Cliente.Builder()
+        cliente1 = new Cliente.Builder()
                 .nome("Mario")
                 .cognome("Rossi")
                 .email("mario.rossi@example.com")
@@ -34,7 +36,7 @@ public class RegistroVenditeTest {
         preventivo1 = new Preventivo(auto1, 25000.0, cliente1);
 
         Automobile auto2 = new Automobile("Punto", "Fiat", 0, 5, 1200, 75, GeneratoreTarga.generateTarga(), StatoMacchina.NUOVO);
-        Cliente cliente2 = new Cliente.Builder()
+        cliente2 = new Cliente.Builder()
                 .nome("Luigi")
                 .cognome("Verdi")
                 .email("luigi.verdi@example.com")
@@ -46,7 +48,7 @@ public class RegistroVenditeTest {
 
     @Test
     public void testAddPreventivo() {
-        registroVendite.addPreventivo(preventivo1);
+        registroVendite.addPreventivo(preventivo1, cliente1);
         List<Preventivo> preventivi = registroVendite.getListaPreventivi();
 
         assertEquals(1, preventivi.size(), "La dimensione della lista dovrebbe essere 1");
@@ -55,8 +57,8 @@ public class RegistroVenditeTest {
 
     @Test
     public void testAddPiuPreventivi() {
-        registroVendite.addPreventivo(preventivo1);
-        registroVendite.addPreventivo(preventivo2);
+        registroVendite.addPreventivo(preventivo1, cliente1);
+        registroVendite.addPreventivo(preventivo2, cliente2);
         List<Preventivo> preventivi = registroVendite.getListaPreventivi();
 
         assertEquals(2, preventivi.size(), "La dimensione della lista dovrebbe essere 2");
@@ -66,10 +68,9 @@ public class RegistroVenditeTest {
 
     @Test
     public void testGetListaPreventivi() {
-        registroVendite.addPreventivo(preventivo1);
+        registroVendite.addPreventivo(preventivo1, cliente1);
         List<Preventivo> preventivi = registroVendite.getListaPreventivi();
-
-        preventivi.clear();  // Prova a svuotare la lista esterna
+        preventivi.clear();
 
         List<Preventivo> preventiviInterni = registroVendite.getListaPreventivi();
         assertEquals(1, preventiviInterni.size(), "La lista interna non dovrebbe essere stata modificata");

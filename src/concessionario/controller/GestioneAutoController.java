@@ -1,12 +1,17 @@
 package concessionario.controller;
 
+import java.util.stream.Collectors;
+import java.util.List;
+
 import concessionario.model.automobile.StatoMacchina;
+import concessionario.model.listino.ElementoListino;
 import concessionario.model.listino.Listino;
 import concessionario.model.ricercaAuto.CercatoreAuto;
 import concessionario.model.ricercaAuto.Filtro;
 import concessionario.view.auto.EventoGestioneAuto;
 import concessionario.view.auto.GestioneAutoView;
 import concessionario.view.auto.GestioneAutoViewObserver;
+
 
 public class GestioneAutoController implements GestioneAutoViewObserver {
 
@@ -30,6 +35,7 @@ public class GestioneAutoController implements GestioneAutoViewObserver {
         switch (e) {
             case GESTIONE_AUTO_APERTA:
                 view.mostraListino(listinoAuto.getListino());
+                view.mostraSuggerimenti(filtraSuggerimenti(listinoAuto));
                 break;
             case CERCA_AUTO:
                 Filtro filtroAuto = creaFiltro(false); // Filtro per auto nuove
@@ -63,5 +69,11 @@ public class GestioneAutoController implements GestioneAutoViewObserver {
         }
 
         return filtroBuilder.build();
+    }
+    
+    private List<ElementoListino> filtraSuggerimenti(Listino listino) {
+        return listino.getListino().stream()
+            .filter(elemento -> elemento.getPrezzo() < 20000)
+            .collect(Collectors.toList());
     }
 }

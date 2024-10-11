@@ -44,6 +44,10 @@ public class GestioneAutoViewImpl implements GestioneAutoView {
     private List<GestioneAutoViewObserver> osservatori;
     private List<ElementoListino> listinoCorrente;
 
+    // Nuovi membri per i suggerimenti
+    private JTable suggerimentiAuto;
+    private DefaultTableModel modelloSuggerimenti;
+
     public GestioneAutoViewImpl() {
         this.osservatori = new LinkedList<>();
         frameAuto = new JFrame("GestioneAuto");
@@ -55,7 +59,7 @@ public class GestioneAutoViewImpl implements GestioneAutoView {
         modelloTabella = new DefaultTableModel(nomiColonne, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false; // Rende tutte le celle non modificabili
+                return false;
             }
         };
 
@@ -81,50 +85,50 @@ public class GestioneAutoViewImpl implements GestioneAutoView {
             }
         });
 
-        // filtri per cercare un auto
+        // Filtri per cercare un auto
         JPanel panel2 = new JPanel();
         panel2.setBorder(BorderFactory.createLineBorder(Color.black));
-        // vincoli per posizionare un elemento nella GridBag
+        // Vincoli per posizionare un elemento nella GridBag
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.fill = 1;
         constraints.anchor = GridBagConstraints.NORTH;
         panel2.setLayout(new GridBagLayout());
         constraints.gridy = 0;
-        // campo per marca auto
+        // Campo per marca auto
         panel2.add(new JLabel("Marca Auto"), constraints);
         constraints.gridy = 1;
         panel2.add(marcaAuto = new JTextField(), constraints);
         constraints.gridy = 2;
-        // campo per modello auto
+        // Campo per modello auto
         panel2.add(new JLabel("Modello Auto"), constraints);
         constraints.gridy = 3;
         panel2.add(modelloAuto = new JTextField(), constraints);
         constraints.gridy = 4;
-        // campo per KM auto
+        // Campo per KM auto
         panel2.add(new JLabel("KM auto"), constraints);
         constraints.gridy = 5;
         panel2.add(kmAuto = new JTextField(), constraints);
         constraints.gridy = 6;
-        // campo per numero porte auto
+        // Campo per numero porte auto
         panel2.add(new JLabel("Numero porte"), constraints);
         constraints.gridy = 7;
         panel2.add(numeroPorte = new JTextField(), constraints);
         constraints.gridy = 8;
-        // campo per cilindrata auto
+        // Campo per cilindrata auto
         panel2.add(new JLabel("Cilindrata Auto"), constraints);
         constraints.gridy = 9;
         panel2.add(cilindrata = new JTextField(), constraints);
         constraints.gridy = 10;
-        // campo per prezzo max macchina
+        // Campo per prezzo max macchina
         panel2.add(new JLabel("Prezzo Max"), constraints);
         constraints.gridy = 11;
         panel2.add(prezzoMax = new JTextField(), constraints);
         constraints.gridy = 12;
-        // bottone per impostare le auto ad usate
+        // Bottone per impostare le auto ad usate
         JCheckBox checkBoxUsato = new JCheckBox("Usato");
         panel2.add(checkBoxUsato, constraints);
         constraints.gridy = 13;
-        // bottone per ricerca delle auto
+        // Bottone per ricerca delle auto
         JButton bRicerca = new JButton("Cerca");
         panel2.add(bRicerca, constraints);
         constraints.gridy = 14;
@@ -140,6 +144,26 @@ public class GestioneAutoViewImpl implements GestioneAutoView {
         });
 
         this.frameAuto.add(panel2, BorderLayout.LINE_START);
+
+        // Modello della tabella per i suggerimenti
+        String[] nomiColonneSuggerimenti = {"Modello", "Marca", "Prezzo"};
+        modelloSuggerimenti = new DefaultTableModel(nomiColonneSuggerimenti, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        // Creazione della tabella per i suggerimenti
+        suggerimentiAuto = new JTable(modelloSuggerimenti);
+        suggerimentiAuto.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        // Aggiunta della tabella per i suggerimenti al frame
+        JPanel panelSuggerimenti = new JPanel(new BorderLayout());
+        panelSuggerimenti.setBorder(BorderFactory.createTitledBorder("Suggerimenti Auto"));
+        panelSuggerimenti.add(new JScrollPane(suggerimentiAuto), BorderLayout.CENTER);
+
+        this.frameAuto.add(panelSuggerimenti, BorderLayout.LINE_END); // Aggiunge il pannello dei suggerimenti a destra
     }
 
     private void notifyEvent(EventoGestioneAuto tipoEvento) {
@@ -148,12 +172,12 @@ public class GestioneAutoViewImpl implements GestioneAutoView {
         }
     }
 
-    // dialog per mostrare le specifiche del auto
+    // Dialog per mostrare le specifiche del auto
     private void mostraSpecificheAuto(ElementoListino elemento) {
         JDialog dialog = new JDialog();
         dialog.setTitle("Specifiche Auto");
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        // panel per mostrare specifiche auto
+        // Panel per mostrare specifiche auto
         JPanel panel1 = new JPanel();
         panel1.setLayout(new GridLayout(0, 1));
         panel1.add(new JLabel("Marca: " + elemento.getAutomobile().getMarca()));
@@ -222,6 +246,9 @@ public class GestioneAutoViewImpl implements GestioneAutoView {
             };
             modelloTabella.addRow(row);
         }
+
+        // Chiamare il metodo per mostrare suggerimenti
+        mostraSuggerimenti(listino);
     }
 
     @Override
@@ -276,6 +303,17 @@ public class GestioneAutoViewImpl implements GestioneAutoView {
             return Optional.empty();
         } else {
             return Optional.of(Double.parseDouble(prezzoMax.getText()));
+        }
+    }
+
+    @Override
+    public void mostraSuggerimenti(List<ElementoListino> suggerimenti) {
+        modelloSuggerimenti.setRowCount(0);
+
+        for (ElementoListino elemento : suggerimenti) {
+            Automobile auto = elemento.getAutomobile();
+            Object[] row = {auto.getModello(), auto.getMarca(), elemento.getPrezzo()};
+            modelloSuggerimenti.addRow(row);
         }
     }
 }
