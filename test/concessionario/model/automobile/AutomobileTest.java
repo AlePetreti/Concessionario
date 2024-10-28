@@ -8,10 +8,10 @@ import org.junit.jupiter.api.Test;
 public class AutomobileTest {
 
     private Automobile auto;
-    
+
     @BeforeEach
     private void init() {
-        auto = new Automobile("Classe A", "Mercedes", 0, 5, 2000, 500, GeneratoreTarga.generateTarga(), StatoMacchina.NUOVO);
+        auto = new Automobile("Classe A", "Mercedes", 0, 5, 2000, 500, GeneratoreTarga.generateTarga(), StatoMacchina.NUOVO, TipoAlimentazione.BENZINA);
     }
 
     @Test
@@ -23,5 +23,7 @@ public class AutomobileTest {
         assertEquals(2000, auto.getCilindrata());
         assertEquals(500, auto.getCavalli());
         assertEquals(StatoMacchina.NUOVO, auto.getStatoMacchina());
+        // Nuovo test per tipoAlimentazione
+        assertEquals(TipoAlimentazione.BENZINA, auto.getTipoAlimentazione());
     }
 }

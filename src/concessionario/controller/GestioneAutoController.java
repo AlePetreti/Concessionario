@@ -35,7 +35,6 @@ public class GestioneAutoController implements GestioneAutoViewObserver {
         switch (e) {
             case GESTIONE_AUTO_APERTA:
                 view.mostraListino(listinoAuto.getListino());
-                view.mostraSuggerimenti(filtraSuggerimenti(listinoAuto));
                 break;
             case CERCA_AUTO:
                 Filtro filtroAuto = creaFiltro(false); // Filtro per auto nuove

@@ -17,8 +17,6 @@ public interface GestioneAutoView {
 
     String getMarcaAuto();
 
-    void mostraSuggerimenti(List<ElementoListino> suggerimenti);
-
     Optional<Integer> getKmAuto();
 
     Optional<Integer> getNumeroPorte();

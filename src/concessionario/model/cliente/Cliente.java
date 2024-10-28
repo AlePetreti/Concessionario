@@ -1,5 +1,7 @@
 package concessionario.model.cliente;
 
+import concessionario.model.automobile.TipoAlimentazione;
+
 public class Cliente {
     private String nome;
     private String cognome;
@@ -9,7 +11,7 @@ public class Cliente {
     private double redditoAnnuale;
     private String preferenzeAuto;
     private int preferenzeNumeroPorte;
-    private String preferenzeAlimentazione;
+    private TipoAlimentazione preferenzeAlimentazione;
     
     private Cliente(Builder builder) {
         this.nome = builder.nome;
@@ -32,7 +34,7 @@ public class Cliente {
         private double redditoAnnuale;
         private String preferenzeAuto;
         private int preferenzeNumeroPorte;
-        private String preferenzeAlimentazione; 
+        private TipoAlimentazione preferenzeAlimentazione; 
         
         public Builder nome(String nome) {
             this.nome = nome;
@@ -74,7 +76,7 @@ public class Cliente {
             return this;
         }
 
-        public Builder preferenzeAlimentazione(String alimentazione) {
+        public Builder preferenzeAlimentazione(TipoAlimentazione alimentazione) {
             this.preferenzeAlimentazione = alimentazione;
             return this;
         }
@@ -116,7 +118,7 @@ public class Cliente {
         return preferenzeNumeroPorte;
     }
 
-    public String getPreferenzeAlimentazione() {
+    public TipoAlimentazione getPreferenzeAlimentazione() {
         return preferenzeAlimentazione;
     }
 

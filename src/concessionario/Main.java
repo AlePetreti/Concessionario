@@ -5,6 +5,7 @@ import concessionario.controller.ConcessionarioController;
 import concessionario.controller.GestioneAutoController;
 import concessionario.controller.PreventivoController;
 import concessionario.model.automobile.FactoryAutomobile;
+import concessionario.model.automobile.TipoAlimentazione;
 import concessionario.model.autonoleggio.auto_noleggio.FactoryAutomobiliNoleggio;
 import concessionario.model.cliente.AnagraficaClienti;
 import concessionario.model.cliente.AnagraficaClientiImpl;
@@ -15,6 +16,7 @@ import concessionario.model.listino.Listino;
 import concessionario.model.officina.OfficinaModel;
 import concessionario.model.repartoVendita.RegistroVendite;
 import concessionario.model.repartoVendita.ServizioVendite;
+import concessionario.model.suggerimenti.Suggeritore;
 import concessionario.model.suggerimenti.SuggeritoreAuto;
 import concessionario.view.anagrafica.AnagraficaClientiView;
 import concessionario.view.anagrafica.AnagraficaClientiViewImpl;
@@ -76,33 +78,44 @@ public class Main {
         inizializzaClienti(anagrafica, factoryCliente);
         
         // Inizializzazione del suggeritore di auto
-        SuggeritoreAuto suggeritore = new SuggeritoreAuto();
-
-        int numeroPorte = 3;
-        String tipoAlimentazione = "Benzina";
+        SuggeritoreAuto suggeritore = new SuggeritoreAuto(listinoAuto, listinoUsato); // Assicurati che il costruttore sia corretto
 
         // Loop per suggerire auto ai clienti
         for (Cliente cliente : anagrafica.getClienti()) {
-            List<ElementoListino> autoSuggerite = suggeritore.suggerisciAuto(cliente, listinoAuto, listinoUsato, numeroPorte, tipoAlimentazione);
+            // Assicurati che il cliente abbia preferenze valide
+            if (cliente.getPreferenzeAuto() == null || cliente.getPreferenzeAuto().isEmpty()) {
+                System.out.println("Il cliente " + cliente.getNome() + " " + cliente.getCognome() + " non ha preferenze di auto.");
+                continue; // Salta questo cliente
+            }
+
+            // Ottieni le auto suggerite
+            List<ElementoListino> autoSuggerite = suggeritore.suggerisciAuto(cliente);
             double budgetCliente = cliente.getRedditoAnnuale() * 0.35; // Esempio di calcolo del budget
-        
+            
             // Stampa delle informazioni per ogni cliente
             System.out.println("Auto suggerite per il cliente " + cliente.getNome() + " " + cliente.getCognome() + ":");
             System.out.println("Marca preferita dal cliente: " + cliente.getPreferenzeAuto());
+            System.out.println("Numero di porte preferito: " + cliente.getPreferenzeNumeroPorte());
+            System.out.println("Tipo di alimentazione preferito: " + cliente.getPreferenzeAlimentazione());
             System.out.println("Budget massimo del cliente: " + budgetCliente);
             System.out.println("Auto suggerite:");
             
-            // Stampa delle auto suggerite per il cliente
-            for (ElementoListino elemento : autoSuggerite) {
-                System.out.println("- " + elemento.getAutomobile().getMarca() + " " + elemento.getAutomobile().getModello() + 
-                                   " (Prezzo: " + elemento.getPrezzo() + 
-                                   ", Alimentazione: " + elemento.getAutomobile().getTipoAlimentazione() + 
-                                   ", Stato: " + elemento.getAutomobile().getStatoMacchina() + ")");
+            // Verifica se ci sono auto suggerite
+            if (autoSuggerite.isEmpty()) {
+                System.out.println("Nessuna auto suggerita.");
+            } else {
+                // Stampa delle auto suggerite per il cliente
+                for (ElementoListino elemento : autoSuggerite) {
+                    System.out.println("- " + elemento.getAutomobile().getMarca() + " " + elemento.getAutomobile().getModello() + 
+                                    " (Prezzo: " + elemento.getPrezzo() + 
+                                    ", Alimentazione: " + elemento.getAutomobile().getTipoAlimentazione() + 
+                                    ", Stato: " + elemento.getAutomobile().getStatoMacchina() + ")");
+                }
             }
             System.out.println();
         }
     }
-        
+
     /**
      * Inizializza una lista di automobili nuove nel listino.
      * 

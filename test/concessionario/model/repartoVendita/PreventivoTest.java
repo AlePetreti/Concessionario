@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import concessionario.model.automobile.Automobile;
 import concessionario.model.automobile.GeneratoreTarga;
 import concessionario.model.automobile.StatoMacchina;
+import concessionario.model.automobile.TipoAlimentazione;
 import concessionario.model.cliente.Cliente;
 
 public class PreventivoTest {
@@ -17,8 +18,9 @@ public class PreventivoTest {
 
     @BeforeEach
     public void init() {
+        // Aggiunta del parametro TipoAlimentazione nel costruttore di Automobile
+        auto = new Automobile("Classe A", "Mercedes", 0, 5, 2000, 500, GeneratoreTarga.generateTarga(), StatoMacchina.NUOVO, TipoAlimentazione.BENZINA);
         
-        auto = new Automobile("Classe A", "Mercedes", 0, 5, 2000, 500,GeneratoreTarga.generateTarga(), StatoMacchina.NUOVO);
         cliente = new Cliente.Builder()
                 .nome("Mario")
                 .cognome("Rossi")

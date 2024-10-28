@@ -1,6 +1,7 @@
 package concessionario.model.automobile;
 
 import java.util.Random;
+import concessionario.model.automobile.TipoAlimentazione;
 
 public class FactoryAutomobile {
 
@@ -19,14 +20,15 @@ public class FactoryAutomobile {
         int[] numeroPorte = {3, 5};
         int[] cilindrata = {1200, 1400, 1600, 1900, 2000, 2200, 3000, 4000};
         int[] cavalli = {75, 90, 116, 120, 150, 190, 210, 350, 400};
-        String[] tipiAlimentazione = {"Benzina", "Diesel", "Elettrico", "Ibrido"};
+        
+        TipoAlimentazione[] tipiAlimentazione = TipoAlimentazione.values();
 
         String marcaAuto = marche[rnd.nextInt(marche.length)];
         String modelloAuto = selezionaModello(marcaAuto);
         int numeroPorteAuto = numeroPorte[rnd.nextInt(numeroPorte.length)];
         int cilindrataAuto = cilindrata[rnd.nextInt(cilindrata.length)];
         int cavalliAuto = cavalli[rnd.nextInt(cavalli.length)];
-        String tipoAlimentazione = tipiAlimentazione[rnd.nextInt(tipiAlimentazione.length)];
+        TipoAlimentazione tipoAlimentazione = tipiAlimentazione[rnd.nextInt(tipiAlimentazione.length)];
 
         return new Automobile(modelloAuto, marcaAuto, 0, numeroPorteAuto, cilindrataAuto, cavalliAuto, GeneratoreTarga.generateTarga(), StatoMacchina.NUOVO, tipoAlimentazione);
     }
@@ -40,7 +42,9 @@ public class FactoryAutomobile {
         int[] numeroPorte = {3, 5};
         int[] cilindrata = {1200, 1400, 1600, 1900, 2000, 2200, 3000, 4000};
         int[] cavalli = {75, 90, 116, 120, 150, 190, 210, 350, 400};
-        String[] tipiAlimentazione = {"Benzina", "Diesel", "Elettrico", "Ibrido"};
+        
+        // Usa l'enum TipoAlimentazione invece di un array di String
+        TipoAlimentazione[] tipiAlimentazione = TipoAlimentazione.values();
 
         String marcaAuto = marche[rnd.nextInt(marche.length)];
         String modelloAuto = selezionaModello(marcaAuto);
@@ -48,7 +52,9 @@ public class FactoryAutomobile {
         int numeroPorteAuto = numeroPorte[rnd.nextInt(numeroPorte.length)];
         int cilindrataAuto = cilindrata[rnd.nextInt(cilindrata.length)];
         int cavalliAuto = cavalli[rnd.nextInt(cavalli.length)];
-        String tipoAlimentazione = tipiAlimentazione[rnd.nextInt(tipiAlimentazione.length)];
+        
+        // Seleziona un tipo di alimentazione dall'enum
+        TipoAlimentazione tipoAlimentazione = tipiAlimentazione[rnd.nextInt(tipiAlimentazione.length)];
 
         return new Automobile(modelloAuto, marcaAuto, KmAuto, numeroPorteAuto, cilindrataAuto, cavalliAuto, GeneratoreTarga.generateTarga(), StatoMacchina.USATO, tipoAlimentazione);
     }

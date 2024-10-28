@@ -3,6 +3,7 @@ package concessionario.controller;
 import java.util.Collections;
 import java.util.List;
 
+import concessionario.model.automobile.TipoAlimentazione;
 import concessionario.model.cliente.AnagraficaClienti;
 import concessionario.model.cliente.Cliente;
 import concessionario.model.cliente.StrategiaRicercaPerCf;
@@ -31,6 +32,7 @@ public class AnagraficaClientiController implements AnagraficaClientiViewObserve
             case REGISTRA_CLIENTI:
                 double redditoAnnuale = Double.parseDouble(view.getRedditoAnnualeInserito());
                 int numeroPorte = Integer.parseInt(view.getNumeroPorteInserito());
+                TipoAlimentazione preferenzaAlimentazione = TipoAlimentazione.valueOf(view.getAlimentazioneInserita().toUpperCase());
                 Cliente nuovoCliente = new Cliente.Builder()
                     .nome(view.getNomeInserito())
                     .cognome(view.getCognomeInserito())
@@ -40,7 +42,7 @@ public class AnagraficaClientiController implements AnagraficaClientiViewObserve
                     .redditoAnnuale(redditoAnnuale)
                     .preferenzeAuto(view.getPreferenzeAutoInserita())
                     .preferenzeNumeroPorte(numeroPorte)
-                    .preferenzeAlimentazione(view.getAlimentazioneInserita())
+                    .preferenzeAlimentazione(preferenzaAlimentazione)
                     .build();
 
                 anagraficaClienti.registraCliente(nuovoCliente);

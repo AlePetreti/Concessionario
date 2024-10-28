@@ -10,9 +10,9 @@ public class Automobile {
     private final int cavalli;
     private final String targa;
     private final StatoMacchina statoMacchina;
-    private String tipoAlimentazione;
+    private TipoAlimentazione tipoAlimentazione;
 
-    public Automobile(String modello, String marca, int km, int numeroPorte, int cilindrata, int cavalli, String targa, StatoMacchina statoMacchina,  String tipoAlimentazione) {
+    public Automobile(String modello, String marca, int km, int numeroPorte, int cilindrata, int cavalli, String targa, StatoMacchina statoMacchina, TipoAlimentazione tipoAlimentazione) {
         this.modello = modello;
         this.marca = marca;
         this.km = km;
@@ -56,7 +56,7 @@ public class Automobile {
         return statoMacchina;
     }
 
-    public String getTipoAlimentazione() {
+    public TipoAlimentazione getTipoAlimentazione() {
         return tipoAlimentazione;
     }
 

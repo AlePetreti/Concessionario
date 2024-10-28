@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import concessionario.model.automobile.Automobile;
 import concessionario.model.automobile.GeneratoreTarga;
 import concessionario.model.automobile.StatoMacchina;
+import concessionario.model.automobile.TipoAlimentazione;
 import concessionario.model.cliente.AnagraficaClienti;
 import concessionario.model.cliente.AnagraficaClientiImpl;
 import concessionario.model.cliente.Cliente;
@@ -34,7 +35,9 @@ public class ServizioVenditeTest {
         anagraficaClienti = new AnagraficaClientiImpl();
         registroVendite = new RegistroVendite();
         servizioVendite = new ServizioVendite(listino, listinoUsato, anagraficaClienti, registroVendite);
-        auto = new Automobile("Golf", "Volkswagen", 0, 5, 1400, 120, GeneratoreTarga.generateTarga(), StatoMacchina.NUOVO);
+        
+        // Aggiornamento del costruttore di Automobile con TipoAlimentazione
+        auto = new Automobile("Golf", "Volkswagen", 0, 5, 1400, 120, GeneratoreTarga.generateTarga(), StatoMacchina.NUOVO, TipoAlimentazione.DIESEL);
 
         cliente = new Cliente.Builder()
                 .nome("Mario")

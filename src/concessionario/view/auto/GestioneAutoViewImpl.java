@@ -44,10 +44,6 @@ public class GestioneAutoViewImpl implements GestioneAutoView {
     private List<GestioneAutoViewObserver> osservatori;
     private List<ElementoListino> listinoCorrente;
 
-    // Nuovi membri per i suggerimenti
-    private JTable suggerimentiAuto;
-    private DefaultTableModel modelloSuggerimenti;
-
     public GestioneAutoViewImpl() {
         this.osservatori = new LinkedList<>();
         frameAuto = new JFrame("GestioneAuto");
@@ -55,7 +51,7 @@ public class GestioneAutoViewImpl implements GestioneAutoView {
         this.frameAuto.setLayout(new BorderLayout());
 
         // Creazione del modello della tabella
-        String[] nomiColonne = {"Modello", "Marca", "Km", "Numero Porte", "Cilindrata", "Stato", "Prezzo"};
+        String[] nomiColonne = {"Modello", "Marca", "Km", "Numero Porte", "Cilindrata", "Stato", "Alimentazione", "Prezzo"};
         modelloTabella = new DefaultTableModel(nomiColonne, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -144,26 +140,6 @@ public class GestioneAutoViewImpl implements GestioneAutoView {
         });
 
         this.frameAuto.add(panel2, BorderLayout.LINE_START);
-
-        // Modello della tabella per i suggerimenti
-        String[] nomiColonneSuggerimenti = {"Modello", "Marca", "Prezzo"};
-        modelloSuggerimenti = new DefaultTableModel(nomiColonneSuggerimenti, 0) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-
-        // Creazione della tabella per i suggerimenti
-        suggerimentiAuto = new JTable(modelloSuggerimenti);
-        suggerimentiAuto.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-        // Aggiunta della tabella per i suggerimenti al frame
-        JPanel panelSuggerimenti = new JPanel(new BorderLayout());
-        panelSuggerimenti.setBorder(BorderFactory.createTitledBorder("Suggerimenti Auto"));
-        panelSuggerimenti.add(new JScrollPane(suggerimentiAuto), BorderLayout.CENTER);
-
-        this.frameAuto.add(panelSuggerimenti, BorderLayout.LINE_END); // Aggiunge il pannello dei suggerimenti a destra
     }
 
     private void notifyEvent(EventoGestioneAuto tipoEvento) {
@@ -242,13 +218,11 @@ public class GestioneAutoViewImpl implements GestioneAutoView {
                 auto.getNumeroPorte(),
                 auto.getCilindrata(),
                 auto.getStatoMacchina(),
+                auto.getTipoAlimentazione(),
                 elementoListino.getPrezzo()
             };
             modelloTabella.addRow(row);
         }
-
-        // Chiamare il metodo per mostrare suggerimenti
-        mostraSuggerimenti(listino);
     }
 
     @Override
@@ -303,17 +277,6 @@ public class GestioneAutoViewImpl implements GestioneAutoView {
             return Optional.empty();
         } else {
             return Optional.of(Double.parseDouble(prezzoMax.getText()));
-        }
-    }
-
-    @Override
-    public void mostraSuggerimenti(List<ElementoListino> suggerimenti) {
-        modelloSuggerimenti.setRowCount(0);
-
-        for (ElementoListino elemento : suggerimenti) {
-            Automobile auto = elemento.getAutomobile();
-            Object[] row = {auto.getModello(), auto.getMarca(), elemento.getPrezzo()};
-            modelloSuggerimenti.addRow(row);
         }
     }
 }
