@@ -6,6 +6,8 @@ public class Cliente {
     private String email;
     private String telefono;
     private String codiceFiscale;
+    private double redditoAnnuale;
+    private int numeroMembriNucleoFamiliare;
     
     private Cliente(Builder builder) {
         this.nome = builder.nome;
@@ -13,6 +15,8 @@ public class Cliente {
         this.email = builder.email;
         this.telefono = builder.telefono;
         this.codiceFiscale = builder.codiceFiscale;
+        this.redditoAnnuale = builder.redditoAnnuale;
+        this.numeroMembriNucleoFamiliare = builder.numeroMembriNucleoFamiliare;
     }
     
     public static class Builder {
@@ -21,6 +25,8 @@ public class Cliente {
         private String email;
         private String telefono;
         private String codiceFiscale;
+        private double redditoAnnuale;
+        private int numeroMembriNucleoFamiliare;
         
         public Builder nome(String nome) {
             this.nome = nome;
@@ -44,6 +50,16 @@ public class Cliente {
 
         public Builder codiceFiscale(String codiceFiscale) {
             this.codiceFiscale = codiceFiscale;
+            return this;
+        }
+
+        public Builder redditoAnnuale(double redditoAnnuale) {
+            this.redditoAnnuale = redditoAnnuale;
+            return this;
+        }
+
+        public Builder numeroMembriNucleoFamiliare(int numeroMembriNucleoFamiliare) {
+            this.numeroMembriNucleoFamiliare = numeroMembriNucleoFamiliare;
             return this;
         }
 
@@ -72,12 +88,20 @@ public class Cliente {
         return codiceFiscale;
     }
 
-   
+    public double getRedditoAnnuale() {
+        return redditoAnnuale;
+    }
 
+    public int getNumeroMembriNucleoFamiliare() {
+        return numeroMembriNucleoFamiliare;
+    }
+
+   
     @Override
     public String toString() {
         return "Cliente [nome=" + nome + ", cognome=" + cognome + ", email=" + email + ", telefono=" + telefono
-                + ", codiceFiscale=" + codiceFiscale + "]";
+                + ", codiceFiscale=" + codiceFiscale + ", redditoAnnuale=" + redditoAnnuale
+                + ", numeroMembriNucleoFamiliare=" + numeroMembriNucleoFamiliare + "]";
     }
 
     @Override
