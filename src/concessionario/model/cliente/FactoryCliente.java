@@ -1,7 +1,5 @@
 package concessionario.model.cliente;
 
-import concessionario.model.automobile.TipoAlimentazione;
-
 import java.util.Random;
 
 public class FactoryCliente {
@@ -20,10 +18,6 @@ public class FactoryCliente {
         String email = nome.toLowerCase() + "." + cognome.toLowerCase() + "@gmail.com";
         String telefono = String.valueOf(3000000000L + rnd.nextInt(1000000000));
         String codiceFiscale = generaCodiceFiscaleRandom();
-        double redditoAnnuale = 20000 + rnd.nextInt(80000);
-        String preferenzeMarca = generaPreferenzeMarcaRandom();
-        int preferenzeNumeroPorte = (rnd.nextBoolean()) ? 3 : 5;
-        TipoAlimentazione preferenzeAlimentazione = generaPreferenzeAlimentazioneRandom();
 
         return new Cliente.Builder()
                 .nome(nome)
@@ -31,10 +25,6 @@ public class FactoryCliente {
                 .email(email)
                 .telefono(telefono)
                 .codiceFiscale(codiceFiscale)
-                .redditoAnnuale(redditoAnnuale)
-                .preferenzeAuto(preferenzeMarca)
-                .preferenzeNumeroPorte(preferenzeNumeroPorte)
-                .preferenzeAlimentazione(preferenzeAlimentazione)
                 .build();
     }
 
@@ -45,15 +35,5 @@ public class FactoryCliente {
             cf.append(simboli.charAt(rnd.nextInt(simboli.length())));
         }
         return cf.toString();
-    }
-
-    private String generaPreferenzeMarcaRandom() {
-        String[] marche = {"MERCEDES", "FIAT", "TOYOTA", "AUDI", "VOLKSWAGEN", "ALFAROMEO", "SUZUKI"};
-        return marche[rnd.nextInt(marche.length)];
-    }
-
-    private TipoAlimentazione generaPreferenzeAlimentazioneRandom() {
-        TipoAlimentazione[] alimentazioni = TipoAlimentazione.values();
-        return alimentazioni[rnd.nextInt(alimentazioni.length)];
     }
 }

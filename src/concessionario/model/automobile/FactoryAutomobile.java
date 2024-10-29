@@ -1,7 +1,6 @@
 package concessionario.model.automobile;
 
 import java.util.Random;
-import concessionario.model.automobile.TipoAlimentazione;
 
 public class FactoryAutomobile {
 

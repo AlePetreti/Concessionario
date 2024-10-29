@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import concessionario.model.automobile.Automobile;
 import concessionario.model.automobile.StatoMacchina;
 import concessionario.model.automobile.TipoAlimentazione; // Importa l'enum
-import concessionario.model.cliente.Cliente;
 import concessionario.model.listino.ElementoListino;
 import concessionario.model.listino.Listino;
 
@@ -20,7 +19,6 @@ public class SuggeritoreAutoTest {
     private SuggeritoreAuto suggeritoreAuto;
     private Listino listinoAuto;
     private Listino listinoUsato;
-    private Cliente cliente;
 
     @BeforeEach
     public void init() {
@@ -41,15 +39,13 @@ public class SuggeritoreAutoTest {
 
     @Test
     public void testSuggerisciAuto_PreferenzaEPrezzoCompatibile() {
-        cliente = new Cliente.Builder()
-                .nome("Mario")
-                .cognome("Rossi")
+        PreferenzeCliente preferenzeCliente = new PreferenzeCliente.Builder()
                 .redditoAnnuale(100000)
                 .preferenzeAuto("Tesla") // preferenza per la marca
                 .preferenzeAlimentazione(TipoAlimentazione.ELETTRICA) // preferenza per l'alimentazione
                 .build();
 
-        List<ElementoListino> autoSuggerite = suggeritoreAuto.suggerisciAuto(cliente);
+        List<ElementoListino> autoSuggerite = suggeritoreAuto.suggerisciAuto(preferenzeCliente);
 
         // Dovrebbe restituire 1 auto
         assertEquals(1, autoSuggerite.size(), "Dovrebbe suggerire una sola auto compatibile con il reddito e la preferenza.");
@@ -58,13 +54,11 @@ public class SuggeritoreAutoTest {
 
     @Test
     public void testSuggerisciAuto_SenzaPreferenza() {
-        cliente = new Cliente.Builder()
-                .nome("Luigi")
-                .cognome("Verdi")
+        PreferenzeCliente preferenzeCliente = new PreferenzeCliente.Builder()
                 .redditoAnnuale(60000)
                 .build();
 
-        List<ElementoListino> autoSuggerite = suggeritoreAuto.suggerisciAuto(cliente);
+        List<ElementoListino> autoSuggerite = suggeritoreAuto.suggerisciAuto(preferenzeCliente);
 
         // Dovrebbe suggerire "Golf"
         assertEquals(1, autoSuggerite.size(), "Dovrebbe suggerire una sola auto compatibile senza preferenze.");
@@ -73,14 +67,12 @@ public class SuggeritoreAutoTest {
 
     @Test
     public void testSuggerisciAuto_PreferenzaNonDisponibile() {
-        cliente = new Cliente.Builder()
-            .nome("Giuseppe")
-            .cognome("Bianchi")
+        PreferenzeCliente preferenzeCliente = new PreferenzeCliente.Builder()
             .redditoAnnuale(50000)
             .preferenzeAuto("Fiat")
             .build();
 
-        List<ElementoListino> autoSuggerite = suggeritoreAuto.suggerisciAuto(cliente);
+        List<ElementoListino> autoSuggerite = suggeritoreAuto.suggerisciAuto(preferenzeCliente);
 
         // Controlla che non ci siano auto con la marca Fiat nel risultato
         boolean contieneFiat = autoSuggerite.stream().anyMatch(el -> el.getAutomobile().getMarca().equalsIgnoreCase("Fiat"));
@@ -91,13 +83,11 @@ public class SuggeritoreAutoTest {
 
     @Test
     public void testSuggerisciAuto_MultipliModelliCompatibili() {
-        cliente = new Cliente.Builder()
-                .nome("Sergio")
-                .cognome("Rossi")
+        PreferenzeCliente preferenzeCliente = new PreferenzeCliente.Builder()
                 .redditoAnnuale(120000)
                 .build();
 
-        List<ElementoListino> autoSuggerite = suggeritoreAuto.suggerisciAuto(cliente);
+        List<ElementoListino> autoSuggerite = suggeritoreAuto.suggerisciAuto(preferenzeCliente);
 
         assertTrue(autoSuggerite.size() >= 1, "Dovrebbe suggerire almeno una auto compatibile.");
         boolean contieneModelX = autoSuggerite.stream().anyMatch(el -> el.getAutomobile().getModello().equals("Model X"));
@@ -108,15 +98,13 @@ public class SuggeritoreAutoTest {
 
     @Test
     public void testSuggerisciAuto_PreferenzaCompatibileUsata() {
-        cliente = new Cliente.Builder()
-                .nome("Alberto")
-                .cognome("Ferrari")
+        PreferenzeCliente preferenzeCliente = new PreferenzeCliente.Builder()
                 .redditoAnnuale(20000)
                 .preferenzeAuto("Honda")
                 .preferenzeAlimentazione(TipoAlimentazione.BENZINA) // Preferenza per l'alimentazione
                 .build();
 
-        List<ElementoListino> autoSuggerite = suggeritoreAuto.suggerisciAuto(cliente);
+        List<ElementoListino> autoSuggerite = suggeritoreAuto.suggerisciAuto(preferenzeCliente);
 
         assertEquals(1, autoSuggerite.size(), "Dovrebbe suggerire una sola auto usata della marca preferita.");
         assertEquals("Civic", autoSuggerite.get(0).getAutomobile().getModello(), "Dovrebbe suggerire la Civic.");

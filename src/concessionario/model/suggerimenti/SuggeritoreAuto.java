@@ -2,7 +2,6 @@ package concessionario.model.suggerimenti;
 
 import concessionario.model.automobile.Automobile;
 import concessionario.model.automobile.TipoAlimentazione;
-import concessionario.model.cliente.Cliente;
 import concessionario.model.listino.ElementoListino;
 import concessionario.model.listino.Listino;
 
@@ -20,15 +19,15 @@ public class SuggeritoreAuto implements Suggeritore {
     }
 
     @Override
-    public List<ElementoListino> suggerisciAuto(Cliente cliente) {
-        List<ElementoListino> autoFiltrate = new ArrayList<>();
-        List<ElementoListino> autoCompatibili = new ArrayList<>();
-
-        double budgetCliente = cliente.getRedditoAnnuale() * 0.35;
-        String preferenzaMarca = cliente.getPreferenzeAuto();
-        int preferenzaNumeroPorte = cliente.getPreferenzeNumeroPorte();
-        TipoAlimentazione preferenzaAlimentazione = cliente.getPreferenzeAlimentazione();
-
+    public List<ElementoListino> suggerisciAuto(PreferenzeCliente preferenzeCliente) {
+        List<ElementoListino> autoFiltrate = new ArrayList<>(); // contiene le auto che rientrano nel budget e rispettano tutte le preferenze
+        List<ElementoListino> autoCompatibili = new ArrayList<>(); // contiene le auto che rientrano nel budget ma non rispettano tutte le preferenze.
+    
+        double budgetCliente = preferenzeCliente.getRedditoAnnuale() * 0.35;
+        String preferenzaMarca = preferenzeCliente.getPreferenzeAuto();
+        int preferenzaNumeroPorte = preferenzeCliente.getPreferenzeNumeroPorte();
+        TipoAlimentazione preferenzaAlimentazione = preferenzeCliente.getPreferenzeAlimentazione();
+    
         // Filtraggio auto in base al budget
         for (ElementoListino elemento : listinoAuto.getListino()) {
             Automobile auto = elemento.getAutomobile();
@@ -40,7 +39,7 @@ public class SuggeritoreAuto implements Suggeritore {
                 }
             }
         }
-
+    
         // Se nessuna auto nuova è stata filtrata, considera anche l'usato
         if (autoFiltrate.isEmpty()) {
             for (ElementoListino elemento : listinoUsato.getListino()) {
@@ -54,16 +53,16 @@ public class SuggeritoreAuto implements Suggeritore {
                 }
             }
         }
-
-        // Se nessuna auto rispetta tutte le preferenze, considera quelle compatibili
+    
+        // Se nessuna auto rispetta tutte le preferenze, considera tutte le compatibili
         if (autoFiltrate.isEmpty() && !autoCompatibili.isEmpty()) {
-            autoCompatibili.sort((auto1, auto2) -> calcolaRanking(auto1, auto2, cliente));
-            autoFiltrate.add(autoCompatibili.get(0));
+            autoCompatibili.sort((auto1, auto2) -> calcolaRanking(auto1, auto2, preferenzeCliente));
+            autoFiltrate.addAll(autoCompatibili);
+        } else {
+            // Ordina le auto filtrate in base al ranking
+            autoFiltrate.sort((auto1, auto2) -> calcolaRanking(auto1, auto2, preferenzeCliente));
         }
-
-        // Ordina le auto filtrate in base al ranking
-        autoFiltrate.sort((auto1, auto2) -> calcolaRanking(auto1, auto2, cliente));
-
+    
         return autoFiltrate;
     }
 
@@ -77,23 +76,20 @@ public class SuggeritoreAuto implements Suggeritore {
     }
 
     // Metodo che calcola il ranking delle auto in base alle preferenze del cliente
-    // Metodo che calcola il ranking delle auto in base alle preferenze del cliente
-    private int calcolaRanking(ElementoListino auto1, ElementoListino auto2, Cliente cliente) {
+    private int calcolaRanking(ElementoListino auto1, ElementoListino auto2, PreferenzeCliente preferenzeCliente) {
         int punteggio1 = 0;
         int punteggio2 = 0;
 
-        String preferenzaMarca = cliente.getPreferenzeAuto();
-        int preferenzaNumeroPorte = cliente.getPreferenzeNumeroPorte();
-        TipoAlimentazione preferenzaAlimentazione = cliente.getPreferenzeAlimentazione();
+        String preferenzaMarca = preferenzeCliente.getPreferenzeAuto();
+        int preferenzaNumeroPorte = preferenzeCliente.getPreferenzeNumeroPorte();
+        TipoAlimentazione preferenzaAlimentazione = preferenzeCliente.getPreferenzeAlimentazione();
 
-        // Ranking basato su quanto l'auto rispetta le preferenze del cliente
-
-        // Preferenza di marca
+        // Preferenza di marca con un peso maggiore
         if (auto1.getAutomobile().getMarca().equalsIgnoreCase(preferenzaMarca)) {
-            punteggio1 += 5;
+            punteggio1 += 10;
         }
         if (auto2.getAutomobile().getMarca().equalsIgnoreCase(preferenzaMarca)) {
-            punteggio2 += 5;
+            punteggio2 += 10;
         }
 
         // Preferenza di numero porte
@@ -106,24 +102,25 @@ public class SuggeritoreAuto implements Suggeritore {
 
         // Preferenza di alimentazione
         if (auto1.getAutomobile().getTipoAlimentazione().equals(preferenzaAlimentazione)) {
-            punteggio1 += 2;
+            punteggio1 += 5;
         }
         if (auto2.getAutomobile().getTipoAlimentazione().equals(preferenzaAlimentazione)) {
-            punteggio2 += 2;
+            punteggio2 += 5;
         }
 
-        // Differenza prezzo rispetto al budget
-        double budgetCliente = cliente.getRedditoAnnuale() * 0.35;
+        // Differenza prezzo rispetto al budget con peso ridotto
+        double budgetCliente = preferenzeCliente.getRedditoAnnuale() * 0.35;
         double differenzaPrezzo1 = Math.abs(auto1.getPrezzo() - budgetCliente);
         double differenzaPrezzo2 = Math.abs(auto2.getPrezzo() - budgetCliente);
 
+        // Peso minore per la vicinanza al budget
         if (differenzaPrezzo1 < differenzaPrezzo2) {
-            punteggio1 += 10;
+            punteggio1 += 4;
         } else if (differenzaPrezzo2 < differenzaPrezzo1) {
-            punteggio2 += 10;
+            punteggio2 += 4;
         }
 
-        // Confronto finale: in caso di punteggio uguale, preferisce l'auto con il prezzo più basso
+        //in caso di punteggio uguale, preferisce l'auto con il prezzo più basso
         if (punteggio1 == punteggio2) {
             return Double.compare(auto1.getPrezzo(), auto2.getPrezzo());
         }
@@ -131,4 +128,5 @@ public class SuggeritoreAuto implements Suggeritore {
         // Ordinamento decrescente per punteggio
         return Integer.compare(punteggio2, punteggio1);
     }
+
 }

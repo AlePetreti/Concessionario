@@ -78,42 +78,40 @@ public class Main {
         inizializzaClienti(anagrafica, factoryCliente);
         
         // Inizializzazione del suggeritore di auto
-        SuggeritoreAuto suggeritore = new SuggeritoreAuto(listinoAuto, listinoUsato); // Assicurati che il costruttore sia corretto
+        SuggeritoreAuto suggeritore = new SuggeritoreAuto(listinoAuto, listinoUsato);
 
-        // Loop per suggerire auto ai clienti
-        for (Cliente cliente : anagrafica.getClienti()) {
-            // Assicurati che il cliente abbia preferenze valide
-            if (cliente.getPreferenzeAuto() == null || cliente.getPreferenzeAuto().isEmpty()) {
-                System.out.println("Il cliente " + cliente.getNome() + " " + cliente.getCognome() + " non ha preferenze di auto.");
-                continue; // Salta questo cliente
-            }
+        // for (Cliente cliente : anagrafica.getClienti()) {
+        //     // Assicurati che il cliente abbia preferenze valide
+        //     if (cliente.getPreferenzeAuto() == null || cliente.getPreferenzeAuto().isEmpty()) {
+        //         System.out.println("Il cliente " + cliente.getNome() + " " + cliente.getCognome() + " non ha preferenze di auto.");
+        //     }
 
-            // Ottieni le auto suggerite
-            List<ElementoListino> autoSuggerite = suggeritore.suggerisciAuto(cliente);
-            double budgetCliente = cliente.getRedditoAnnuale() * 0.35; // Esempio di calcolo del budget
+        //     // Ottieni le auto suggerite
+        //     List<ElementoListino> autoSuggerite = suggeritore.suggerisciAuto(cliente);
+        //     double budgetCliente = cliente.getRedditoAnnuale() * 0.35;
             
-            // Stampa delle informazioni per ogni cliente
-            System.out.println("Auto suggerite per il cliente " + cliente.getNome() + " " + cliente.getCognome() + ":");
-            System.out.println("Marca preferita dal cliente: " + cliente.getPreferenzeAuto());
-            System.out.println("Numero di porte preferito: " + cliente.getPreferenzeNumeroPorte());
-            System.out.println("Tipo di alimentazione preferito: " + cliente.getPreferenzeAlimentazione());
-            System.out.println("Budget massimo del cliente: " + budgetCliente);
-            System.out.println("Auto suggerite:");
+        //     // Stampa delle informazioni per ogni cliente
+        //     System.out.println("Auto suggerite per il cliente " + cliente.getNome() + " " + cliente.getCognome() + ":");
+        //     System.out.println("Marca preferita dal cliente: " + cliente.getPreferenzeAuto());
+        //     System.out.println("Numero di porte preferito: " + cliente.getPreferenzeNumeroPorte());
+        //     System.out.println("Tipo di alimentazione preferito: " + cliente.getPreferenzeAlimentazione());
+        //     System.out.println("Budget massimo del cliente: " + budgetCliente);
+        //     System.out.println("Auto suggerite:");
             
-            // Verifica se ci sono auto suggerite
-            if (autoSuggerite.isEmpty()) {
-                System.out.println("Nessuna auto suggerita.");
-            } else {
-                // Stampa delle auto suggerite per il cliente
-                for (ElementoListino elemento : autoSuggerite) {
-                    System.out.println("- " + elemento.getAutomobile().getMarca() + " " + elemento.getAutomobile().getModello() + 
-                                    " (Prezzo: " + elemento.getPrezzo() + 
-                                    ", Alimentazione: " + elemento.getAutomobile().getTipoAlimentazione() + 
-                                    ", Stato: " + elemento.getAutomobile().getStatoMacchina() + ")");
-                }
-            }
-            System.out.println();
-        }
+        //     // Verifica se ci sono auto suggerite
+        //     if (autoSuggerite.isEmpty()) {
+        //         System.out.println("Nessuna auto suggerita.");
+        //     } else {
+        //         // Stampa delle auto suggerite per il cliente
+        //         for (ElementoListino elemento : autoSuggerite) {
+        //             System.out.println("- " + elemento.getAutomobile().getMarca() + " " + elemento.getAutomobile().getModello() + 
+        //                             " (Prezzo: " + elemento.getPrezzo() + 
+        //                             ", Alimentazione: " + elemento.getAutomobile().getTipoAlimentazione() + 
+        //                             ", Stato: " + elemento.getAutomobile().getStatoMacchina() + ")");
+        //         }
+        //     }
+        //     System.out.println();
+        // }
     }
 
     /**
