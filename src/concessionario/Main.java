@@ -52,6 +52,7 @@ public class Main {
         RegistroVendite registroVendite = new RegistroVendite();
         ServizioVendite concessionario = new ServizioVendite(listinoAuto, listinoUsato, anagrafica, registroVendite);
         OfficinaModel officina = new OfficinaModel(listinoUsato);
+        Suggeritore suggeritoreAuto = new SuggeritoreAuto(listinoAuto, listinoUsato);
         
         // Creazione delle viste
         final OfficinaView officinaView = new OfficinaView();
@@ -65,7 +66,7 @@ public class Main {
         final ConcessionarioViewObserver controller = new ConcessionarioController(view, viewAnagrafica, viewGestioneAuto, registroVendite, viewLeasingAuto, officinaView, officina);
         final AnagraficaClientiViewObserver controllerAnagrafica = new AnagraficaClientiController(viewAnagrafica, anagrafica);
         final PreventivoController controllerPreventivo = new PreventivoController(viewPreventivo, anagrafica, concessionario);
-        final GestioneAutoController controllerGestioneAuto = new GestioneAutoController(viewGestioneAuto, listinoAuto, listinoUsato, controllerPreventivo);
+        final GestioneAutoController controllerGestioneAuto = new GestioneAutoController(viewGestioneAuto, listinoAuto, listinoUsato, anagrafica, suggeritoreAuto ,controllerPreventivo);
         final LeasingController leasingController = new LeasingController(viewLeasingAuto, new FactoryAutomobiliNoleggio());
         final OfficinaController officinaController = new OfficinaController(officina, officinaView);
 

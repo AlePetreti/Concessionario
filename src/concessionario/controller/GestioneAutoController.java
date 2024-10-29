@@ -4,10 +4,15 @@ import java.util.stream.Collectors;
 import java.util.List;
 
 import concessionario.model.automobile.StatoMacchina;
+import concessionario.model.cliente.AnagraficaClienti;
+import concessionario.model.cliente.Cliente;
 import concessionario.model.listino.ElementoListino;
 import concessionario.model.listino.Listino;
 import concessionario.model.ricercaAuto.CercatoreAuto;
 import concessionario.model.ricercaAuto.Filtro;
+import concessionario.model.suggerimenti.PreferenzeCliente;
+import concessionario.model.suggerimenti.Suggeritore;
+import concessionario.model.suggerimenti.SuggeritoreAuto;
 import concessionario.view.auto.EventoGestioneAuto;
 import concessionario.view.auto.GestioneAutoView;
 import concessionario.view.auto.GestioneAutoViewObserver;
@@ -20,12 +25,16 @@ public class GestioneAutoController implements GestioneAutoViewObserver {
     private final Listino listinoUsato;
     private final CercatoreAuto cercatoreAuto;
     private final PreventivoController preventivoController;
+    private final AnagraficaClienti anagraficaClienti;
+    private final Suggeritore suggeritoreAuto;
 
-    public GestioneAutoController(GestioneAutoView view, Listino listinoAuto, Listino listinoUsato, PreventivoController preventivoController) {
+    public GestioneAutoController(GestioneAutoView view, Listino listinoAuto, Listino listinoUsato, AnagraficaClienti anagraficaClienti , Suggeritore suggeritoreAuto, PreventivoController preventivoController) {
         this.view = view;
         this.listinoAuto = listinoAuto;
         this.listinoUsato = listinoUsato;
         this.cercatoreAuto = new CercatoreAuto();
+        this.anagraficaClienti = anagraficaClienti;
+        this.suggeritoreAuto = suggeritoreAuto;
         this.view.addObserver(this);
         this.preventivoController = preventivoController;
     }
@@ -35,6 +44,8 @@ public class GestioneAutoController implements GestioneAutoViewObserver {
         switch (e) {
             case GESTIONE_AUTO_APERTA:
                 view.mostraListino(listinoAuto.getListino());
+                view.mostraListaClienti(anagraficaClienti.getClienti());
+                view.mostraTipiAlimentazione();
                 break;
             case CERCA_AUTO:
                 Filtro filtroAuto = creaFiltro(false); // Filtro per auto nuove
@@ -47,9 +58,29 @@ public class GestioneAutoController implements GestioneAutoViewObserver {
                 view.mostraListino(autoUsate.getListino());
                 break;
             case MOSTRA_PREVENTIVO:
-                preventivoController.inizializzaPreventivo(view.getElementoListino().getAutomobile());
+                Cliente clienteSelezionato = view.getClienteSelezionato(anagraficaClienti.getClienti());
+                if (clienteSelezionato != null) {
+                    preventivoController.inizializzaPreventivo(view.getElementoListino().getAutomobile(), clienteSelezionato);
+                } else {
+                    preventivoController.inizializzaPreventivo(view.getElementoListino().getAutomobile());
+                }
                 break;
-            default:
+                case CERCA_AUTO_SUGG:
+                Cliente cliente = view.getClienteSelezionato(anagraficaClienti.getClienti());
+                    PreferenzeCliente preferenzeCliente = new PreferenzeCliente.Builder()
+                        .redditoAnnuale(cliente.getRedditoAnnuale())
+                        .preferenzeAuto(view.getMarcaAutoSugg())
+                        .numeroMembriFamiglia(cliente.getNumeroMembriNucleoFamiliare())
+                        .preferenzeAlimentazione(view.getTipoAlimentazioneSelezionato())
+                        .build();
+
+                        System.out.println("Preferenze cliente: " + preferenzeCliente);
+                    List<ElementoListino> autoSuggerite = suggeritoreAuto.suggerisciAuto(preferenzeCliente);
+                    view.mostraListino(autoSuggerite);
+                break;
+                default:
+                
+                
                 break;
         }
     }

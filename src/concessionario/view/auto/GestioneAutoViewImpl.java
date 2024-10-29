@@ -2,10 +2,12 @@ package concessionario.view.auto;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
@@ -14,6 +16,7 @@ import java.util.Optional;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,6 +31,8 @@ import javax.swing.table.DefaultTableModel;
 
 import concessionario.model.automobile.Automobile;
 import concessionario.model.automobile.StatoMacchina;
+import concessionario.model.automobile.TipoAlimentazione;
+import concessionario.model.cliente.Cliente;
 import concessionario.model.listino.ElementoListino;
 
 public class GestioneAutoViewImpl implements GestioneAutoView {
@@ -41,8 +46,11 @@ public class GestioneAutoViewImpl implements GestioneAutoView {
     private final JTextField numeroPorte;
     private final JTextField cilindrata;
     private final JTextField prezzoMax;
+    private final JComboBox boxClienti;
+    private final JComboBox boxTipoAlimentazione;
     private List<GestioneAutoViewObserver> osservatori;
     private List<ElementoListino> listinoCorrente;
+    private final JTextField marcaAutoSugg;
 
     public GestioneAutoViewImpl() {
         this.osservatori = new LinkedList<>();
@@ -81,6 +89,49 @@ public class GestioneAutoViewImpl implements GestioneAutoView {
             }
         });
 
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(5, 0, 5, 0);
+        gbc.gridx = 0;
+        
+        // Aggiungi boxClienti
+        gbc.gridy = 0;
+        boxClienti = new JComboBox<>();
+        boxClienti.setPreferredSize(new Dimension(300, 30));
+        panel.add(boxClienti, gbc);
+        
+        // Aggiungi boxTipoAlimentazione
+        gbc.gridy = 1;
+        boxTipoAlimentazione = new JComboBox<>();
+        boxTipoAlimentazione.setPreferredSize(new Dimension(300, 30));
+        panel.add(boxTipoAlimentazione, gbc);
+        
+        gbc.gridy = 2;
+        panel.add(new JLabel("Marca Auto"), gbc);
+        gbc.gridy = 3;
+        marcaAutoSugg = new JTextField();
+        marcaAutoSugg.setPreferredSize(new Dimension(300, 30));
+        panel.add(marcaAutoSugg, gbc);
+        
+        // Aggiungi bottone per ricerca suggerimenti
+        gbc.gridy = 4;
+        JButton bRicercaSugg = new JButton("Ricerca tramite suggerimenti");
+        panel.add(bRicercaSugg, gbc);
+
+        bRicercaSugg.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                notifyEvent(EventoGestioneAuto.CERCA_AUTO_SUGG);
+            }
+            
+        });
+        
+        this.frameAuto.add(panel, BorderLayout.EAST);
+
+        
         // Filtri per cercare un auto
         JPanel panel2 = new JPanel();
         panel2.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -279,4 +330,40 @@ public class GestioneAutoViewImpl implements GestioneAutoView {
             return Optional.of(Double.parseDouble(prezzoMax.getText()));
         }
     }
+
+    @Override
+    public void mostraListaClienti(List<Cliente> cliente) {
+        boxClienti.removeAllItems();
+        for (Cliente c : cliente) {
+            boxClienti.addItem(c.getNome() + " " + c.getCognome()); 
+        }
+    }
+
+    @Override
+    public Cliente getClienteSelezionato(List<Cliente> listaClienti) {
+        String nomeCognome = (String) boxClienti.getSelectedItem();
+        for (Cliente cliente : listaClienti) {
+            if ((cliente.getNome() + " " + cliente.getCognome()).equals(nomeCognome)) {
+                return cliente;
+            }
+        }
+        return null;
+    }
+    @Override
+    public void mostraTipiAlimentazione() {
+            boxTipoAlimentazione.removeAllItems();
+        for (TipoAlimentazione tipo : TipoAlimentazione.values()) {
+            boxTipoAlimentazione.addItem(tipo);
+        }
+    }
+    @Override
+    public TipoAlimentazione getTipoAlimentazioneSelezionato() {
+        return (TipoAlimentazione) boxTipoAlimentazione.getSelectedItem();
+    }
+    
+    @Override
+    public String getMarcaAutoSugg() {
+        return marcaAutoSugg.getText();
+    }
+
 }

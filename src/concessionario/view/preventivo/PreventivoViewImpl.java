@@ -118,4 +118,10 @@ public class PreventivoViewImpl implements PreventivoView {
     public void mostraPrezzoTotale(double prezzo) {
         prezzoTotale.setText("Prezzo: € " + prezzo);
     }
+
+    @Override
+    public void selezionaCliente(Cliente cliente) {
+        String nomeCognome = cliente.getNome() + " " + cliente.getCognome();
+        boxClienti.setSelectedItem(nomeCognome);
+    }
 }

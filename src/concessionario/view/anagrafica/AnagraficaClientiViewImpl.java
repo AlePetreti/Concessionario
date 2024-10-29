@@ -35,7 +35,6 @@ public class AnagraficaClientiViewImpl implements AnagraficaClientiView {
     private final JTextField redditoAnnualeCliente;
     private final JTextField numeroMembriNucleoFamiliare;
 
-
     private List<AnagraficaClientiViewObserver> osservatori;
 
     public AnagraficaClientiViewImpl() {
@@ -50,7 +49,9 @@ public class AnagraficaClientiViewImpl implements AnagraficaClientiView {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(new JLabel("Lista dei clienti"));
         panel.add(Box.createRigidArea(new Dimension(0, 8)));
-        String[] columnNames = {"CF", "Nome", "Cognome", "Email", "Telefono"};
+
+        // Aggiornamento delle colonne per includere reddito e membri della famiglia
+        String[] columnNames = {"CF", "Nome", "Cognome", "Email", "Telefono", "Reddito Annuale", "Numero Membri Nucleo Familiare"};
         model = new DefaultTableModel(columnNames, 0);
         tabella = new JTable(model);
         
@@ -67,29 +68,34 @@ public class AnagraficaClientiViewImpl implements AnagraficaClientiView {
         constraints.anchor = GridBagConstraints.NORTH;
         panel1.setLayout(new GridBagLayout());
         constraints.gridy = 0;
+
         // campo per nome cliente
         panel1.add(new JLabel("nome cliente:"), constraints);
         constraints.gridy = 1;
         panel1.add(nomeCliente = new JTextField(), constraints);
         constraints.gridy = 2;
+
         // campo per cognome cliente
         panel1.add(new JLabel("cognome cliente:"), constraints);
         constraints.gridy = 3;
         cognomeCliente = new JTextField();
         panel1.add(cognomeCliente, constraints);
         constraints.gridy = 4;
+
         // campo per email cliente
         panel1.add(new JLabel("email cliente:"), constraints);
         constraints.gridy = 5;
         emailCliente = new JTextField();
         panel1.add(emailCliente, constraints);
         constraints.gridy = 6;
+
         // campo per telefono cliente
         panel1.add(new JLabel("telefono cliente:"), constraints);
         constraints.gridy = 7;
         telCliente = new JTextField();
         panel1.add(telCliente, constraints);
         constraints.gridy = 8;
+
         // campo per cf cliente
         panel1.add(new JLabel("codice fiscale cliente:"), constraints);
         constraints.gridy = 9;
@@ -97,14 +103,16 @@ public class AnagraficaClientiViewImpl implements AnagraficaClientiView {
         panel1.add(cfCliente, constraints);
         constraints.gridy = 10;
 
+        // campo per reddito annuale cliente
         constraints.gridy = 11;
         panel1.add(new JLabel("Reddito Annuale Cliente:"), constraints);
         constraints.gridy = 12;
         redditoAnnualeCliente = new JTextField();
         panel1.add(redditoAnnualeCliente, constraints);
 
+        // campo per numero membri della famiglia
         constraints.gridy = 13;
-        panel1.add(new JLabel("Numero membri familia:"), constraints);
+        panel1.add(new JLabel("Numero membri famiglia:"), constraints);
         constraints.gridy = 14;
         numeroMembriNucleoFamiliare = new JTextField();
         panel1.add(numeroMembriNucleoFamiliare, constraints);
@@ -165,6 +173,9 @@ public class AnagraficaClientiViewImpl implements AnagraficaClientiView {
         String email = emailCliente.getText().trim();
         String telefono = telCliente.getText().trim();
         String cf = cfCliente.getText().trim();
+        String reddito = redditoAnnualeCliente.getText().trim();
+        String numeroMembri = numeroMembriNucleoFamiliare.getText().trim();
+
 
         if (!nome.matches("[a-zA-Z]+")) {
             JOptionPane.showMessageDialog(frameClienti, "Il nome deve contenere solo lettere.", "Errore di validazione", JOptionPane.ERROR_MESSAGE);
@@ -190,6 +201,19 @@ public class AnagraficaClientiViewImpl implements AnagraficaClientiView {
             JOptionPane.showMessageDialog(frameClienti, "Il codice fiscale deve contenere 16 caratteri alfanumerici.", "Errore di validazione", JOptionPane.ERROR_MESSAGE);
             return false;
         }
+
+        try {
+            Double.parseDouble(reddito);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(frameClienti, "Il reddito annuale deve essere un numero.", "Errore di validazione", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        if (!numeroMembri.matches("\\d+")) {
+            JOptionPane.showMessageDialog(frameClienti, "Il numero di membri della famiglia deve essere un numero intero positivo.", "Errore di validazione", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
         return true;
     }
 
@@ -201,13 +225,24 @@ public class AnagraficaClientiViewImpl implements AnagraficaClientiView {
 
     @Override
     public void mostraListaClienti(List<Cliente> clienti) {
+        // Pulisce la tabella
         model.setRowCount(0);
+        
+        // Popola la tabella con i dati dei clienti
         for (Cliente cliente : clienti) {
-            Object[] rowData = {cliente.getCf(), cliente.getNome(), cliente.getCognome(), cliente.getEmail(), cliente.getTelefono()};
+            Object[] rowData = {
+                cliente.getCf(),
+                cliente.getNome(),
+                cliente.getCognome(),
+                cliente.getEmail(),
+                cliente.getTelefono(),
+                cliente.getRedditoAnnuale(),
+                cliente.getNumeroMembriNucleoFamiliare() 
+            };
             model.addRow(rowData);
         }
     }
-
+       
     @Override
     public String getNomeInserito() {
         return nomeCliente.getText();

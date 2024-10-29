@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import concessionario.model.automobile.Automobile;
 import concessionario.model.cliente.AnagraficaClienti;
+import concessionario.model.cliente.Cliente;
 import concessionario.model.repartoVendita.Preventivo;
 import concessionario.model.repartoVendita.ServizioVendite;
 import concessionario.view.preventivo.EventoPreventivo;
@@ -44,6 +45,16 @@ public class PreventivoController implements PreventivoViewObserver {
         view.mostraCreaPreventivo();
         view.mostraListaClienti(anagraficaClienti.getClienti());
         view.mostraSpecificheAutoPreventivo(automobile);
+        double prezzoAuto = servizioVendite.calcolaPrezzoAuto(automobile);
+        view.mostraPrezzoTotale(prezzoAuto);
+        this.autoSelezionata = Optional.of(automobile);
+    }
+
+    public void inizializzaPreventivo(Automobile automobile, Cliente cliente) {
+        view.mostraCreaPreventivo();
+        view.mostraListaClienti(anagraficaClienti.getClienti());
+        view.mostraSpecificheAutoPreventivo(automobile);
+        view.selezionaCliente(cliente);
         double prezzoAuto = servizioVendite.calcolaPrezzoAuto(automobile);
         view.mostraPrezzoTotale(prezzoAuto);
         this.autoSelezionata = Optional.of(automobile);

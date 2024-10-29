@@ -32,6 +32,13 @@ public class PreferenzeCliente {
         return preferenzeAlimentazione;
     }
 
+    @Override
+    public String toString() {
+        return "PreferenzeCliente [redditoAnnuale=" + redditoAnnuale + ", preferenzeAuto=" + preferenzeAuto
+                + ", preferenzeNumeroPorte=" + preferenzeNumeroPorte + ", preferenzeAlimentazione="
+                + preferenzeAlimentazione + "]";
+    }
+
     public static class Builder {
         private double redditoAnnuale;
         private String preferenzeAuto;
@@ -54,8 +61,8 @@ public class PreferenzeCliente {
             return this;
         }
 
-        public Builder preferenzeNumeroPorte(int preferenzeNumeroPorte) {
-            this.preferenzeNumeroPorte = preferenzeNumeroPorte;
+        public Builder numeroMembriFamiglia(int numeroMembri) {
+            this.preferenzeNumeroPorte = (numeroMembri > 2) ? 5 : 3;
             return this;
         }
 

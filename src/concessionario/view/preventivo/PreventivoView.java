@@ -19,5 +19,7 @@ public interface PreventivoView {
 
     void mostraListaClienti(List<Cliente> cliente);
 
+    void selezionaCliente(Cliente cliente);
+
     Cliente getClienteSelezionato(List<Cliente> listaClienti);
 }

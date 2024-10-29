@@ -18,6 +18,9 @@ public class FactoryCliente {
         String email = nome.toLowerCase() + "." + cognome.toLowerCase() + "@gmail.com";
         String telefono = String.valueOf(3000000000L + rnd.nextInt(1000000000));
         String codiceFiscale = generaCodiceFiscaleRandom();
+        
+        double redditoAnnuale = 20000 + (rnd.nextDouble() * 80000); // Genera un valore tra 20000 e 100000
+        int numeroMembriNucleoFamiliare = 1 + rnd.nextInt(5); 
 
         return new Cliente.Builder()
                 .nome(nome)
@@ -25,6 +28,8 @@ public class FactoryCliente {
                 .email(email)
                 .telefono(telefono)
                 .codiceFiscale(codiceFiscale)
+                .redditoAnnuale(redditoAnnuale)
+                .numeroMembriNucleoFamiliare(numeroMembriNucleoFamiliare)
                 .build();
     }
 
