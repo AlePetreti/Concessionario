@@ -10,6 +10,12 @@ import java.util.List;
 
 public class SuggeritoreAuto implements Suggeritore {
 
+    private static final double PERCENTUALE_BUDGET = 0.35; // Percentuale del reddito per il budget auto
+    private static final int PESO_MARCA = 10; // Peso per la corrispondenza della marca
+    private static final int PESO_NUMERO_PORTE = 3; // Peso per la corrispondenza del numero di porte
+    private static final int PESO_ALIMENTAZIONE = 5; // Peso per la corrispondenza dell'alimentazione
+    private static final int PESO_VICINANZA_BUDGET = 4; // Peso per la vicinanza al budget
+
     private Listino listinoAuto;
     private Listino listinoUsato;
 
@@ -23,7 +29,7 @@ public class SuggeritoreAuto implements Suggeritore {
         List<ElementoListino> autoFiltrate = new ArrayList<>(); // contiene le auto che rientrano nel budget e rispettano tutte le preferenze
         List<ElementoListino> autoCompatibili = new ArrayList<>(); // contiene le auto che rientrano nel budget ma non rispettano tutte le preferenze.
     
-        double budgetCliente = preferenzeCliente.getRedditoAnnuale() * 0.35;
+        double budgetCliente = preferenzeCliente.getRedditoAnnuale() * PERCENTUALE_BUDGET;
         String preferenzaMarca = preferenzeCliente.getPreferenzeAuto();
         int preferenzaNumeroPorte = preferenzeCliente.getPreferenzeNumeroPorte();
         TipoAlimentazione preferenzaAlimentazione = preferenzeCliente.getPreferenzeAlimentazione();
@@ -86,38 +92,38 @@ public class SuggeritoreAuto implements Suggeritore {
 
         // Preferenza di marca con un peso maggiore
         if (auto1.getAutomobile().getMarca().equalsIgnoreCase(preferenzaMarca)) {
-            punteggio1 += 10;
+            punteggio1 += PESO_MARCA;
         }
         if (auto2.getAutomobile().getMarca().equalsIgnoreCase(preferenzaMarca)) {
-            punteggio2 += 10;
+            punteggio2 += PESO_MARCA;
         }
 
         // Preferenza di numero porte
         if (auto1.getAutomobile().getNumeroPorte() == preferenzaNumeroPorte) {
-            punteggio1 += 3;
+            punteggio1 += PESO_NUMERO_PORTE;
         }
         if (auto2.getAutomobile().getNumeroPorte() == preferenzaNumeroPorte) {
-            punteggio2 += 3;
+            punteggio2 += PESO_NUMERO_PORTE;
         }
 
         // Preferenza di alimentazione
         if (auto1.getAutomobile().getTipoAlimentazione().equals(preferenzaAlimentazione)) {
-            punteggio1 += 5;
+            punteggio1 += PESO_ALIMENTAZIONE;
         }
         if (auto2.getAutomobile().getTipoAlimentazione().equals(preferenzaAlimentazione)) {
-            punteggio2 += 5;
+            punteggio2 += PESO_ALIMENTAZIONE;
         }
 
         // Differenza prezzo rispetto al budget con peso ridotto
-        double budgetCliente = preferenzeCliente.getRedditoAnnuale() * 0.35;
+        double budgetCliente = preferenzeCliente.getRedditoAnnuale() * PERCENTUALE_BUDGET;
         double differenzaPrezzo1 = Math.abs(auto1.getPrezzo() - budgetCliente);
         double differenzaPrezzo2 = Math.abs(auto2.getPrezzo() - budgetCliente);
 
         // Peso minore per la vicinanza al budget
         if (differenzaPrezzo1 < differenzaPrezzo2) {
-            punteggio1 += 4;
+            punteggio1 += PESO_VICINANZA_BUDGET;
         } else if (differenzaPrezzo2 < differenzaPrezzo1) {
-            punteggio2 += 4;
+            punteggio2 += PESO_VICINANZA_BUDGET;
         }
 
         //in caso di punteggio uguale, preferisce l'auto con il prezzo più basso
@@ -128,5 +134,4 @@ public class SuggeritoreAuto implements Suggeritore {
         // Ordinamento decrescente per punteggio
         return Integer.compare(punteggio2, punteggio1);
     }
-
 }

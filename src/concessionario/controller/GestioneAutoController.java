@@ -1,6 +1,5 @@
 package concessionario.controller;
 
-import java.util.stream.Collectors;
 import java.util.List;
 
 import concessionario.model.automobile.StatoMacchina;
@@ -12,7 +11,6 @@ import concessionario.model.ricercaAuto.CercatoreAuto;
 import concessionario.model.ricercaAuto.Filtro;
 import concessionario.model.suggerimenti.PreferenzeCliente;
 import concessionario.model.suggerimenti.Suggeritore;
-import concessionario.model.suggerimenti.SuggeritoreAuto;
 import concessionario.view.auto.EventoGestioneAuto;
 import concessionario.view.auto.GestioneAutoView;
 import concessionario.view.auto.GestioneAutoViewObserver;
@@ -74,13 +72,10 @@ public class GestioneAutoController implements GestioneAutoViewObserver {
                         .preferenzeAlimentazione(view.getTipoAlimentazioneSelezionato())
                         .build();
 
-                        System.out.println("Preferenze cliente: " + preferenzeCliente);
                     List<ElementoListino> autoSuggerite = suggeritoreAuto.suggerisciAuto(preferenzeCliente);
                     view.mostraListino(autoSuggerite);
                 break;
                 default:
-                
-                
                 break;
         }
     }
@@ -100,10 +95,5 @@ public class GestioneAutoController implements GestioneAutoViewObserver {
 
         return filtroBuilder.build();
     }
-    
-    private List<ElementoListino> filtraSuggerimenti(Listino listino) {
-        return listino.getListino().stream()
-            .filter(elemento -> elemento.getPrezzo() < 20000)
-            .collect(Collectors.toList());
-    }
+
 }

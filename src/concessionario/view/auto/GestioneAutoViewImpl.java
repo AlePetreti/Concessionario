@@ -22,6 +22,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -115,6 +116,7 @@ public class GestioneAutoViewImpl implements GestioneAutoView {
         marcaAutoSugg.setPreferredSize(new Dimension(300, 30));
         panel.add(marcaAutoSugg, gbc);
         
+        
         // Aggiungi bottone per ricerca suggerimenti
         gbc.gridy = 4;
         JButton bRicercaSugg = new JButton("Ricerca tramite suggerimenti");
@@ -122,11 +124,16 @@ public class GestioneAutoViewImpl implements GestioneAutoView {
 
         bRicercaSugg.addActionListener(new ActionListener() {
 
-            @Override
             public void actionPerformed(ActionEvent e) {
-                notifyEvent(EventoGestioneAuto.CERCA_AUTO_SUGG);
+                String testoInserito = marcaAutoSugg.getText().trim();
+        
+                // Controlla se il testo contiene solo lettere
+                if (!testoInserito.matches("[a-zA-Z\\s]+")) {
+                    JOptionPane.showMessageDialog(frameAuto, "Inserire una marca valida", "Errore di validazione", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    notifyEvent(EventoGestioneAuto.CERCA_AUTO_SUGG);
+                }
             }
-            
         });
         
         this.frameAuto.add(panel, BorderLayout.EAST);
