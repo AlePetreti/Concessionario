@@ -77,6 +77,7 @@ public class SuggeritoreAuto implements Suggeritore {
     }
 
     // Metodo che calcola il ranking delle auto in base alle preferenze del cliente
+    // Metodo che calcola il ranking delle auto in base alle preferenze del cliente
     private int calcolaRanking(ElementoListino auto1, ElementoListino auto2, Cliente cliente) {
         int punteggio1 = 0;
         int punteggio2 = 0;
@@ -118,10 +119,16 @@ public class SuggeritoreAuto implements Suggeritore {
 
         if (differenzaPrezzo1 < differenzaPrezzo2) {
             punteggio1 += 10;
-        } else {
+        } else if (differenzaPrezzo2 < differenzaPrezzo1) {
             punteggio2 += 10;
         }
 
+        // Confronto finale: in caso di punteggio uguale, preferisce l'auto con il prezzo più basso
+        if (punteggio1 == punteggio2) {
+            return Double.compare(auto1.getPrezzo(), auto2.getPrezzo());
+        }
+
+        // Ordinamento decrescente per punteggio
         return Integer.compare(punteggio2, punteggio1);
     }
 }
