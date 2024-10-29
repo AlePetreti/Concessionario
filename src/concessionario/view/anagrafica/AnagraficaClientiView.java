@@ -24,11 +24,7 @@ public interface AnagraficaClientiView {
 
     String getRedditoAnnualeInserito();
 
-    String getPreferenzeAutoInserita();
-
-    String getNumeroPorteInserito();
-
-    String getAlimentazioneInserita();
+    String getNumberoMembriFamiliaInserito();
 
     void addObserver(AnagraficaClientiViewObserver observer);
 

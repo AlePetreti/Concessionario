@@ -29,12 +29,16 @@ public class AnagraficaClientiController implements AnagraficaClientiViewObserve
                 view.mostraListaClienti(anagraficaClienti.getClienti());
                 break;
             case REGISTRA_CLIENTI:
+                double redditoAnnuale = Double.parseDouble(view.getRedditoAnnualeInserito());
+                int numeroMembriFamilia = Integer.parseInt(view.getNumberoMembriFamiliaInserito());
                 Cliente nuovoCliente = new Cliente.Builder()
                     .nome(view.getNomeInserito())
                     .cognome(view.getCognomeInserito())
                     .email(view.getEmailInserita())
                     .telefono(view.getTelefonoInserito())
                     .codiceFiscale(view.getCfInserito())
+                    .redditoAnnuale(redditoAnnuale)
+                    .numeroMembriNucleoFamiliare(numeroMembriFamilia)
                     .build();
 
                 anagraficaClienti.registraCliente(nuovoCliente);

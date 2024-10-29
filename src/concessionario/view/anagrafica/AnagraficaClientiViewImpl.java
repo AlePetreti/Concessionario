@@ -33,9 +33,7 @@ public class AnagraficaClientiViewImpl implements AnagraficaClientiView {
     private final JTextField cfCliente;
     private final JTextField parolaChiave;
     private final JTextField redditoAnnualeCliente;
-    private final JTextField preferenzeAutoCliente;
-    private final JTextField numeroPorteCliente;
-    private final JTextField alimentazioneCliente;
+    private final JTextField numeroMembriNucleoFamiliare;
 
 
     private List<AnagraficaClientiViewObserver> osservatori;
@@ -106,23 +104,13 @@ public class AnagraficaClientiViewImpl implements AnagraficaClientiView {
         panel1.add(redditoAnnualeCliente, constraints);
 
         constraints.gridy = 13;
-        panel1.add(new JLabel("Preferenze Auto Cliente:"), constraints);
+        panel1.add(new JLabel("Numero membri familia:"), constraints);
         constraints.gridy = 14;
-        preferenzeAutoCliente = new JTextField();
-        panel1.add(preferenzeAutoCliente, constraints);
+        numeroMembriNucleoFamiliare = new JTextField();
+        panel1.add(numeroMembriNucleoFamiliare, constraints);
 
-        constraints.gridy = 15;
-        panel1.add(new JLabel("Numero Porte Cliente:"), constraints);
-        constraints.gridy = 16;
-        numeroPorteCliente = new JTextField();
-        panel1.add(numeroPorteCliente, constraints);
-
-        constraints.gridy = 17;
-        panel1.add(new JLabel("Alimentazione Cliente:"), constraints);
-        constraints.gridy = 18;
-        alimentazioneCliente = new JTextField();
-        panel1.add(alimentazioneCliente, constraints);
         // bottone per la registrazione dei clienti 
+        constraints.gridy = 15;
         JButton bRegistraCliente = new JButton("Registra Cliente");
         panel1.add(bRegistraCliente, constraints);
         bRegistraCliente.addActionListener(new ActionListener() {
@@ -251,20 +239,9 @@ public class AnagraficaClientiViewImpl implements AnagraficaClientiView {
     }
     
     @Override
-    public String getPreferenzeAutoInserita() {
-        return preferenzeAutoCliente.getText();
+    public String getNumberoMembriFamiliaInserito() {
+        return numeroMembriNucleoFamiliare.getText();
     }
-
-    @Override
-    public String getNumeroPorteInserito() {
-        return numeroPorteCliente.getText();
-    }
-
-    @Override
-    public String getAlimentazioneInserita() {
-        return alimentazioneCliente.getText();
-    }
-    
 
     @Override
     public String getParolaChiave() {
