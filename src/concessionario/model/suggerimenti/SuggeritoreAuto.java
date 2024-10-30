@@ -12,9 +12,9 @@ public class SuggeritoreAuto implements Suggeritore {
 
     private static final double PERCENTUALE_BUDGET = 0.35; // Percentuale del reddito per il budget auto
     private static final int PESO_MARCA = 10; // Peso per la corrispondenza della marca
-    private static final int PESO_NUMERO_PORTE = 3; // Peso per la corrispondenza del numero di porte
+    private static final int PESO_NUMERO_PORTE = 5; // Peso per la corrispondenza del numero di porte
     private static final int PESO_ALIMENTAZIONE = 5; // Peso per la corrispondenza dell'alimentazione
-    private static final int PESO_VICINANZA_BUDGET = 4; // Peso per la vicinanza al budget
+    private static final int PESO_VICINANZA_BUDGET = 5; // Peso per la vicinanza al budget
 
     private Listino listinoAuto;
     private Listino listinoUsato;

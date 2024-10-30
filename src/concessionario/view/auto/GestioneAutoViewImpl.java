@@ -47,8 +47,8 @@ public class GestioneAutoViewImpl implements GestioneAutoView {
     private final JTextField numeroPorte;
     private final JTextField cilindrata;
     private final JTextField prezzoMax;
-    private final JComboBox boxClienti;
-    private final JComboBox boxTipoAlimentazione;
+    private final JComboBox<String> boxClienti;
+    private final JComboBox<TipoAlimentazione> boxTipoAlimentazione;
     private List<GestioneAutoViewObserver> osservatori;
     private List<ElementoListino> listinoCorrente;
     private final JTextField marcaAutoSugg;
@@ -128,7 +128,7 @@ public class GestioneAutoViewImpl implements GestioneAutoView {
                 String testoInserito = marcaAutoSugg.getText().trim();
         
                 // Controlla se il testo contiene solo lettere
-                if (!testoInserito.matches("[a-zA-Z\\s]+")) {
+                if (!testoInserito.isEmpty() && !testoInserito.matches("[a-zA-Z\\s]+")) {
                     JOptionPane.showMessageDialog(frameAuto, "Inserire una marca valida", "Errore di validazione", JOptionPane.ERROR_MESSAGE);
                 } else {
                     notifyEvent(EventoGestioneAuto.CERCA_AUTO_SUGG);
